@@ -1,0 +1,10 @@
+{
+    "standard.autoFixOnSave": true,
+    "javascript.format.enable": false,
+    "javascript.validate.enable": false,
+    "standard.enable": true,
+    "standard.validate": [
+        "javascript",
+        "javascriptreact"
+      ]
+}
