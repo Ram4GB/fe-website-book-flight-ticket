@@ -17,7 +17,7 @@ export default function (dispatch, props) {
           }
           dispatch(actions.login(result))
         } else console.log('User must be login')
-        console.log(123)
+        console.log(456)
         dispatch(actions.login(result))
       }
     },
