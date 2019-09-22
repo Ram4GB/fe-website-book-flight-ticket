@@ -4,7 +4,7 @@ import { HashRouter } from 'react-router-dom'
 import Routes from '../routes'
 import Modal from '../components/widgets/Modal'
 import { MODULE_NAME as MODULE_USER } from '../../modules/user/models'
-import { fetchLoading } from '../effects'
+import handlers from '../../modules/user/handlers'
 
 class MainPage extends Component {
   shouldComponentUpdate (nextProps) {
@@ -19,10 +19,7 @@ class MainPage extends Component {
   }
 
   async componentDidMount () {
-    const result = await fetchLoading({
-      method: 'GET'
-    })
-    console.log(result)
+    await this.props.getProfileUser()
   }
 
   render () {
@@ -46,7 +43,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    dispatch
+    ...handlers(dispatch)
   }
 }
 

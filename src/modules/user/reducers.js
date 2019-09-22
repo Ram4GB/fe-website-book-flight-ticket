@@ -1,9 +1,23 @@
 import { handleActions } from 'redux-actions'
+import * as actions from './actions'
 const initialState = {
   users: [],
-  user: { role: 'admin', token: '123' }
+  user: { }
 }
 
-const reducerMap = {}
+const reducerMap = {
+  [actions.login]: (state, action) => {
+    return {
+      ...state,
+      user: action.payload
+    }
+  },
+  [actions.logout]: (state, action) => {
+    return {
+      ...state,
+      user: {}
+    }
+  }
+}
 
 export default handleActions(reducerMap, initialState)
