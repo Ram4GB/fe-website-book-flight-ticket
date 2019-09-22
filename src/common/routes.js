@@ -5,6 +5,7 @@ import FoodPage from '../pages/FoodPage'
 import UnderConstruction from './components/UnderConstruction'
 import MainLayout from './hocs/MainLayout'
 import { MODULE_NAME as MODULE_USER } from '../modules/user/models'
+import LoginPage from './hocs/LoginPage'
 export class routes extends Component {
   render () {
     const { store } = this.props
@@ -31,7 +32,7 @@ export class routes extends Component {
     } else {
       return (
         <MainLayout mode=''>
-          <Route component={UnderConstruction} path='*' />
+          <Route component={LoginPage} path='*' />
         </MainLayout>
       )
     }
