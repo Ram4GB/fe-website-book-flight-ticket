@@ -13,8 +13,8 @@ const menu = {
       icon: 'user',
       children: [
         {
-          key: 'user',
-          name: 'User 1',
+          key: 'cashier',
+          name: 'Cashier',
           icon: 'user'
         },
         {

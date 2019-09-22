@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import { Layout, Menu, Icon, Row, Col, Dropdown, Avatar } from 'antd'
 import { withRouter } from 'react-router'
 import menuConstant from './Menu'
-import UnderConstruction from '../components/UnderConstruction'
+import LoginPage from './LoginPage'
+import { connect } from 'react-redux'
+import handlers from '../../modules/user/handlers'
 const { Header, Content, Footer, Sider } = Layout
 
 const nameLogo = 'Food Restaurant'
@@ -13,12 +15,13 @@ export class MainLayout extends Component {
     this.state = {}
     this.handleSelect = this.handleSelect.bind(this)
     this.handleShowMenu = this.handleShowMenu.bind(this)
+    this.handleLogout = this.handleLogout.bind(this)
   }
 
   handleSelect (value) {
     this.props.history.push(`/${value.key}`)
   }
-  ;
+
   handleShowMenu () {
     const { mode } = this.props
     const menu = menuConstant[mode]
@@ -72,7 +75,11 @@ export class MainLayout extends Component {
       </Menu>
     )
   }
-  ;
+
+  handleLogout (value) {
+    this.props.logout()
+  }
+
   render () {
     const { mode } = this.props
     if (mode) {
@@ -82,7 +89,6 @@ export class MainLayout extends Component {
             breakpoint='lg'
             collapsedWidth='0'
             onBreakpoint={broken => {
-              console.log(broken)
             }}
             onCollapse={(collapsed, type) => {
               // console.log(collapsed, type);
@@ -119,11 +125,11 @@ export class MainLayout extends Component {
                       <Dropdown
                         overlay={
                           <Menu style={{ width: 180, fontSize: '1.2em' }}>
-                            <Menu.Item>
+                            <Menu.Item key='profile'>
                               <Icon type='user' />
                               My Profile
                             </Menu.Item>
-                            <Menu.Item>
+                            <Menu.Item onClick={this.handleLogout} key='logout'>
                               <Icon type='poweroff' />
                               Logout
                             </Menu.Item>
@@ -142,15 +148,13 @@ export class MainLayout extends Component {
             </Header>
             <Content
               style={{
-                margin: '24px 16px 0',
-                height: '100%',
-                backgroundColor: '#F4F3EF'
+                margin: '5px 9px',
+                height: '100%'
               }}
             >
               <div
                 style={{
                   padding: 24,
-                  background: '#fff',
                   minHeight: 360,
                   height: '100%'
                 }}
@@ -164,8 +168,18 @@ export class MainLayout extends Component {
           </Layout>
         </Layout>
       )
-    } else return <UnderConstruction />
+    } else return <LoginPage />
   }
 }
-
-export default withRouter(MainLayout)
+const mapStateToProps = (state) => {
+  return {}
+}
+const mapDispatchToProps = dispatch => {
+  return {
+    ...handlers(dispatch)
+  }
+}
+export default withRouter(connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MainLayout))

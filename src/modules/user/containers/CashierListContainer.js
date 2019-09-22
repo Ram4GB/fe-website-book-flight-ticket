@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import UserListComponent from '../components/UserListComponent'
+import CashierListComponent from '../components/CashierListComponent'
 import handlers from '../handlers'
 import { MODULE_NAME as MODULE_USER } from '../models'
 
@@ -25,4 +25,4 @@ const mapDispatchToProps = (dispatch, props) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(UserListComponent)
+)(CashierListComponent)

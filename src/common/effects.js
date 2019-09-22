@@ -1,13 +1,14 @@
 import Axios from 'axios'
-import { DEFAULT_URL } from './url'
+import Cookies from 'js-cookie/src/js.cookie'
 
-export const fetchLoading = async ({ params, method, data }) => {
+export const fetchLoading = async ({ params, method, data, url }) => {
+  console.log(url)
   return Axios({
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json'
     },
-    url: DEFAULT_URL,
+    url,
     params,
     method,
     data
@@ -21,24 +22,28 @@ export const fetchAuthLoading = async ({
   params,
   method,
   data,
+  url,
   ...res
 }) => {
-  const token = window.localStorage.getItem('token')
-  if (token) {
-    return Axios({
-      headers: {
-        Authorization: 'Bearer ' + token,
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        ...headers
-      },
-      url: DEFAULT_URL,
-      params,
-      method,
-      data,
-      res
-    })
-      .then(response => response)
-      .catch(errors => errors.response)
+  const user = Cookies.get('user')
+  if (user) {
+    const token = Cookies.get('token')
+    if (token) {
+      return Axios({
+        headers: {
+          Authorization: 'Bearer ' + token,
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          ...headers
+        },
+        url,
+        params,
+        method,
+        data,
+        res
+      })
+        .then(response => response)
+        .catch(errors => errors.response)
+    }
   }
 }

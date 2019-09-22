@@ -4,8 +4,13 @@ import { HashRouter } from 'react-router-dom'
 import Routes from '../routes'
 import Modal from '../components/widgets/Modal'
 import { MODULE_NAME as MODULE_USER } from '../../modules/user/models'
-import { fetchLoading } from '../effects'
-
+import handlers from '../../modules/user/handlers'
+import { notification } from 'antd'
+notification.config({
+  placement: 'bottomRight',
+  bottom: 50,
+  duration: 3
+})
 class MainPage extends Component {
   shouldComponentUpdate (nextProps) {
     const { user } = this.props
@@ -19,10 +24,7 @@ class MainPage extends Component {
   }
 
   async componentDidMount () {
-    const result = await fetchLoading({
-      method: 'GET'
-    })
-    console.log(result)
+    await this.props.getProfileUser()
   }
 
   render () {
@@ -46,7 +48,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    dispatch
+    ...handlers(dispatch)
   }
 }
 
