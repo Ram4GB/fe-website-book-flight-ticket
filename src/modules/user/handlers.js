@@ -1,42 +1,44 @@
 import * as actions from './actions'
+import Cookies from '../../../node_modules/js-cookie/src/js.cookie'
 export default function (dispatch, props) {
   return {
     getProfileUser: () => {
-      const user = window.localStorage.getItem('user')
+      const user = Cookies.get('user')
       if (user) {
         const { token } = JSON.parse(user)
-        let result = {}
         if (token) {
-        // fetch user login again and dispatch to redux again
-          result = {
+          // fetch user login again and dispatch to redux again
+          const result = {
             id: 1,
-            username: 'leminhcuong298@yahoo.com.vn',
-            password: '123456789',
+            username: 'admin',
+            password: 'admin',
             role: 'admin',
-            token: 'qwertyuiop'
+            token: 'qwertyuiopqwertyuiop'
           }
           dispatch(actions.login(result))
         } else console.log('User must be login')
-        dispatch(actions.login(result))
       }
     },
-    login: () => {
-      const result = {
-        id: 1,
-        username: 'leminhcuong298@yahoo.com.vn',
-        password: '123456789',
-        role: 'admin',
-        token: 'qwertyuiop'
+    login: (username, password) => {
+      if (username === 'admin' && password === 'admin') {
+        const result = {
+          id: 1,
+          username: 'admin',
+          password: 'admin',
+          role: 'admin',
+          token: 'qwertyuiopqwertyuiop'
+        }
+        dispatch(actions.login(result))
+        Cookies.set('user', result)
+        return { success: 'Login success' }
+      } else {
+        return { error: { message: 'Username or password not match' } }
       }
-      dispatch(actions.login(result))
-      window.localStorage.setItem('user', JSON.stringify(result))
     },
     logout: () => {
       dispatch(actions.logout())
-      window.localStorage.removeItem('user')
+      Cookies.remove('user', { path: '/' })
     },
-    getData: () => {
-
-    }
+    getData: () => {}
   }
 }
