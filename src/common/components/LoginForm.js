@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Input, Button } from 'antd'
+import { Form, Input, Button, notification } from 'antd'
 import { connect } from 'react-redux'
 import handlers from '../../modules/user/handlers'
 import { withRouter } from 'react-router'
@@ -17,8 +17,17 @@ class LoginForm extends Component {
     validateFields(async (errors, values) => {
       if (!errors) {
         const { login } = this.props
-        await login()
-        this.props.history.push('/dashboard')
+        const result = await login(values.username, values.password)
+        if (result.error) {
+          notification.error({
+            message: result.error.message
+          })
+        } else {
+          this.props.history.push('/dashboard')
+          notification.success({
+            message: 'Login successfully'
+          })
+        }
       }
     })
   }

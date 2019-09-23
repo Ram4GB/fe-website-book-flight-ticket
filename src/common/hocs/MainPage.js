@@ -5,7 +5,12 @@ import Routes from '../routes'
 import Modal from '../components/widgets/Modal'
 import { MODULE_NAME as MODULE_USER } from '../../modules/user/models'
 import handlers from '../../modules/user/handlers'
-
+import { notification } from 'antd'
+notification.config({
+  placement: 'bottomRight',
+  bottom: 50,
+  duration: 3
+})
 class MainPage extends Component {
   shouldComponentUpdate (nextProps) {
     const { user } = this.props
