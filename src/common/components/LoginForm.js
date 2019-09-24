@@ -17,11 +17,19 @@ class LoginForm extends Component {
     validateFields(async (errors, values) => {
       if (!errors) {
         const { login } = this.props
-        const result = await login(values.username, values.password)
+        const result = await login(values.email, values.password)
         if (result.error) {
-          notification.error({
-            message: result.error.message
-          })
+          if (Array.isArray(result.error)) {
+            result.error.forEach(error => {
+              notification.error({
+                message: error
+              })
+            })
+          } else {
+            notification.error({
+              message: result.error
+            })
+          }
         } else {
           this.props.history.push('/dashboard')
           notification.success({
@@ -36,7 +44,16 @@ class LoginForm extends Component {
     const { getFieldDecorator } = this.props.form
     return (
       <Form onSubmit={this.handleSubmitLoginForm}>
-        <Form.Item>{getFieldDecorator('username')(<Input />)}</Form.Item>
+        <Form.Item>
+          {getFieldDecorator('email', {
+            rules: [
+              {
+                type: 'email',
+                message: 'Invalid email'
+              }
+            ]
+          })(<Input />)}
+        </Form.Item>
         <Form.Item>
           {getFieldDecorator('password')(<Input.Password />)}
         </Form.Item>
