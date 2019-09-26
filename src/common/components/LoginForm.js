@@ -31,7 +31,8 @@ class LoginForm extends Component {
             })
           }
         } else {
-          this.props.history.push('/dashboard')
+          console.log(this.props)
+          window.location.reload()
           notification.success({
             message: 'Login successfully'
           })

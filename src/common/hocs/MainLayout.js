@@ -148,15 +148,13 @@ export class MainLayout extends Component {
             </Header>
             <Content
               style={{
-                margin: '24px 16px 0',
-                height: '100%',
-                backgroundColor: '#F4F3EF'
+                margin: '5px 9px',
+                height: '100%'
               }}
             >
               <div
                 style={{
                   padding: 24,
-                  background: '#fff',
                   minHeight: 360,
                   height: '100%'
                 }}

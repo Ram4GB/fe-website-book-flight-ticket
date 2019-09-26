@@ -27,7 +27,7 @@ export const fetchAuthLoading = async ({
 }) => {
   const user = Cookies.get('user')
   if (user) {
-    const { token } = JSON.stringify(user)
+    const token = Cookies.get('token')
     if (token) {
       return Axios({
         headers: {

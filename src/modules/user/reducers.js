@@ -17,7 +17,11 @@ const reducerMap = {
       ...state,
       user: {}
     }
-  }
+  },
+  [actions.getListUser]: (state, action) => ({
+    ...state,
+    users: action.payload
+  })
 }
 
 export default handleActions(reducerMap, initialState)

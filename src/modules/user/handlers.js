@@ -1,13 +1,29 @@
 import * as actions from './actions'
 import Cookies from '../../../node_modules/js-cookie/src/js.cookie'
 import { DEFAULT_URL } from '../../common/url'
-import { fetchLoading } from '../../common/effects'
+import { fetchLoading, fetchAuthLoading } from '../../common/effects'
+export const getListCashierAsync = async (page, params) => {
+  const result = await fetchAuthLoading({
+    url: `${DEFAULT_URL}/cashier`,
+    method: 'GET',
+    params: {
+      ...params
+    }
+  })
+  return result
+}
+export const addCashierAsync = async user => {
+  const result = await fetchAuthLoading({
+    url: `${DEFAULT_URL}/cashier`,
+    method: 'POST',
+    data: user
+  })
+  return result
+}
 export default function (dispatch, props) {
   return {
     getProfileUser: () => {
-      // const user = JSON.parse(Cookies.get('user'))
       const token = Cookies.get('token')
-      // if (user) {
       if (token) {
         // fetch user login again and dispatch to redux again
         const result = {
@@ -19,7 +35,6 @@ export default function (dispatch, props) {
         }
         dispatch(actions.login(result))
       } else console.log('User must be login')
-      // }
     },
     login: async (email, password) => {
       const result = await fetchLoading({
@@ -29,9 +44,10 @@ export default function (dispatch, props) {
           password
         },
         method: 'POST'
-      }).catch(errors => errors).then()
-      if (result && result.response) { return result.response.data }
-      console.log(result.data)
+      })
+      if (result && result.response) {
+        return result.response.data
+      }
       const { account, exp, token } = result.data
       dispatch(actions.login(account))
       Cookies.set('user', account)
@@ -45,6 +61,17 @@ export default function (dispatch, props) {
       Cookies.remove('token', { path: '/' })
       Cookies.remove('exp', { path: '/' })
     },
-    getData: () => {}
+    getListCashier: async (page, params) => {
+      const result = await getListCashierAsync(page, params)
+      console.log(result)
+      if (result && result.data) {
+        dispatch(actions.getListUser(result.data.data)) // dispatch list user
+      }
+      return result.data
+    },
+    addCashier: async user => {
+      const result = await addCashierAsync(user)
+      if (result && result.data) { return result.data }
+    }
   }
 }
