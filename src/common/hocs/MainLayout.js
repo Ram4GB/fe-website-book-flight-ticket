@@ -156,7 +156,8 @@ export class MainLayout extends Component {
                 style={{
                   padding: 24,
                   minHeight: 360,
-                  height: '100%'
+                  height: '100%',
+                  minWidth: 'calc(80vw)'
                 }}
               >
                 {this.props.children}

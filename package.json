@@ -20,11 +20,13 @@
     "redux-actions": "^2.6.5"
   },
   "scripts": {
-    "start": "set PORT=3001 && react-scripts start",
+    "start": "set PORT=3000 && react-scripts start",
+    "dev": "set PORT=3000 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "./node_modules/.bin/standard --fix"
+    "lint": "./node_modules/.bin/standard",
+    "lint-fix": "./node_modules/.bin/standard --fix"
   },
   "eslintConfig": {
     "extends": "react-app"
