@@ -18,14 +18,20 @@ const columns = [
     }
   },
   { title: 'ID', dataIndex: 'id', key: 'id' },
-  { title: 'Name', dataIndex: 'name', key: 'name' },
+  {
+    title: 'Name',
+    key: 'name',
+    render: record => (
+      <div className='link'>{record.name}</div>
+    )
+  },
   { title: 'Gender', dataIndex: 'gender', key: 'gender' },
   {
     title: 'Birthday',
     dataIndex: 'birthday',
     key: 'birthday',
     render: value => {
-      return <span>{moment(value).format('MMM Do YY')}</span>
+      return <span>{moment(value).format('DD-MM-YYYY')}</span>
     }
   },
   { title: 'Phone', dataIndex: 'phone', key: 'phone' },
@@ -40,10 +46,10 @@ const columns = [
   {
     title: 'Action',
     key: 'action',
+    width: 120,
     render: record => {
       return (
-        <span style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Button icon='info-circle' />
+        <span style={{ display: 'flex', justifyContent: 'space-around' }}>
           <Button type='primary' icon='edit' />
           <Button type='danger' icon='delete' />
         </span>
@@ -112,7 +118,7 @@ export class UserComponent extends Component {
       <Card
         extra={
           <>
-            <Button onClick={this.handleShowFormAddUser} type='primary'>
+            <Button className='d-none d-md-inline-block' onClick={this.handleShowFormAddUser} type='primary'>
               Add Staff
             </Button>
           </>

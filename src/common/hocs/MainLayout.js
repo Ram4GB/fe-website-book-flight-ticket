@@ -164,7 +164,7 @@ export class MainLayout extends Component {
               </div>
             </Content>
             <Footer style={{ textAlign: 'center' }}>
-              Ant Design ©2018 Created by Ant UED
+              Restaurant Management ©2019
             </Footer>
           </Layout>
         </Layout>
