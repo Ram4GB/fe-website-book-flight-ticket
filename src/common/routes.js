@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import { Route, Switch } from 'react-router-dom'
+import { MODULE_NAME as MODULE_USER } from '../modules/user/models'
+import UnderConstruction from './components/UnderConstruction'
+/** Pages */
+import MainLayout from './hocs/MainLayout'
+import LoginPage from './hocs/LoginPage'
 import CashierPage from '../pages/CashierPage'
 import FoodPage from '../pages/FoodPage'
-import UnderConstruction from './components/UnderConstruction'
-import MainLayout from './hocs/MainLayout'
-import { MODULE_NAME as MODULE_USER } from '../modules/user/models'
-import LoginPage from './hocs/LoginPage'
 export class routes extends Component {
   render () {
     const { store } = this.props
