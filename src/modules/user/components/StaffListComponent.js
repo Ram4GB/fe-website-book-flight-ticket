@@ -82,6 +82,7 @@ export class UserComponent extends Component {
     const { getListStaff } = this.props;
     const next = input || page;
     const result = await getListStaff(next, params);
+    console.log(result);
     if (result && result.success === true) {
       this.setState({
         page: next,

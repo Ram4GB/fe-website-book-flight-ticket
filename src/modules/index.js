@@ -3,7 +3,7 @@ import frontpageReducer from "./frontpage/reducers";
 import orderReducer from "./order/reducers";
 
 import { MODULE_NAME as MODULE_USER } from "./user/models";
-import { MODULE_NAME as MODULE_ORDER } from "./user/models";
+import { MODULE_NAME as MODULE_ORDER } from "./order/models";
 import { MODULE_NAME as MODULE_FRONT_PAGE } from "./frontpage/models";
 
 const rootReducer = {

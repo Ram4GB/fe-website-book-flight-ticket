@@ -1,34 +1,34 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { HashRouter } from 'react-router-dom'
-import Routes from '../routes'
-import Modal from '../components/widgets/Modal'
-import { MODULE_NAME as MODULE_USER } from '../../modules/user/models'
-import handlers from '../../modules/user/handlers'
-import { notification } from 'antd'
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { HashRouter } from "react-router-dom";
+import Routes from "../routes";
+import Modal from "../components/widgets/Modal";
+import { MODULE_NAME as MODULE_USER } from "../../modules/user/models";
+import handlers from "../../modules/user/handlers";
+import { notification } from "antd";
 notification.config({
-  placement: 'topRight',
+  placement: "topRight",
   bottom: 50,
   duration: 1
-})
+});
 class MainPage extends Component {
-  shouldComponentUpdate (nextProps) {
-    const { user } = this.props
+  shouldComponentUpdate(nextProps) {
+    const { user } = this.props;
     if (
       (!user && nextProps.user) ||
       (nextProps.user && user.id !== nextProps.user.id)
     ) {
-      return true
+      return true;
     }
-    return false
+    return false;
   }
 
-  async componentDidMount () {
-    await this.props.getProfileUser()
+  async componentDidMount() {
+    await this.props.getProfileUser();
   }
 
-  render () {
-    const { store } = this.props
+  render() {
+    const { store } = this.props;
     return (
       <>
         <HashRouter>
@@ -36,24 +36,23 @@ class MainPage extends Component {
         </HashRouter>
         <Modal.Component global />
       </>
-    )
+    );
   }
 }
 
 const mapStateToProps = state => {
-  console.log(state)
   return {
     user: state[MODULE_USER].user
-  }
-}
+  };
+};
 
 const mapDispatchToProps = dispatch => {
   return {
     ...handlers(dispatch)
-  }
-}
+  };
+};
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(MainPage)
+)(MainPage);

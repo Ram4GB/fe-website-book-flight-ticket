@@ -8,8 +8,8 @@ export class CashierPage extends Component {
       <>
         <CustomBreadcrumb
           items={[
-            { url: "/admin/dashboard", icon: "home", title: "Dashboard" },
-            { url: "/admin/staff", icon: "user", title: "Staff" }
+            { url: "/admin/dashboard", icon: "home", title: "Bảng điều khiển" },
+            { url: "/admin/staff", icon: "user", title: "Nhân viên" }
           ]}
         />
         <StaffListContainer />
