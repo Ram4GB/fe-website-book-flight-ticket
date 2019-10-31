@@ -7,7 +7,7 @@ export class UnderConstruction extends Component {
       <div>
         <Lottie
           options={{
-            animationData: require('../assets/8980-order-status-for-food-delivery.json')
+            animationData: require('../assets/animations/5371-volaris-tickets')
           }}
           style={{
             marginBottom: 150

@@ -2,40 +2,29 @@
 const menu = {
   admin: [
     {
-      key: 'dashboard',
-      name: 'Dashboard',
-      icon: 'safety-certificate',
+      key: "admin/dashboard",
+      name: "Bảng điều khiển",
+      icon: "safety-certificate",
       children: []
     },
     {
-      key: 'user',
-      name: 'User',
-      icon: 'user',
-      children: [
-        {
-          key: 'cashier',
-          name: 'Cashier',
-          icon: 'user'
-        },
-        {
-          key: 'user-2',
-          name: 'User 2',
-          icon: 'user'
-        }
-      ]
-    },
-    {
-      key: 'food',
-      name: 'Food',
-      icon: 'setting',
+      key: "admin/staff",
+      name: "Nhân viên",
+      icon: "user",
       children: []
     },
     {
-      key: 'setting',
-      name: 'Setting',
-      icon: 'setting',
+      key: "admin/customer",
+      name: "Khách hàng",
+      icon: "user",
+      children: []
+    },
+    {
+      key: "admin/order",
+      name: "Hóa đơn",
+      icon: "file-text",
       children: []
     }
   ]
-}
-export default menu
+};
+export default menu;
