@@ -7,9 +7,9 @@ import { MODULE_NAME as MODULE_USER } from '../../modules/user/models'
 import handlers from '../../modules/user/handlers'
 import { notification } from 'antd'
 notification.config({
-  placement: 'bottomRight',
+  placement: 'topRight',
   bottom: 50,
-  duration: 3
+  duration: 1
 })
 class MainPage extends Component {
   shouldComponentUpdate (nextProps) {
@@ -41,6 +41,7 @@ class MainPage extends Component {
 }
 
 const mapStateToProps = state => {
+  console.log(state)
   return {
     user: state[MODULE_USER].user
   }
