@@ -14,6 +14,7 @@ import StepRegisterPage from "../pages/StepRegisterPage";
 import Homepage from "../pages/Homepage";
 import CustomerPage from "../pages/CustomerPage";
 import OrderListPage from "../pages/OrderListPage";
+import InformationUser from "../pages/InformationUser";
 
 export class routes extends Component {
   constructor(props) {
@@ -59,6 +60,11 @@ export class routes extends Component {
               <Route exact path="/admin/order">
                 <MainLayout mode="admin">
                   <OrderListPage></OrderListPage>
+                </MainLayout>
+              </Route>
+              <Route exact path="/admin/profile">
+                <MainLayout mode="admin">
+                  <InformationUser></InformationUser>
                 </MainLayout>
               </Route>
               <Route exact path="/">

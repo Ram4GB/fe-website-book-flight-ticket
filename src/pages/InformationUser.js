@@ -1,21 +1,21 @@
 import React, { Component } from "react";
-import CustomerListContainer from "../modules/user/containers/CustomerListContainer";
+import InformationUserContainer from "../modules/user/containers/InformationUserContainer";
 import CustomBreadcrumb from "../common/components/widgets/CustomBreadcrumb";
 
-export class CustomerPage extends Component {
+export class InformationUser extends Component {
   render() {
     return (
       <>
         <CustomBreadcrumb
           items={[
             { url: "/admin/dashboard", icon: "home", title: "Bảng điều khiển" },
-            { url: "/admin/customer", icon: "user", title: "Khách hàng" }
+            { url: "/admin/profile", icon: "user", title: "Thông tin cá nhân" }
           ]}
         />
-        <CustomerListContainer></CustomerListContainer>
+        <InformationUserContainer></InformationUserContainer>
       </>
     );
   }
 }
 
-export default CustomerPage;
+export default InformationUser;

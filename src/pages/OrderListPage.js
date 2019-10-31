@@ -8,8 +8,8 @@ export class OrderListPage extends Component {
       <>
         <CustomBreadcrumb
           items={[
-            { url: "/admin/dashboard", icon: "home", title: "Dashboard" },
-            { url: "/admin/order", icon: "file-text", title: "Order" }
+            { url: "/admin/dashboard", icon: "home", title: "Bảng điều khiển" },
+            { url: "/admin/order", icon: "file-text", title: "Hóa đơn" }
           ]}
         />
         <OrderListContainer></OrderListContainer>

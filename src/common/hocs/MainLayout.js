@@ -128,7 +128,12 @@ export class MainLayout extends Component {
                       <Dropdown
                         overlay={
                           <Menu style={{ width: 180, fontSize: "1.2em" }}>
-                            <Menu.Item key="profile">
+                            <Menu.Item
+                              onClick={() =>
+                                this.props.history.push("/admin/profile")
+                              }
+                              key="profile"
+                            >
                               <Icon type="user" />
                               Thông tin cá nhân
                             </Menu.Item>
