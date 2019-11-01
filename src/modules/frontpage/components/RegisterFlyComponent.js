@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import background from "../../../common/assets/images/wall1.png";
-import Slider from "react-slick";
-import { Card } from "antd";
+import { Card, Carousel } from "antd";
 import { withRouter } from "react-router";
 import FormRegisterHomepage from "./FormRegisterHomepage";
 
@@ -21,17 +20,6 @@ class RegisterFlyComponent extends Component {
     });
   }
   render() {
-    const settings = {
-      infinite: true,
-      speed: 500,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      accessibility: true,
-      arrows: true,
-      autoplay: true,
-      autoplaySpeed: 1000,
-      dots: true
-    };
     // console.log(this.props.paramsRegisterFly);
     const { paramsRegisterFly, history, setParamsRegisterFly } = this.props;
     return (
@@ -55,7 +43,7 @@ class RegisterFlyComponent extends Component {
           </div>
           <div className="col-lg-6 col-md-12 col-sm-12">
             <Card style={{ marginTop: 24, marginBottom: 24, height: 558 }}>
-              <Slider {...settings}>
+              <Carousel>
                 <div>
                   <img
                     alt=""
@@ -77,7 +65,7 @@ class RegisterFlyComponent extends Component {
                     src="https://res.flynow.vn/Seo/gohub.jpg"
                   />
                 </div>
-              </Slider>
+              </Carousel>
             </Card>
           </div>
         </div>

@@ -9,12 +9,11 @@ import rootReducer from "./modules/index";
 import Root from "./common/hocs/Root";
 import "antd/dist/antd.css";
 import "./common/styles/grid.css";
+import "./App.css";
 import { persistStore, persistCombineReducers } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 
-export const history = createHashHistory()
+export const history = createHashHistory();
 
 const config = {
   key: "qlvcb",
