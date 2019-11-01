@@ -15,6 +15,7 @@ import Homepage from "../pages/Homepage";
 import CustomerPage from "../pages/CustomerPage";
 import OrderListPage from "../pages/OrderListPage";
 import InformationUser from "../pages/InformationUser";
+import StaffInformationPage from "../pages/StaffInformationPage";
 
 export class routes extends Component {
   constructor(props) {
@@ -50,6 +51,11 @@ export class routes extends Component {
               <Route exact path="/admin/staff">
                 <MainLayout mode="admin">
                   <StaffPage></StaffPage>
+                </MainLayout>
+              </Route>
+              <Route exact path="/admin/staff/:id">
+                <MainLayout mode="admin">
+                  <StaffInformationPage></StaffInformationPage>
                 </MainLayout>
               </Route>
               <Route exact path="/admin/customer">

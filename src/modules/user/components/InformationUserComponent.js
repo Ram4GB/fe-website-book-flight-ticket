@@ -3,7 +3,8 @@ import { Row, Col, Card, Avatar, Typography, Descriptions } from "antd";
 
 export class InformationUserComponent extends Component {
   render() {
-    // const { user } = this.props;
+    const { user } = this.props;
+    console.log(user);
     return (
       <Row style={{ display: "flex" }} gutter={5}>
         <Col lg={7}>

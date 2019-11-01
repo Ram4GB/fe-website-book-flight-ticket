@@ -123,22 +123,39 @@ export class UserComponent extends Component {
             size: "small"
           }}
         >
-          <Column title="Họ và tên" dataIndex="name"></Column>
-          <Column title="CMND" dataIndex="identifier"></Column>
+          <Column
+            title="Họ và tên"
+            key="name"
+            render={value => {
+              return (
+                <p
+                  className="table-name"
+                  onClick={() =>
+                    this.props.history.push(`/admin/staff/${value.id}`)
+                  }
+                >
+                  {value.name}
+                </p>
+              );
+            }}
+          ></Column>
+          <Column title="CMND" dataIndex="identifier" key="identifier"></Column>
           <Column
             title="Điện thoại"
             dataIndex="phone"
+            key="phone"
             render={value => {
               if (value) return value;
               else return emptyString;
             }}
           ></Column>
-          <Column title="Email" dataIndex="email"></Column>
-          <Column title="Giới tính" dataIndex="gender"></Column>
-          {/* <Column title="Giới tính" dataIndex="gender"></Column> */}
+          <Column title="Email" dataIndex="email" key="email"></Column>
+          <Column title="Giới tính" dataIndex="gender" key="gender"></Column>
+          {/* <Column title="Giới tính" dataIndex="gender" key='gender'></Column> */}
           <Column
             title="Địa chỉ"
             dataIndex="address"
+            key="address"
             render={value => {
               if (value) return value;
               else return emptyString;
@@ -146,7 +163,7 @@ export class UserComponent extends Component {
           ></Column>
           {/* <Column
             title="Ngày sinh"
-            dataIndex="birthday"
+            dataIndex="birthday" key='birthday'
             render={date => {
               return moment(date).format("DD-MM-YYYY");
             }}
