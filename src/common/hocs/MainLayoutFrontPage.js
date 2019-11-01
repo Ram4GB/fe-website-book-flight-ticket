@@ -6,8 +6,9 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import handlers from "../../modules/user/handlers";
 import { MODULE_NAME as MODULE_USER } from "../../modules/user/models";
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 import _ from "lodash";
+import "../../style.scss";
 
 const { Footer } = Layout;
 export class MainLayoutFrontPage extends Component {
@@ -33,7 +34,7 @@ export class MainLayoutFrontPage extends Component {
       this.props.user
     );
     return (
-      <Layout>
+      <Layout className="use-bootstrap">
         <nav
           style={{
             backgroundColor: "#001529",

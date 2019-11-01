@@ -5,7 +5,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
@@ -32,4 +31,8 @@ code {
 
 .steps-action {
   margin-top: 24px;
+}
+
+.anticon {
+  padding-bottom: 2;
 }

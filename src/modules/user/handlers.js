@@ -24,6 +24,22 @@ export const getListCustomerAsync = async (page, params) => {
   });
   return result;
 };
+export const addStaffAsync = async data => {
+  let result = await fetchAuthLoading({
+    url: `${DEFAULT_URL}/staff`,
+    data,
+    method: "POST"
+  });
+  return result;
+};
+export const addCustomerAsync = async data => {
+  let result = await fetchAuthLoading({
+    url: `${DEFAULT_URL}/customer`,
+    data,
+    method: "POST"
+  });
+  return result;
+};
 export default function(dispatch, props) {
   return {
     getProfileUser: async () => {
@@ -86,6 +102,18 @@ export default function(dispatch, props) {
         dispatch(actions.getListUser(result.data.data)); // dispatch list user
         return result.data;
       }
+    },
+    addStaff: async data => {
+      let result = await addStaffAsync(data);
+      if (result && result.data) {
+        return result.data;
+      } else return { success: false, error: "Server error" };
+    },
+    addCustomer: async data => {
+      let result = await addCustomerAsync(data);
+      if (result && result.data) {
+        return result.data;
+      } else return { success: false, error: "Server error" };
     }
   };
 }

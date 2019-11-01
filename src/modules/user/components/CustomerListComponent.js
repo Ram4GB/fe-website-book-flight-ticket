@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { Table, notification, Button, Card } from "antd";
+import { Table, notification, Button, Card, Input } from "antd";
 import Column from "antd/lib/table/Column";
 import { catchErrorAndNotification } from "../../../common/utils/Notification";
-import { LIMIT } from "../models";
-import moment from "moment";
+import { LIMIT, emptyString } from "../models";
+import modal from "../../../common/components/widgets/Modal";
+import FormAddCustomer from "./Forms/FormAddCustomer";
 
 export class CustomerListComponent extends Component {
   constructor(props) {
@@ -18,8 +19,10 @@ export class CustomerListComponent extends Component {
       }
     };
     this.handleChangeTable = this.handleChangeTable.bind(this);
+    this.handleAddCustomer = this.handleAddCustomer.bind(this);
+    this.getData = this.getData.bind(this);
   }
-  async getData(input) {
+  async getData(input = 1) {
     const { page, params } = this.state;
     const { getListCustomer } = this.props;
     const next = input || page;
@@ -53,16 +56,56 @@ export class CustomerListComponent extends Component {
         phone: "0123456789",
         email: `leminhcuong298${i}@yahoo.com.vn`,
         birthday: new Date(),
+        address: "TP HCM",
         gender: "Nam"
       });
     }
     return arr;
   }
+
+  handleAddCustomer() {
+    modal.show(
+      <FormAddCustomer
+        getData={this.getData}
+        addCustomer={this.props.addCustomer}
+      ></FormAddCustomer>,
+      {
+        style: { top: 20 },
+        width: "60%"
+      }
+    );
+  }
+
   render() {
     const { page, limit, totalRecord } = this.state;
-    // const { staffs } = this.props;
+    const { users } = this.props;
     return (
       <Card>
+        <div style={{ overflow: "hidden", marginBottom: 5 }}>
+          <Input
+            placeholder="Tìm bằng họ và tên"
+            style={{ float: "left", width: 200, marginLeft: 5 }}
+          />
+          <Input
+            placeholder="Tìm bằng CMND"
+            style={{ float: "left", width: 200, marginLeft: 5 }}
+          />
+          <Button
+            icon="plus"
+            type="primary"
+            style={{ float: "right", marginLeft: 5 }}
+            onClick={this.handleAddCustomer}
+          >
+            Thêm nhân viên
+          </Button>
+          <Button
+            icon="filter"
+            type="primary"
+            style={{ float: "right", marginLeft: 5 }}
+          >
+            Tìm kiếm nâng cao
+          </Button>
+        </div>
         <Table
           pagination={{
             current: page,
@@ -70,22 +113,38 @@ export class CustomerListComponent extends Component {
             total: totalRecord,
             size: "small"
           }}
-          dataSource={this.renderDataSource()}
+          dataSource={users}
           onChange={this.handleChangeTable}
           rowKey={e => e.id}
         >
           <Column title="Họ và tên" dataIndex="name"></Column>
-          <Column title="Giới tính" dataIndex="gender"></Column>
+          <Column title="CMND" dataIndex="identifier"></Column>
           <Column
+            title="Điện thoại"
+            dataIndex="phone"
+            render={value => {
+              if (value) return value;
+              else return emptyString;
+            }}
+          ></Column>
+          <Column title="Email" dataIndex="email"></Column>
+          <Column title="Giới tính" dataIndex="gender"></Column>
+          {/* <Column title="Giới tính" dataIndex="gender"></Column> */}
+          <Column
+            title="Địa chỉ"
+            dataIndex="address"
+            render={value => {
+              if (value) return value;
+              else return emptyString;
+            }}
+          ></Column>
+          {/* <Column
             title="Ngày sinh"
             dataIndex="birthday"
             render={date => {
               return moment(date).format("DD-MM-YYYY");
             }}
-          ></Column>
-          <Column title="CMND" dataIndex="identifier"></Column>
-          <Column title="Điện thoại" dataIndex="phone"></Column>
-          <Column title="Email" dataIndex="email"></Column>
+          ></Column> */}
           <Column
             title="Thao tác"
             render={record => {
