@@ -46,7 +46,7 @@ export class MainLayout extends Component {
           <SubMenu
             title={
               <span>
-                <Icon type={item.icon} />
+                <Icon className="fix-icon" type={item.icon} />
                 {item.name}
               </span>
             }
@@ -59,7 +59,7 @@ export class MainLayout extends Component {
         renderMenu.push(
           <Menu.Item key={item.key}>
             <span>
-              <Icon type={item.icon} key={item} />
+              <Icon className="fix-icon" type={item.icon} key={item} />
               {item.name}
             </span>
           </Menu.Item>

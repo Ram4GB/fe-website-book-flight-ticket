@@ -43,7 +43,7 @@ class RegisterFlyComponent extends Component {
           </div>
           <div className="col-lg-6 col-md-12 col-sm-12">
             <Card style={{ marginTop: 24, marginBottom: 24, height: 558 }}>
-              <Carousel>
+              <Carousel autoplay effect="fade">
                 <div>
                   <img
                     alt=""

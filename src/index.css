@@ -33,6 +33,22 @@ code {
   margin-top: 24px;
 }
 
-.anticon {
-  padding-bottom: 2;
+.fix-icon {
+  position: relative;
+  top: -3px;
+  left: 0;
+}
+
+.ant-btn .anticon {
+  position: relative;
+  top: -3px;
+  left: 0;
+}
+
+.table-name {
+  color: #1890ff;
+  cursor: pointer;
+}
+.table-name:hover {
+  text-decoration: underline;
 }

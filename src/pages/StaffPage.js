@@ -4,6 +4,7 @@ import CustomBreadcrumb from "../common/components/widgets/CustomBreadcrumb";
 
 export class CashierPage extends Component {
   render() {
+    const { history } = this.props;
     return (
       <>
         <CustomBreadcrumb
@@ -12,7 +13,7 @@ export class CashierPage extends Component {
             { url: "/admin/staff", icon: "user", title: "Nhân viên" }
           ]}
         />
-        <StaffListContainer />
+        <StaffListContainer history={history} />
       </>
     );
   }
