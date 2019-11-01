@@ -54,7 +54,7 @@ export class UserComponent extends Component {
       {
         title: "Thêm nhân viên",
         style: { top: 20 },
-        width: "50%"
+        width: "60%"
       }
     );
   }
