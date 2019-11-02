@@ -20,11 +20,12 @@ export class FlightListComponent extends Component {
     let arr = [];
     for (let i = 0; i < 10; i++) {
       arr.push({
-        id: i,
-        name: "Flight " + i,
-        date: new Date().toString(),
-        time: new Date().getTime(),
-        direction: 1
+        airlines: "VietJetAir" + i,
+        departure: "Flight " + i,
+        departureTime: "8:30 22/09/2019",
+        arrival: "Flight " + i,
+        arrivalTime: "8:30 22/09/2020",
+        slot: 60
       });
     }
     return arr;
@@ -53,26 +54,72 @@ export class FlightListComponent extends Component {
             Tìm kiếm nâng cao
           </Button>
         </div>
-        <Table rowKey={e => e.id} dataSource={this.renderDataSource()}>
+        <Table rowKey={e => e.airlines} dataSource={this.renderDataSource()}>
           <Column
-            title="Tên chuyến bay"
-            key="name"
+            title="Hãng hàng không"
+            key="airlines"
+            width="25%"
+            render={record => {
+              return <p>{record.airlines}</p>;
+            }}
+          ></Column>
+          <Column
+            title="Điểm đi"
+            key="from"
             render={record => {
               return (
-                <p
-                  onClick={() =>
-                    this.props.history.push(`/admin/flight/${record.id}`)
-                  }
-                  className="table-name"
-                >
-                  {record.name}
-                </p>
+                <>
+                  <strong>{record.departure}</strong>
+                  <p className="table-name" style={{ fontSize: "13px" }}>
+                    {record.departureTime}
+                  </p>
+                </>
               );
             }}
           ></Column>
-          <Column title="Chiều" dataIndex="direction" key="direction"></Column>
-          <Column title="Ngày bay" dataIndex="date" key="date"></Column>
-          <Column title="Giờ bay" dataIndex="time" key="time"></Column>
+          <Column
+            title="Điểm đến"
+            key="to"
+            render={record => {
+              return (
+                <>
+                  <strong>{record.arrival}</strong>
+                  <p className="table-name" style={{ fontSize: "13px" }}>
+                    {record.arrivalTime}
+                  </p>
+                </>
+              );
+            }}
+          ></Column>
+          <Column
+            title="Số lượng ghế"
+            dataIndex="slot"
+            key="slot"
+            align="center"
+          ></Column>
+          <Column
+            title="Thao tác"
+            render={() => {
+              return (
+                <>
+                  <Button type="primary" icon="info-circle" key="infoButton">
+                    Chi tiết
+                  </Button>
+                  &nbsp;
+                  <Button type="primary" icon="edit" key="editButton">
+                    Sửa
+                  </Button>
+                  &nbsp;
+                  <Button type="danger" icon="delete" key="deleteButton">
+                    Xoá
+                  </Button>
+                </>
+              );
+            }}
+            key="button"
+            align="right"
+            width="30%"
+          ></Column>
         </Table>
       </Card>
     );
