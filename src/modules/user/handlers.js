@@ -111,7 +111,6 @@ export default function(dispatch, props) {
     },
     getListStaff: async (page, params) => {
       const result = await getListStaffAsync(page, params);
-      console.log(result);
       if (result && result.data) {
         dispatch(actions.getListStaff(result.data.data)); // dispatch list user
         return result.data;

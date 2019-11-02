@@ -20,6 +20,12 @@ const menu = {
       children: []
     },
     {
+      key: "admin/flight",
+      name: "Chuyến bay",
+      icon: "rocket",
+      children: []
+    },
+    {
       key: "admin/order",
       name: "Hóa đơn",
       icon: "file-text",
