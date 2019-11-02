@@ -31,6 +31,14 @@ export const getCustomerByID = async id => {
   });
   return result.data;
 };
+export const updateCustomerByID = async (data, id) => {
+  let result = await fetchAuthLoading({
+    url: `${DEFAULT_URL}/customer/${id}`,
+    method: "PUT",
+    data
+  });
+  return result.data;
+};
 export const getStaffByID = async id => {
   let result = await fetchAuthLoading({
     url: `${DEFAULT_URL}/staff/${id}`,

@@ -4,6 +4,7 @@ import CustomBreadcrumb from "../common/components/widgets/CustomBreadcrumb";
 
 export class CustomerPage extends Component {
   render() {
+    const { history, match } = this.props;
     return (
       <>
         <CustomBreadcrumb
@@ -12,7 +13,10 @@ export class CustomerPage extends Component {
             { url: "/admin/customer", icon: "user", title: "Khách hàng" }
           ]}
         />
-        <CustomerListContainer></CustomerListContainer>
+        <CustomerListContainer
+          history={history}
+          match={match}
+        ></CustomerListContainer>
       </>
     );
   }

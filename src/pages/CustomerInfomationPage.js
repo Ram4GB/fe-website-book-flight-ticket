@@ -13,17 +13,16 @@ import {
   notification,
   DatePicker
 } from "antd";
-import { getStaffByID, updateStaffByID } from "../modules/user/handlers";
-import { catchErrorAndNotification } from "../common/utils/Notification";
-import { emptyString } from "../modules/user/models";
-import removeNullObject from "../common/utils/removeObjectNull";
 import moment from "moment";
+import { getCustomerByID, updateCustomerByID } from "../modules/user/handlers";
+import { catchErrorAndNotification } from "../common/utils/Notification";
+import removeNullObject from "../common/utils/removeObjectNull";
 
-export class StaffInformationPage extends Component {
+export class CustomerInfomationPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      staff: {},
+      customer: {},
       isEditing: {
         name: false,
         identifier: false,
@@ -33,24 +32,25 @@ export class StaffInformationPage extends Component {
         birthday: false
       }
     };
-    this.getStaff = this.getStaff.bind(this);
+    this.getCustomer = this.getCustomer.bind(this);
     this.edit = this.edit.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.showEdittingButton = this.showEdittingButton.bind(this);
     this.handleReset = this.handleReset.bind(this);
+    this.showEdittingButton = this.showEdittingButton.bind(this);
   }
-  async getStaff() {
+  async getCustomer() {
     if (this.props.match.params.id) {
-      let result = await getStaffByID(this.props.match.params.id);
-      if (result && result.success === true)
+      let result = await getCustomerByID(this.props.match.params.id);
+      if (result && result.success === true) {
         this.setState({
-          staff: result.staff
+          customer: result.customer
         });
-      else catchErrorAndNotification(result.error);
+      } else catchErrorAndNotification(result.error);
     }
   }
+
   componentDidMount() {
-    this.getStaff();
+    this.getCustomer();
   }
   edit(key) {
     this.setState({
@@ -66,7 +66,10 @@ export class StaffInformationPage extends Component {
     this.props.form.validateFields(async (errors, values) => {
       if (!errors) {
         values = removeNullObject(values);
-        let result = await updateStaffByID(values, this.props.match.params.id);
+        let result = await updateCustomerByID(
+          values,
+          this.props.match.params.id
+        );
         if (result && result.success === true) {
           notification.success({
             message: "Cập nhật thành công"
@@ -80,18 +83,10 @@ export class StaffInformationPage extends Component {
               address: false
             }
           });
-          await this.getStaff();
+          await this.getCustomer();
         } else catchErrorAndNotification(result.error);
       }
     });
-  }
-  showEdittingButton() {
-    const { staff } = this.state;
-    const values = this.props.form.getFieldsValue();
-    for (const key in values) {
-      if (values[key] !== staff[key]) return true;
-    }
-    return false;
   }
   handleReset() {
     this.setState({
@@ -105,30 +100,37 @@ export class StaffInformationPage extends Component {
     });
     this.props.form.resetFields();
   }
+
+  showEdittingButton() {
+    const { customer } = this.state;
+    const values = this.props.form.getFieldsValue();
+    for (const key in values) {
+      if (values[key] !== customer[key]) return true;
+    }
+    return false;
+  }
   render() {
-    const { staff, isEditing } = this.state;
+    const { customer, isEditing } = this.state;
     const { getFieldDecorator } = this.props.form;
     return (
       <Row style={{ display: "flex" }} gutter={5}>
         <Col lg={7}>
           <Card style={{ height: "100%" }}>
-            <div>
-              <Avatar
-                style={{
-                  width: "100%",
-                  height: 200,
-                  maxWidth: 200,
-                  minWidth: 200,
-                  display: "block",
-                  margin: "auto"
-                }}
-              />
-            </div>
+            <Avatar
+              style={{
+                width: "100%",
+                height: 200,
+                maxWidth: 200,
+                minWidth: 200,
+                display: "block",
+                margin: "auto"
+              }}
+            />
             <Typography.Title
               style={{ textAlign: "center", marginTop: 8 }}
               level={3}
             >
-              {staff ? staff.name : null}
+              {customer ? customer.name : null}
             </Typography.Title>
           </Card>
         </Col>
@@ -137,7 +139,7 @@ export class StaffInformationPage extends Component {
             title={<strong>Thông tin cá nhân</strong>}
             style={{ height: "100%" }}
           >
-            {staff ? (
+            {customer ? (
               <Form onSubmit={this.handleSubmit}>
                 <Descriptions column={1} bordered>
                   <Descriptions.Item label={<strong>Họ và tên</strong>}>
@@ -151,11 +153,11 @@ export class StaffInformationPage extends Component {
                                 message: "Mời điền họ và tên"
                               }
                             ],
-                            initialValue: staff.name
+                            initialValue: customer.name
                           })(<Input placeholder="Mời điền họ và tên" />)}
                         </Form.Item>
                       ) : (
-                        <span>{staff.name}</span>
+                        <span>{customer.name}</span>
                       )}
                       {isEditing.name ? null : (
                         <span style={{ float: "right" }}>
@@ -179,11 +181,11 @@ export class StaffInformationPage extends Component {
                                 message: "Mời điền CMND"
                               }
                             ],
-                            initialValue: staff.identifier
+                            initialValue: customer.identifier
                           })(<Input placeholder="Mời điền CMND" />)}
                         </Form.Item>
                       ) : (
-                        <span>{staff.identifier}</span>
+                        <span>{customer.identifier}</span>
                       )}
                       {isEditing.identifier ? null : (
                         <span style={{ float: "right" }}>
@@ -207,15 +209,13 @@ export class StaffInformationPage extends Component {
                                 message: "Mời điền CMND"
                               }
                             ],
-                            initialValue: moment(staff.birthday)
+                            initialValue: moment(customer.birthday)
                           })(<DatePicker placeholder="Mời điền ngày sinh" />)}
                         </Form.Item>
-                      ) : staff.birthday ? (
-                        <span>
-                          {moment(staff.birthday).format("DD-MM-YYYY")}
-                        </span>
                       ) : (
-                        emptyString
+                        <span>
+                          {moment(customer.birthday).format("DD-MM-YYYY")}
+                        </span>
                       )}
                       {isEditing.birthday ? null : (
                         <span style={{ float: "right" }}>
@@ -233,15 +233,14 @@ export class StaffInformationPage extends Component {
                       {isEditing.phone ? (
                         <Form.Item style={{ marginBottom: 0 }}>
                           {getFieldDecorator("phone", {
-                            initialValue: staff.phone
+                            initialValue: customer.phone
                           })(<Input placeholder="Mời điền SDT" />)}
                         </Form.Item>
-                      ) : staff.phone ? (
-                        <span>{staff.phone}</span>
                       ) : (
-                        emptyString
+                        <span>{customer.phone}</span>
                       )}
-                      {isEditing.phone ? null : (
+
+                      {isEditing ? null : (
                         <span style={{ float: "right" }}>
                           <Icon
                             onClick={() => this.edit("phone")}
@@ -263,11 +262,11 @@ export class StaffInformationPage extends Component {
                                 message: "Mời điền email"
                               }
                             ],
-                            initialValue: staff.email
+                            initialValue: customer.email
                           })(<Input placeholder="Mời điền email" />)}
                         </Form.Item>
                       ) : (
-                        <span>{staff.email}</span>
+                        <span>{customer.email}</span>
                       )}
                       {isEditing.email ? null : (
                         <span style={{ float: "right" }}>
@@ -282,26 +281,14 @@ export class StaffInformationPage extends Component {
                   </Descriptions.Item>
                   <Descriptions.Item label={<strong>Địa chỉ</strong>}>
                     <div style={{ overflow: "hidden" }}>
-                      {isEditing.address ? (
-                        <Form.Item style={{ marginBottom: 0 }}>
-                          {getFieldDecorator("address", {
-                            initialValue: staff.address
-                          })(<Input placeholder="Mời điền địa chỉ" />)}
-                        </Form.Item>
-                      ) : staff.address ? (
-                        <span>{staff.address}</span>
-                      ) : (
-                        emptyString
-                      )}
-                      {isEditing.address ? null : (
-                        <span style={{ float: "right" }}>
-                          <Icon
-                            onClick={() => this.edit("address")}
-                            type="edit"
-                            style={{ color: "blue" }}
-                          />
-                        </span>
-                      )}
+                      <span>{customer.address}</span>
+                      <span style={{ float: "right" }}>
+                        <Icon
+                          onClick={() => this.edit("address")}
+                          type="edit"
+                          style={{ color: "blue" }}
+                        />
+                      </span>
                     </div>
                   </Descriptions.Item>
                 </Descriptions>
@@ -327,4 +314,4 @@ export class StaffInformationPage extends Component {
   }
 }
 
-export default Form.create({ name: "form" })(StaffInformationPage);
+export default Form.create({ name: "form" })(CustomerInfomationPage);

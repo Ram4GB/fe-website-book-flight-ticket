@@ -18,6 +18,7 @@ import InformationUser from "../pages/InformationUser";
 import StaffInformationPage from "../pages/StaffInformationPage";
 import FlightPage from "../pages/FlightPage";
 import FlightInformationPage from "../pages/FlightInformationPage";
+import CustomerInfomationPage from "../pages/CustomerInfomationPage";
 
 export class routes extends Component {
   constructor(props) {
@@ -63,6 +64,11 @@ export class routes extends Component {
               <Route exact path="/admin/customer">
                 <MainLayout mode="admin">
                   <CustomerPage></CustomerPage>
+                </MainLayout>
+              </Route>
+              <Route exact path="/admin/customer/:id">
+                <MainLayout mode="admin">
+                  <CustomerInfomationPage></CustomerInfomationPage>
                 </MainLayout>
               </Route>
               <Route exact path="/admin/order">
