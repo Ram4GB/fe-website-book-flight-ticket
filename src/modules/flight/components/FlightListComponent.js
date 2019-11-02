@@ -10,11 +10,7 @@ export class FlightListComponent extends Component {
     this.handleShowFormAddFlight = this.handleShowFormAddFlight.bind(this);
   }
   handleShowFormAddFlight() {
-    modal.show("Form Add Flight", {
-      title: "Thêm chuyến bay",
-      style: { top: 20 },
-      width: "60%"
-    });
+    this.props.history.push("/admin/flight/create");
   }
   renderDataSource() {
     let arr = [];
