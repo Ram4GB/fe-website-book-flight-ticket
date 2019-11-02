@@ -17,6 +17,7 @@ import moment from "moment";
 import { getCustomerByID, updateCustomerByID } from "../modules/user/handlers";
 import { catchErrorAndNotification } from "../common/utils/Notification";
 import removeNullObject from "../common/utils/removeObjectNull";
+import CustomBreadcrumb from "../common/components/widgets/CustomBreadcrumb";
 
 export class CustomerInfomationPage extends Component {
   constructor(props) {
@@ -113,203 +114,215 @@ export class CustomerInfomationPage extends Component {
     const { customer, isEditing } = this.state;
     const { getFieldDecorator } = this.props.form;
     return (
-      <Row style={{ display: "flex" }} gutter={5}>
-        <Col lg={7}>
-          <Card style={{ height: "100%" }}>
-            <Avatar
-              style={{
-                width: "100%",
-                height: 200,
-                maxWidth: 200,
-                minWidth: 200,
-                display: "block",
-                margin: "auto"
-              }}
-            />
-            <Typography.Title
-              style={{ textAlign: "center", marginTop: 8 }}
-              level={3}
+      <>
+        <CustomBreadcrumb
+          items={[
+            { url: "/admin/dashboard", icon: "home", title: "Bảng điều khiển" },
+            {
+              url: `/admin/customer/${customer.id}`,
+              icon: "user",
+              title: "Thông tin khách hàng"
+            }
+          ]}
+        />
+        <Row style={{ display: "flex" }} gutter={5}>
+          <Col lg={7}>
+            <Card style={{ height: "100%" }}>
+              <Avatar
+                style={{
+                  width: "100%",
+                  height: 200,
+                  maxWidth: 200,
+                  minWidth: 200,
+                  display: "block",
+                  margin: "auto"
+                }}
+              />
+              <Typography.Title
+                style={{ textAlign: "center", marginTop: 8 }}
+                level={3}
+              >
+                {customer ? customer.name : null}
+              </Typography.Title>
+            </Card>
+          </Col>
+          <Col lg={17}>
+            <Card
+              title={<strong>Thông tin cá nhân</strong>}
+              style={{ height: "100%" }}
             >
-              {customer ? customer.name : null}
-            </Typography.Title>
-          </Card>
-        </Col>
-        <Col lg={17}>
-          <Card
-            title={<strong>Thông tin cá nhân</strong>}
-            style={{ height: "100%" }}
-          >
-            {customer ? (
-              <Form onSubmit={this.handleSubmit}>
-                <Descriptions column={1} bordered>
-                  <Descriptions.Item label={<strong>Họ và tên</strong>}>
-                    <div style={{ overflow: "hidden" }}>
-                      {isEditing.name ? (
-                        <Form.Item style={{ marginBottom: 0 }}>
-                          {getFieldDecorator("name", {
-                            rules: [
-                              {
-                                required: true,
-                                message: "Mời điền họ và tên"
-                              }
-                            ],
-                            initialValue: customer.name
-                          })(<Input placeholder="Mời điền họ và tên" />)}
-                        </Form.Item>
-                      ) : (
-                        <span>{customer.name}</span>
-                      )}
-                      {isEditing.name ? null : (
-                        <span style={{ float: "right" }}>
-                          <Icon
-                            onClick={() => this.edit("name")}
-                            type="edit"
-                            style={{ color: "blue" }}
-                          />
-                        </span>
-                      )}
-                    </div>
-                  </Descriptions.Item>
-                  <Descriptions.Item label={<strong>CMND</strong>}>
-                    <div style={{ overflow: "hidden" }}>
-                      {isEditing.identifier ? (
-                        <Form.Item style={{ marginBottom: 0 }}>
-                          {getFieldDecorator("identifier", {
-                            rules: [
-                              {
-                                required: true,
-                                message: "Mời điền CMND"
-                              }
-                            ],
-                            initialValue: customer.identifier
-                          })(<Input placeholder="Mời điền CMND" />)}
-                        </Form.Item>
-                      ) : (
-                        <span>{customer.identifier}</span>
-                      )}
-                      {isEditing.identifier ? null : (
-                        <span style={{ float: "right" }}>
-                          <Icon
-                            onClick={() => this.edit("identifier")}
-                            type="edit"
-                            style={{ color: "blue" }}
-                          />
-                        </span>
-                      )}
-                    </div>
-                  </Descriptions.Item>
-                  <Descriptions.Item label={<strong>Ngày sinh</strong>}>
-                    <div style={{ overflow: "hidden" }}>
-                      {isEditing.birthday ? (
-                        <Form.Item style={{ marginBottom: 0 }}>
-                          {getFieldDecorator("birthday", {
-                            rules: [
-                              {
-                                required: true,
-                                message: "Mời điền CMND"
-                              }
-                            ],
-                            initialValue: moment(customer.birthday)
-                          })(<DatePicker placeholder="Mời điền ngày sinh" />)}
-                        </Form.Item>
-                      ) : (
-                        <span>
-                          {moment(customer.birthday).format("DD-MM-YYYY")}
-                        </span>
-                      )}
-                      {isEditing.birthday ? null : (
-                        <span style={{ float: "right" }}>
-                          <Icon
-                            onClick={() => this.edit("birthday")}
-                            type="edit"
-                            style={{ color: "blue" }}
-                          />
-                        </span>
-                      )}
-                    </div>
-                  </Descriptions.Item>
-                  <Descriptions.Item label={<strong>SDT</strong>}>
-                    <div style={{ overflow: "hidden" }}>
-                      {isEditing.phone ? (
-                        <Form.Item style={{ marginBottom: 0 }}>
-                          {getFieldDecorator("phone", {
-                            initialValue: customer.phone
-                          })(<Input placeholder="Mời điền SDT" />)}
-                        </Form.Item>
-                      ) : (
-                        <span>{customer.phone}</span>
-                      )}
+              {customer ? (
+                <Form onSubmit={this.handleSubmit}>
+                  <Descriptions column={1} bordered>
+                    <Descriptions.Item label={<strong>Họ và tên</strong>}>
+                      <div style={{ overflow: "hidden" }}>
+                        {isEditing.name ? (
+                          <Form.Item style={{ marginBottom: 0 }}>
+                            {getFieldDecorator("name", {
+                              rules: [
+                                {
+                                  required: true,
+                                  message: "Mời điền họ và tên"
+                                }
+                              ],
+                              initialValue: customer.name
+                            })(<Input placeholder="Mời điền họ và tên" />)}
+                          </Form.Item>
+                        ) : (
+                          <span>{customer.name}</span>
+                        )}
+                        {isEditing.name ? null : (
+                          <span style={{ float: "right" }}>
+                            <Icon
+                              onClick={() => this.edit("name")}
+                              type="edit"
+                              style={{ color: "blue" }}
+                            />
+                          </span>
+                        )}
+                      </div>
+                    </Descriptions.Item>
+                    <Descriptions.Item label={<strong>CMND</strong>}>
+                      <div style={{ overflow: "hidden" }}>
+                        {isEditing.identifier ? (
+                          <Form.Item style={{ marginBottom: 0 }}>
+                            {getFieldDecorator("identifier", {
+                              rules: [
+                                {
+                                  required: true,
+                                  message: "Mời điền CMND"
+                                }
+                              ],
+                              initialValue: customer.identifier
+                            })(<Input placeholder="Mời điền CMND" />)}
+                          </Form.Item>
+                        ) : (
+                          <span>{customer.identifier}</span>
+                        )}
+                        {isEditing.identifier ? null : (
+                          <span style={{ float: "right" }}>
+                            <Icon
+                              onClick={() => this.edit("identifier")}
+                              type="edit"
+                              style={{ color: "blue" }}
+                            />
+                          </span>
+                        )}
+                      </div>
+                    </Descriptions.Item>
+                    <Descriptions.Item label={<strong>Ngày sinh</strong>}>
+                      <div style={{ overflow: "hidden" }}>
+                        {isEditing.birthday ? (
+                          <Form.Item style={{ marginBottom: 0 }}>
+                            {getFieldDecorator("birthday", {
+                              rules: [
+                                {
+                                  required: true,
+                                  message: "Mời điền CMND"
+                                }
+                              ],
+                              initialValue: moment(customer.birthday)
+                            })(<DatePicker placeholder="Mời điền ngày sinh" />)}
+                          </Form.Item>
+                        ) : (
+                          <span>
+                            {moment(customer.birthday).format("DD-MM-YYYY")}
+                          </span>
+                        )}
+                        {isEditing.birthday ? null : (
+                          <span style={{ float: "right" }}>
+                            <Icon
+                              onClick={() => this.edit("birthday")}
+                              type="edit"
+                              style={{ color: "blue" }}
+                            />
+                          </span>
+                        )}
+                      </div>
+                    </Descriptions.Item>
+                    <Descriptions.Item label={<strong>SDT</strong>}>
+                      <div style={{ overflow: "hidden" }}>
+                        {isEditing.phone ? (
+                          <Form.Item style={{ marginBottom: 0 }}>
+                            {getFieldDecorator("phone", {
+                              initialValue: customer.phone
+                            })(<Input placeholder="Mời điền SDT" />)}
+                          </Form.Item>
+                        ) : (
+                          <span>{customer.phone}</span>
+                        )}
 
-                      {isEditing ? null : (
+                        {isEditing ? null : (
+                          <span style={{ float: "right" }}>
+                            <Icon
+                              onClick={() => this.edit("phone")}
+                              type="edit"
+                              style={{ color: "blue" }}
+                            />
+                          </span>
+                        )}
+                      </div>
+                    </Descriptions.Item>
+                    <Descriptions.Item label={<strong>Email</strong>}>
+                      <div style={{ overflow: "hidden" }}>
+                        {isEditing.email ? (
+                          <Form.Item style={{ marginBottom: 0 }}>
+                            {getFieldDecorator("email", {
+                              rules: [
+                                {
+                                  required: true,
+                                  message: "Mời điền email"
+                                }
+                              ],
+                              initialValue: customer.email
+                            })(<Input placeholder="Mời điền email" />)}
+                          </Form.Item>
+                        ) : (
+                          <span>{customer.email}</span>
+                        )}
+                        {isEditing.email ? null : (
+                          <span style={{ float: "right" }}>
+                            <Icon
+                              onClick={() => this.edit("email")}
+                              type="edit"
+                              style={{ color: "blue" }}
+                            />
+                          </span>
+                        )}
+                      </div>
+                    </Descriptions.Item>
+                    <Descriptions.Item label={<strong>Địa chỉ</strong>}>
+                      <div style={{ overflow: "hidden" }}>
+                        <span>{customer.address}</span>
                         <span style={{ float: "right" }}>
                           <Icon
-                            onClick={() => this.edit("phone")}
+                            onClick={() => this.edit("address")}
                             type="edit"
                             style={{ color: "blue" }}
                           />
                         </span>
-                      )}
+                      </div>
+                    </Descriptions.Item>
+                  </Descriptions>
+                  {this.showEdittingButton() ? (
+                    <div style={{ marginTop: 5, textAlign: "right" }}>
+                      <Button
+                        onClick={this.handleReset}
+                        style={{ margin: "0px 5px" }}
+                      >
+                        Làm mới
+                      </Button>
+                      <Button htmlType="submit" type="primary">
+                        Lưu lại
+                      </Button>
                     </div>
-                  </Descriptions.Item>
-                  <Descriptions.Item label={<strong>Email</strong>}>
-                    <div style={{ overflow: "hidden" }}>
-                      {isEditing.email ? (
-                        <Form.Item style={{ marginBottom: 0 }}>
-                          {getFieldDecorator("email", {
-                            rules: [
-                              {
-                                required: true,
-                                message: "Mời điền email"
-                              }
-                            ],
-                            initialValue: customer.email
-                          })(<Input placeholder="Mời điền email" />)}
-                        </Form.Item>
-                      ) : (
-                        <span>{customer.email}</span>
-                      )}
-                      {isEditing.email ? null : (
-                        <span style={{ float: "right" }}>
-                          <Icon
-                            onClick={() => this.edit("email")}
-                            type="edit"
-                            style={{ color: "blue" }}
-                          />
-                        </span>
-                      )}
-                    </div>
-                  </Descriptions.Item>
-                  <Descriptions.Item label={<strong>Địa chỉ</strong>}>
-                    <div style={{ overflow: "hidden" }}>
-                      <span>{customer.address}</span>
-                      <span style={{ float: "right" }}>
-                        <Icon
-                          onClick={() => this.edit("address")}
-                          type="edit"
-                          style={{ color: "blue" }}
-                        />
-                      </span>
-                    </div>
-                  </Descriptions.Item>
-                </Descriptions>
-                {this.showEdittingButton() ? (
-                  <div style={{ marginTop: 5, textAlign: "right" }}>
-                    <Button
-                      onClick={this.handleReset}
-                      style={{ margin: "0px 5px" }}
-                    >
-                      Làm mới
-                    </Button>
-                    <Button htmlType="submit" type="primary">
-                      Lưu lại
-                    </Button>
-                  </div>
-                ) : null}
-              </Form>
-            ) : null}
-          </Card>
-        </Col>
-      </Row>
+                  ) : null}
+                </Form>
+              ) : null}
+            </Card>
+          </Col>
+        </Row>
+      </>
     );
   }
 }
