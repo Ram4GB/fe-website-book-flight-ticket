@@ -45,9 +45,6 @@ export class CustomerListComponent extends Component {
     this.getData();
   }
   handleChangeTable(pagination, filter, sorter) {
-    if (sorter && sorter.order) {
-      tableSortUtil(sorter, this);
-    }
     this.getData(pagination.current);
   }
   renderDataSource() {
@@ -122,6 +119,7 @@ export class CustomerListComponent extends Component {
           rowKey={e => e.id}
         >
           <Column
+            key="name"
             title="Họ và tên"
             render={record => (
               <p
@@ -134,23 +132,23 @@ export class CustomerListComponent extends Component {
               </p>
             )}
           ></Column>
-          <Column title="CMND" dataIndex="identifier"></Column>
+          <Column title="CMND" dataIndex="identifier" key="identifier"></Column>
           <Column
-            sorter
             title="Điện thoại"
             dataIndex="phone"
+            key="phone"
             render={value => {
               if (value) return value;
               else return emptyString;
             }}
           ></Column>
-          <Column sorter title="Email" dataIndex="email"></Column>
-          <Column sorter title="Giới tính" dataIndex="gender"></Column>
-          {/* <Column title="Giới tính" dataIndex="gender"></Column> */}
+          <Column title="Email" dataIndex="email" key="email"></Column>
+          <Column title="Giới tính" dataIndex="gender" key="gender"></Column>
+          {/* <Column title="Giới tính" dataIndex="gender" key='gender'></Column> */}
           <Column
-            sorter
             title="Địa chỉ"
             dataIndex="address"
+            key="address"
             render={value => {
               if (value) return value;
               else return emptyString;
@@ -158,7 +156,7 @@ export class CustomerListComponent extends Component {
           ></Column>
           {/* <Column
             title="Ngày sinh"
-            dataIndex="birthday"
+            dataIndex="birthday" key='birthday'
             render={date => {
               return moment(date).format("DD-MM-YYYY");
             }}

@@ -8,7 +8,7 @@
 export const tableSortUtil = async (sorter, componentThis) => {
   try {
     let key = sorter.columnKey;
-    let value = sorter.order;
+    let value = sorter.order ? sorter.order : "";
     await componentThis.setState({
       ...componentThis.state,
       params: {

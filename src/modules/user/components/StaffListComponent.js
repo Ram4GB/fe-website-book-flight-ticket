@@ -60,9 +60,6 @@ export class UserComponent extends Component {
   }
 
   async handleChangeTableStaffs(pagination, filter, sorter) {
-    if (sorter && sorter.order) {
-      tableSortUtil(sorter, this);
-    }
     this.getData(pagination.current);
   }
   renderDataSource() {
@@ -127,7 +124,6 @@ export class UserComponent extends Component {
           }}
         >
           <Column
-            sorter={true}
             title="Họ và tên"
             key="name"
             render={value => {
@@ -143,14 +139,8 @@ export class UserComponent extends Component {
               );
             }}
           ></Column>
+          <Column title="CMND" dataIndex="identifier" key="identifier"></Column>
           <Column
-            sorter={true}
-            title="CMND"
-            dataIndex="identifier"
-            key="identifier"
-          ></Column>
-          <Column
-            sorter={true}
             title="Điện thoại"
             dataIndex="phone"
             key="phone"
@@ -159,16 +149,10 @@ export class UserComponent extends Component {
               else return emptyString;
             }}
           ></Column>
-          <Column sorter title="Email" dataIndex="email" key="email"></Column>
-          <Column
-            sorter
-            title="Giới tính"
-            dataIndex="gender"
-            key="gender"
-          ></Column>
+          <Column title="Email" dataIndex="email" key="email"></Column>
+          <Column title="Giới tính" dataIndex="gender" key="gender"></Column>
           {/* <Column title="Giới tính" dataIndex="gender" key='gender'></Column> */}
           <Column
-            sorter
             title="Địa chỉ"
             dataIndex="address"
             key="address"
