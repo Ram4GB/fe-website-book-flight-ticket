@@ -121,8 +121,20 @@ export class CustomerListComponent extends Component {
           onChange={this.handleChangeTable}
           rowKey={e => e.id}
         >
-          <Column sorter title="Họ và tên" dataIndex="name"></Column>
-          <Column sorter title="CMND" dataIndex="identifier"></Column>
+          <Column
+            title="Họ và tên"
+            render={record => (
+              <p
+                className="table-name"
+                onClick={() =>
+                  this.props.history.push(`/admin/customer/${record.id}`)
+                }
+              >
+                {record.name}
+              </p>
+            )}
+          ></Column>
+          <Column title="CMND" dataIndex="identifier"></Column>
           <Column
             sorter
             title="Điện thoại"
