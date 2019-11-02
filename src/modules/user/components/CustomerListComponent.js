@@ -5,6 +5,7 @@ import { catchErrorAndNotification } from "../../../common/utils/Notification";
 import { LIMIT, emptyString } from "../models";
 import modal from "../../../common/components/widgets/Modal";
 import FormAddCustomer from "./Forms/FormAddCustomer";
+import { tableSortUtil } from "../../../common/utils/TableUtil";
 
 export class CustomerListComponent extends Component {
   constructor(props) {
@@ -43,7 +44,10 @@ export class CustomerListComponent extends Component {
   componentDidMount() {
     this.getData();
   }
-  handleChangeTable(pagination) {
+  handleChangeTable(pagination, filter, sorter) {
+    if (sorter && sorter.order) {
+      tableSortUtil(sorter, this);
+    }
     this.getData(pagination.current);
   }
   renderDataSource() {
@@ -117,9 +121,10 @@ export class CustomerListComponent extends Component {
           onChange={this.handleChangeTable}
           rowKey={e => e.id}
         >
-          <Column title="Họ và tên" dataIndex="name"></Column>
-          <Column title="CMND" dataIndex="identifier"></Column>
+          <Column sorter title="Họ và tên" dataIndex="name"></Column>
+          <Column sorter title="CMND" dataIndex="identifier"></Column>
           <Column
+            sorter
             title="Điện thoại"
             dataIndex="phone"
             render={value => {
@@ -127,10 +132,11 @@ export class CustomerListComponent extends Component {
               else return emptyString;
             }}
           ></Column>
-          <Column title="Email" dataIndex="email"></Column>
-          <Column title="Giới tính" dataIndex="gender"></Column>
+          <Column sorter title="Email" dataIndex="email"></Column>
+          <Column sorter title="Giới tính" dataIndex="gender"></Column>
           {/* <Column title="Giới tính" dataIndex="gender"></Column> */}
           <Column
+            sorter
             title="Địa chỉ"
             dataIndex="address"
             render={value => {

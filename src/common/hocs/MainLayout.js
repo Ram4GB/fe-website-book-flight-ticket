@@ -25,6 +25,8 @@ export class MainLayout extends Component {
   }
 
   handleShowMenu() {
+    const { pathname } = this.props.location;
+    let defaultPath = pathname.slice(1, pathname.length);
     const { mode } = this.props;
     const menu = menuConstant[mode];
     const { SubMenu } = Menu;
@@ -72,6 +74,7 @@ export class MainLayout extends Component {
         onSelect={this.handleSelect}
         theme="dark"
         mode="inline"
+        selectedKeys={[defaultPath ? defaultPath : "/admin/dashboard"]}
       >
         {renderMenu}
       </Menu>

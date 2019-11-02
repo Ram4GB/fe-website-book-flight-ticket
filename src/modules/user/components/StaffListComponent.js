@@ -5,6 +5,7 @@ import { Table, Button, notification, Card, Input } from "antd";
 import modal from "../../../common/components/widgets/Modal";
 import Column from "antd/lib/table/Column";
 import FormAddStaff from "./Forms/FormAddStaff";
+import { tableSortUtil } from "../../../common/utils/TableUtil";
 
 export class UserComponent extends Component {
   constructor(props) {
@@ -32,7 +33,6 @@ export class UserComponent extends Component {
     const { getListStaff } = this.props;
     const next = input || page;
     const result = await getListStaff(next, params);
-    console.log(result);
     if (result && result.success === true) {
       this.setState({
         page: next,
@@ -59,7 +59,10 @@ export class UserComponent extends Component {
     );
   }
 
-  handleChangeTableStaffs(pagination) {
+  async handleChangeTableStaffs(pagination, filter, sorter) {
+    if (sorter && sorter.order) {
+      tableSortUtil(sorter, this);
+    }
     this.getData(pagination.current);
   }
   renderDataSource() {
@@ -124,6 +127,7 @@ export class UserComponent extends Component {
           }}
         >
           <Column
+            sorter={true}
             title="Họ và tên"
             key="name"
             render={value => {
@@ -139,8 +143,14 @@ export class UserComponent extends Component {
               );
             }}
           ></Column>
-          <Column title="CMND" dataIndex="identifier" key="identifier"></Column>
           <Column
+            sorter={true}
+            title="CMND"
+            dataIndex="identifier"
+            key="identifier"
+          ></Column>
+          <Column
+            sorter={true}
             title="Điện thoại"
             dataIndex="phone"
             key="phone"
@@ -149,10 +159,16 @@ export class UserComponent extends Component {
               else return emptyString;
             }}
           ></Column>
-          <Column title="Email" dataIndex="email" key="email"></Column>
-          <Column title="Giới tính" dataIndex="gender" key="gender"></Column>
+          <Column sorter title="Email" dataIndex="email" key="email"></Column>
+          <Column
+            sorter
+            title="Giới tính"
+            dataIndex="gender"
+            key="gender"
+          ></Column>
           {/* <Column title="Giới tính" dataIndex="gender" key='gender'></Column> */}
           <Column
+            sorter
             title="Địa chỉ"
             dataIndex="address"
             key="address"
@@ -173,9 +189,15 @@ export class UserComponent extends Component {
             render={record => {
               return (
                 <>
-                  <Button type="primary" icon="edit">
+                  <Button
+                    onClick={() =>
+                      this.props.history.push(`/admin/staff/${record.id}`)
+                    }
+                    type="primary"
+                    icon="edit"
+                  >
                     Sửa
-                  </Button>
+                  </Button>{" "}
                   <Button type="danger" icon="delete">
                     Xóa
                   </Button>
