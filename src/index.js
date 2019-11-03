@@ -12,6 +12,7 @@ import "./common/styles/grid.css";
 import "./App.css";
 import { persistStore, persistCombineReducers } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import "react-quill/dist/quill.snow.css"; // ES6
 
 export const history = createHashHistory();
 

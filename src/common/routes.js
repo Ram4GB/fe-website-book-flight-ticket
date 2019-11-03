@@ -20,6 +20,7 @@ import FlightPage from "../pages/FlightPage";
 import FlightInformationPage from "../pages/FlightInformationPage";
 import CustomerInfomationPage from "../pages/CustomerInfomationPage";
 import FlightAddPage from "../pages/FlightAddPage";
+import AirplaneListPage from "../pages/AirplaneListPage";
 
 export class routes extends Component {
   constructor(props) {
@@ -95,6 +96,11 @@ export class routes extends Component {
               <Route exact path="/admin/profile">
                 <MainLayout mode="admin">
                   <InformationUser></InformationUser>
+                </MainLayout>
+              </Route>
+              <Route exact path="/admin/airplane">
+                <MainLayout mode="admin">
+                  <AirplaneListPage></AirplaneListPage>
                 </MainLayout>
               </Route>
               <Route exact path="/">
