@@ -5,7 +5,6 @@ import { catchErrorAndNotification } from "../../../common/utils/Notification";
 import { LIMIT, emptyString } from "../models";
 import modal from "../../../common/components/widgets/Modal";
 import FormAddCustomer from "./Forms/FormAddCustomer";
-import { tableSortUtil } from "../../../common/utils/TableUtil";
 
 export class CustomerListComponent extends Component {
   constructor(props) {
@@ -168,7 +167,7 @@ export class CustomerListComponent extends Component {
                 <>
                   <Button type="primary" icon="edit">
                     Sửa
-                  </Button>
+                  </Button>{" "}
                   <Button type="danger" icon="delete">
                     Xóa
                   </Button>

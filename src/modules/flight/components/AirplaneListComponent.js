@@ -1,9 +1,11 @@
 import React, { Component } from "react";
-import { Card, Table, Input, Button } from "antd";
+import { Card, Table, Input, Button, Modal, Tag } from "antd";
 import Column from "antd/lib/table/Column";
 import { catchErrorAndNotification } from "../../../common/utils/Notification";
+import modal from "../../../common/components/widgets/Modal";
+import AirPlaneFormAdd from "./Form/AirPlaneFormAdd";
 
-export class FlightListComponent extends Component {
+export class AirplaneListComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -11,16 +13,21 @@ export class FlightListComponent extends Component {
       total: 0,
       params: {}
     };
-    this.handleShowFormAddFlight = this.handleShowFormAddFlight.bind(this);
     this.getData = this.getData.bind(this);
     this.handleChangeTable = this.handleChangeTable.bind(this);
+    this.handleShowFormAddAirplane = this.handleShowFormAddAirplane.bind(this);
   }
-  handleShowFormAddFlight() {
-    this.props.history.push("/admin/flight/create");
+  handleShowFormAddAirplane() {
+    // this.props.history.push("/admin/airplane/create");
+    modal.show(<AirPlaneFormAdd getData={this.getData}></AirPlaneFormAdd>, {
+      title: "Thêm hãng hàng không",
+      style: { top: 20 },
+      width: "60%"
+    });
   }
   async getData(input = 1) {
     let next = input || this.state.page;
-    let result = await this.props.getListFlight(next, this.state.params);
+    let result = await this.props.getListAirPlane(next, this.state.params);
     if (result && result.success === true) {
       this.setState({
         total: result.totalRecord,
@@ -29,28 +36,28 @@ export class FlightListComponent extends Component {
     } else catchErrorAndNotification(result.error);
   }
   componentDidMount() {
-    // this.getData();
+    this.getData();
   }
   handleChangeTable(pagination) {
     this.getData(pagination.current);
   }
   render() {
-    const { flights } = this.props;
+    const { airlines } = this.props;
     const { page, total } = this.state;
     return (
       <Card>
         <div style={{ overflow: "hidden", marginBottom: 5 }}>
           <Input
-            placeholder="Tìm tên chuyến bay"
+            placeholder="Tìm tên máy bay"
             style={{ float: "left", width: 200, marginLeft: 5 }}
           />
           <Button
             icon="plus"
             type="primary"
             style={{ float: "right", marginLeft: 5 }}
-            onClick={this.handleShowFormAddFlight}
+            onClick={this.handleShowFormAddAirplane}
           >
-            Thêm chuyến bay
+            Thêm máy bay
           </Button>
           <Button
             icon="filter"
@@ -64,52 +71,46 @@ export class FlightListComponent extends Component {
           onChange={this.handleChangeTable}
           pagination={{
             total,
-            current: page
+            current: page,
+            size: "small"
           }}
-          rowKey={e => e.airlines}
-          dataSource={flights}
+          rowKey={e => e.id}
+          dataSource={airlines}
         >
           <Column
-            title="Hãng hàng không"
-            key="airlines"
-            width="25%"
-            render={record => {
-              return <p>{record.airlines}</p>;
-            }}
-          ></Column>
-          <Column
-            title="Điểm đi"
-            key="from"
+            title="Tên công ty"
+            key="name"
             render={record => {
               return (
                 <>
-                  <strong>{record.departure}</strong>
-                  <p className="table-name" style={{ fontSize: "13px" }}>
-                    {record.departureTime}
+                  <p>{record.name}</p>
+                  <p>
+                    <Tag color="red">{record.short_name}</Tag>
                   </p>
                 </>
               );
             }}
           ></Column>
           <Column
-            title="Điểm đến"
-            key="to"
-            render={record => {
-              return (
-                <>
-                  <strong>{record.arrival}</strong>
-                  <p className="table-name" style={{ fontSize: "13px" }}>
-                    {record.arrivalTime}
-                  </p>
-                </>
-              );
-            }}
-          ></Column>
-          <Column
-            title="Số lượng ghế"
-            dataIndex="slot"
-            key="slot"
+            title="Website"
+            dataIndex="website"
+            key="website"
             align="center"
+          ></Column>
+          <Column
+            title="Liên lạc"
+            dataIndex="contact_info"
+            key="contact_info"
+            align="center"
+          ></Column>
+          <Column
+            title="Mô tả"
+            dataIndex="description"
+            key="description"
+            align="center"
+            render={value => {
+              return <p dangerouslySetInnerHTML={{ __html: value }}></p>;
+            }}
           ></Column>
           <Column
             title="Thao tác"
@@ -140,4 +141,4 @@ export class FlightListComponent extends Component {
   }
 }
 
-export default FlightListComponent;
+export default AirplaneListComponent;

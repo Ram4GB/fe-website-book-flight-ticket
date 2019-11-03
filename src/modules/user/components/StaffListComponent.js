@@ -5,7 +5,6 @@ import { Table, Button, notification, Card, Input } from "antd";
 import modal from "../../../common/components/widgets/Modal";
 import Column from "antd/lib/table/Column";
 import FormAddStaff from "./Forms/FormAddStaff";
-import { tableSortUtil } from "../../../common/utils/TableUtil";
 
 export class UserComponent extends Component {
   constructor(props) {
