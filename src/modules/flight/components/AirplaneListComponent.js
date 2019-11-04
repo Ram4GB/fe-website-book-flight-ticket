@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Table, Input, Button, Tag, Avatar } from "antd";
+import { Card, Table, Input, Button, Tag } from "antd";
 import Column from "antd/lib/table/Column";
 import { catchErrorAndNotification } from "../../../common/utils/Notification";
 import modal from "../../../common/components/widgets/Modal";

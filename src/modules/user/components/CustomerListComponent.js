@@ -56,7 +56,6 @@ export class CustomerListComponent extends Component {
         phone: "0123456789",
         email: `leminhcuong298${i}@yahoo.com.vn`,
         birthday: new Date(),
-        address: "TP HCM",
         gender: "Nam"
       });
     }
@@ -145,27 +144,17 @@ export class CustomerListComponent extends Component {
           <Column title="Giới tính" dataIndex="gender" key="gender"></Column>
           {/* <Column title="Giới tính" dataIndex="gender" key='gender'></Column> */}
           <Column
-            title="Địa chỉ"
-            dataIndex="address"
-            key="address"
-            render={value => {
-              if (value) return value;
-              else return emptyString;
-            }}
-          ></Column>
-          {/* <Column
-            title="Ngày sinh"
-            dataIndex="birthday" key='birthday'
-            render={date => {
-              return moment(date).format("DD-MM-YYYY");
-            }}
-          ></Column> */}
-          <Column
             title="Thao tác"
             render={record => {
               return (
                 <>
-                  <Button type="primary" icon="edit">
+                  <Button
+                    type="primary"
+                    icon="edit"
+                    onClick={() =>
+                      this.props.history.push(`/admin/customer/${record.id}`)
+                    }
+                  >
                     Sửa
                   </Button>{" "}
                   <Button type="danger" icon="delete">
