@@ -87,11 +87,10 @@ export class StaffInformationPage extends Component {
     });
   }
   showEdittingButton() {
-    const { staff } = this.state;
+    const { isEditing } = this.state;
     const values = this.props.form.getFieldsValue();
     for (const key in values) {
-      if (values[key] !== staff[key] || this.state.isEditing[key] === true)
-        return true;
+      if (isEditing[key] !== values[key]) return true;
     }
     return false;
   }

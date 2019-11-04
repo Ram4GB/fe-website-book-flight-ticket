@@ -17,6 +17,7 @@ import moment from "moment";
 import { getCustomerByID, updateCustomerByID } from "../modules/user/handlers";
 import { catchErrorAndNotification } from "../common/utils/Notification";
 import removeNullObject from "../common/utils/removeObjectNull";
+import { emptyString } from "../modules/user/models";
 import CustomBreadcrumb from "../common/components/widgets/CustomBreadcrumb";
 
 export class CustomerInfomationPage extends Component {
@@ -29,7 +30,6 @@ export class CustomerInfomationPage extends Component {
         identifier: false,
         phone: false,
         email: false,
-        address: false,
         birthday: false
       }
     };
@@ -47,6 +47,7 @@ export class CustomerInfomationPage extends Component {
           customer: result.customer
         });
       } else catchErrorAndNotification(result.error);
+      console.log(result);
     }
   }
 
@@ -81,11 +82,11 @@ export class CustomerInfomationPage extends Component {
               identifier: false,
               phone: false,
               email: false,
-              address: false
+              birthday: false
             }
           });
           await this.getCustomer();
-        } else catchErrorAndNotification(result.error);
+        } else catchErrorAndNotification(result.error, this);
       }
     });
   }
@@ -96,17 +97,17 @@ export class CustomerInfomationPage extends Component {
         identifier: false,
         phone: false,
         email: false,
-        address: false
+        birthday: false
       }
     });
     this.props.form.resetFields();
   }
 
   showEdittingButton() {
-    const { customer } = this.state;
+    const { isEditing } = this.state;
     const values = this.props.form.getFieldsValue();
     for (const key in values) {
-      if (values[key] !== customer[key]) return true;
+      if (isEditing[key] !== values[key]) return true;
     }
     return false;
   }
@@ -118,6 +119,7 @@ export class CustomerInfomationPage extends Component {
         <CustomBreadcrumb
           items={[
             { url: "/admin/dashboard", icon: "home", title: "Bảng điều khiển" },
+            { url: "/admin/customer", icon: "user", title: "Khách hàng" },
             {
               url: `/admin/customer/${customer.id}`,
               icon: "user",
@@ -248,11 +250,13 @@ export class CustomerInfomationPage extends Component {
                               initialValue: customer.phone
                             })(<Input placeholder="Mời điền SDT" />)}
                           </Form.Item>
-                        ) : (
+                        ) : customer.phone ? (
                           <span>{customer.phone}</span>
+                        ) : (
+                          emptyString
                         )}
 
-                        {isEditing ? null : (
+                        {isEditing.phone ? null : (
                           <span style={{ float: "right" }}>
                             <Icon
                               onClick={() => this.edit("phone")}
@@ -289,18 +293,6 @@ export class CustomerInfomationPage extends Component {
                             />
                           </span>
                         )}
-                      </div>
-                    </Descriptions.Item>
-                    <Descriptions.Item label={<strong>Địa chỉ</strong>}>
-                      <div style={{ overflow: "hidden" }}>
-                        <span>{customer.address}</span>
-                        <span style={{ float: "right" }}>
-                          <Icon
-                            onClick={() => this.edit("address")}
-                            type="edit"
-                            style={{ color: "blue" }}
-                          />
-                        </span>
                       </div>
                     </Descriptions.Item>
                   </Descriptions>

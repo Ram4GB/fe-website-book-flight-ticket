@@ -155,6 +155,7 @@ export class UserComponent extends Component {
             title="Địa chỉ"
             dataIndex="address"
             key="address"
+            width="20%"
             render={value => {
               if (value) return value;
               else return emptyString;
