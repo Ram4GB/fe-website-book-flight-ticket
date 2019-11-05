@@ -47,7 +47,6 @@ export class CustomerInfomationPage extends Component {
           customer: result.customer
         });
       } else catchErrorAndNotification(result.error);
-      console.log(result);
     }
   }
 
