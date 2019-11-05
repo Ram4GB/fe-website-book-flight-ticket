@@ -74,7 +74,7 @@ export class FlightListComponent extends Component {
             key="airlines"
             width="25%"
             render={record => {
-              return <p>{record.airlines}</p>;
+              return <p className="table-name">{record.airlines}</p>;
             }}
           ></Column>
           <Column

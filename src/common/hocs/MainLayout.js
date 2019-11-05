@@ -26,7 +26,11 @@ export class MainLayout extends Component {
 
   handleShowMenu() {
     const { pathname } = this.props.location;
-    let defaultPath = pathname.slice(1, pathname.length);
+    let split = pathname.split("/");
+    let defaultPath = `admin/` + split[2];
+    console.log(defaultPath);
+    // /admin/customer/1
+    // /admin/customer
     const { mode } = this.props;
     const menu = menuConstant[mode];
     const { SubMenu } = Menu;

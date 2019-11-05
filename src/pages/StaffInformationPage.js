@@ -82,7 +82,7 @@ export class StaffInformationPage extends Component {
             }
           });
           await this.getStaff();
-        } else catchErrorAndNotification(result.error);
+        } else catchErrorAndNotification(result.error, this);
       }
     });
   }
@@ -90,7 +90,8 @@ export class StaffInformationPage extends Component {
     const { staff } = this.state;
     const values = this.props.form.getFieldsValue();
     for (const key in values) {
-      if (values[key] !== staff[key]) return true;
+      if (values[key] !== staff[key] || this.state.isEditing[key] === true)
+        return true;
     }
     return false;
   }
@@ -114,6 +115,7 @@ export class StaffInformationPage extends Component {
         <CustomBreadcrumb
           items={[
             { url: "/admin/dashboard", icon: "home", title: "Bảng điều khiển" },
+            { url: "/admin/staff", icon: "user", title: "Nhân viên" },
             {
               url: `/admin/staff/${staff.id}`,
               icon: "user",
@@ -323,7 +325,7 @@ export class StaffInformationPage extends Component {
                         onClick={this.handleReset}
                         style={{ margin: "0px 5px" }}
                       >
-                        Làm mới
+                        Hủy
                       </Button>
                       <Button htmlType="submit" type="primary">
                         Lưu lại
