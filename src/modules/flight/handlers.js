@@ -12,6 +12,27 @@ export const addAirplane = async data => {
   else return { success: false, error: "Server error" };
 };
 
+export const updateAirpplane = async (id, data) => {
+  delete data.logo;
+  delete data.phone;
+  let result = await fetchAuthLoading({
+    url: `${DEFAULT_URL}/airline/${id}`,
+    data,
+    method: "PUT"
+  });
+  if (result && result.data) return result.data;
+  else return { success: false, error: "Server error" };
+};
+
+export const getAirplaneByID = async id => {
+  let result = await fetchAuthLoading({
+    url: `${DEFAULT_URL}/airline/${id}`,
+    method: "GET"
+  });
+  if (result && result.data) return result.data;
+  else return { success: false, error: "Server error" };
+};
+
 export default function(dispatch, props) {
   return {
     getListAirPlane: async (page, params) => {

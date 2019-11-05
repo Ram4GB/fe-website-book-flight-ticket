@@ -21,6 +21,8 @@ import FlightInformationPage from "../pages/FlightInformationPage";
 import CustomerInfomationPage from "../pages/CustomerInfomationPage";
 import FlightAddPage from "../pages/FlightAddPage";
 import AirplaneListPage from "../pages/AirplaneListPage";
+import AirplaneInformationPage from "../pages/AirplaneInformationPage";
+import AirplaneEditPage from "../pages/AirplaneEditPage";
 
 export class routes extends Component {
   constructor(props) {
@@ -88,7 +90,7 @@ export class routes extends Component {
                   <FlightAddPage></FlightAddPage>
                 </MainLayout>
               </Route>
-              <Route exact path="/admin/flight/:d">
+              <Route exact path="/admin/flight/:id">
                 <MainLayout mode="admin">
                   <FlightInformationPage></FlightInformationPage>
                 </MainLayout>
@@ -101,6 +103,16 @@ export class routes extends Component {
               <Route exact path="/admin/airplane">
                 <MainLayout mode="admin">
                   <AirplaneListPage></AirplaneListPage>
+                </MainLayout>
+              </Route>
+              <Route exact path="/admin/airplane/:id">
+                <MainLayout mode="admin">
+                  <AirplaneInformationPage></AirplaneInformationPage>
+                </MainLayout>
+              </Route>
+              <Route exact path="/admin/airplane/:id/edit">
+                <MainLayout mode="admin">
+                  <AirplaneEditPage></AirplaneEditPage>
                 </MainLayout>
               </Route>
               <Route exact path="/">

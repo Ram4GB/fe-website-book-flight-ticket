@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Table, Input, Button, Modal, Tag } from "antd";
+import { Card, Table, Input, Button, Tag, Avatar } from "antd";
 import Column from "antd/lib/table/Column";
 import { catchErrorAndNotification } from "../../../common/utils/Notification";
 import modal from "../../../common/components/widgets/Modal";
@@ -78,14 +78,27 @@ export class AirplaneListComponent extends Component {
           dataSource={airlines}
         >
           <Column
+            title="Logo"
+            render={record => {
+              return record.logo ? <Avatar src={record.logo} /> : <Avatar />;
+            }}
+          ></Column>
+          <Column
             title="Tên công ty"
             key="name"
             render={record => {
               return (
                 <>
-                  <p>{record.name}</p>
+                  <p
+                    onClick={() =>
+                      this.props.history.push(`/admin/airplane/${record.id}`)
+                    }
+                    className="table-name"
+                  >
+                    {record.name}
+                  </p>
                   <p>
-                    <Tag color="red">{record.short_name}</Tag>
+                    <Tag color="#1890ff">{record.short_name}</Tag>
                   </p>
                 </>
               );
@@ -114,14 +127,30 @@ export class AirplaneListComponent extends Component {
           ></Column>
           <Column
             title="Thao tác"
-            render={() => {
+            render={record => {
               return (
                 <>
-                  <Button type="primary" icon="info-circle" key="infoButton">
+                  <Button
+                    onClick={() => {
+                      this.props.history.push(`/admin/airplane/${record.id}`);
+                    }}
+                    type="primary"
+                    icon="info-circle"
+                    key="infoButton"
+                  >
                     Chi tiết
                   </Button>
                   &nbsp;
-                  <Button type="primary" icon="edit" key="editButton">
+                  <Button
+                    onClick={() => {
+                      this.props.history.push(
+                        `/admin/airplane/${record.id}/edit`
+                      );
+                    }}
+                    type="primary"
+                    icon="edit"
+                    key="editButton"
+                  >
                     Sửa
                   </Button>
                   &nbsp;
