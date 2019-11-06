@@ -78,6 +78,7 @@ export class AirplaneListComponent extends Component {
           dataSource={airlines}
         >
           <Column
+            key="logo"
             title="Logo"
             render={record => {
               return record.logo ? <Avatar src={record.logo} /> : <Avatar />;

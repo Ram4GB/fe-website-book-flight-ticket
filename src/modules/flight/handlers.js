@@ -62,6 +62,38 @@ export default function(dispatch, props) {
         dispatch(actions.getListFlight(result.data.data));
         return result.data;
       } else return { success: false, error: "Server error" };
+    },
+    getListLocation: async (page, params) => {
+      let result = await fetchAuthLoading({
+        url: `${DEFAULT_URL}/location`,
+        method: "GET",
+        params: {
+          page,
+          ...params
+        }
+      });
+      if (result && result.data) {
+        dispatch(actions.getListLocation(result.data.data));
+        return result.data;
+      } else return { success: false, error: "Server error" };
+    },
+    addLocation: async data => {
+      let result = await fetchAuthLoading({
+        url: `${DEFAULT_URL}/location`,
+        method: "POST",
+        data
+      });
+      if (result && result.data) return result.data;
+      return { success: false, error: "Server error" };
+    },
+    updateLocation: async (id, data) => {
+      let result = await fetchAuthLoading({
+        url: `${DEFAULT_URL}/location/` + id,
+        method: "PUT",
+        data
+      });
+      if (result && result.data) return result.data;
+      return { success: false, error: "Server error" };
     }
   };
 }

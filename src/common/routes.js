@@ -23,6 +23,7 @@ import FlightAddPage from "../pages/FlightAddPage";
 import AirplaneListPage from "../pages/AirplaneListPage";
 import AirplaneInformationPage from "../pages/AirplaneInformationPage";
 import AirplaneEditPage from "../pages/AirplaneEditPage";
+import LocationListPage from "../pages/LocationListPage";
 
 export class routes extends Component {
   constructor(props) {
@@ -113,6 +114,11 @@ export class routes extends Component {
               <Route exact path="/admin/airplane/:id/edit">
                 <MainLayout mode="admin">
                   <AirplaneEditPage></AirplaneEditPage>
+                </MainLayout>
+              </Route>
+              <Route exact path="/admin/location">
+                <MainLayout mode="admin">
+                  <LocationListPage></LocationListPage>
                 </MainLayout>
               </Route>
               <Route exact path="/">
