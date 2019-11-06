@@ -3,7 +3,9 @@ import * as actions from "./actions";
 
 const initialState = {
   flights: [],
-  airlines: []
+  airlines: [],
+  airports: [],
+  locations: []
 };
 
 const reducerMap = {
@@ -14,6 +16,10 @@ const reducerMap = {
   [actions.getListFlight]: (state, action) => ({
     ...state,
     flights: action.payload
+  }),
+  [actions.getListLocation]: (state, action) => ({
+    ...state,
+    locations: action.payload
   })
 };
 
