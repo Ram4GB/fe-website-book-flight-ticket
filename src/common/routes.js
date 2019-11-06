@@ -34,12 +34,7 @@ export class routes extends Component {
   getRole(user) {
     if (user) {
       if (user.Admin) return "admin";
-      if (user.Staff) {
-        switch (user.Staff) {
-          default:
-            return null;
-        }
-      }
+      if (user.Staff) return "staff";
     }
   }
   render() {
@@ -121,6 +116,60 @@ export class routes extends Component {
                   <LocationListPage></LocationListPage>
                 </MainLayout>
               </Route>
+              {/* Front Page */}
+              <Route exact path="/">
+                <MainLayoutFrontPage>
+                  <RegisterFlyPage></RegisterFlyPage>
+                </MainLayoutFrontPage>
+              </Route>
+              <Route exact path="/register">
+                <MainLayoutFrontPage>
+                  <RegisterFlyPage></RegisterFlyPage>
+                </MainLayoutFrontPage>
+              </Route>
+              <Route path="/step-register">
+                <MainLayoutFrontPage>
+                  <StepRegisterPage></StepRegisterPage>
+                </MainLayoutFrontPage>
+              </Route>
+              <Route exact path="/login">
+                <MainLayoutFrontPage>
+                  <LoginPage></LoginPage>
+                </MainLayoutFrontPage>
+              </Route>
+              <Route path="*">
+                <MainLayoutFrontPage>
+                  <Result
+                    status="404"
+                    title="404"
+                    subTitle="Sorry, the page you visited does not exist."
+                    extra={
+                      <Button
+                        onClick={() => this.props.history.push("/")}
+                        type="primary"
+                      >
+                        Về trang chủ
+                      </Button>
+                    }
+                  />
+                </MainLayoutFrontPage>
+              </Route>
+            </Switch>
+          );
+        case "staff":
+          return (
+            <Switch>
+              <Route exact path="/admin/dashboard">
+                <MainLayout mode="staff">
+                  <UnderConstruction></UnderConstruction>
+                </MainLayout>
+              </Route>
+              <Route exact path="/admin/profile">
+                <MainLayout mode="staff">
+                  <InformationUser></InformationUser>
+                </MainLayout>
+              </Route>
+              {/* Front Page */}
               <Route exact path="/">
                 <MainLayoutFrontPage>
                   <RegisterFlyPage></RegisterFlyPage>

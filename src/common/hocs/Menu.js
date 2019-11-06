@@ -43,6 +43,14 @@ const menu = {
       icon: "file-text",
       children: []
     }
+  ],
+  staff: [
+    {
+      key: "admin/dashboard",
+      name: "Bảng điều khiển",
+      icon: "safety-certificate",
+      children: []
+    }
   ]
 };
 export default menu;
