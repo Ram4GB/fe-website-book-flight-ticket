@@ -116,15 +116,30 @@ export class FlightListComponent extends Component {
             render={() => {
               return (
                 <>
-                  <Button type="primary" icon="info-circle" key="infoButton">
+                  <Button
+                    size="small"
+                    type="primary"
+                    icon="info-circle"
+                    key="infoButton"
+                  >
                     Chi tiết
                   </Button>
                   &nbsp;
-                  <Button type="primary" icon="edit" key="editButton">
+                  <Button
+                    size="small"
+                    type="primary"
+                    icon="edit"
+                    key="editButton"
+                  >
                     Sửa
                   </Button>
                   &nbsp;
-                  <Button type="danger" icon="delete" key="deleteButton">
+                  <Button
+                    size="small"
+                    type="danger"
+                    icon="delete"
+                    key="deleteButton"
+                  >
                     Xoá
                   </Button>
                 </>

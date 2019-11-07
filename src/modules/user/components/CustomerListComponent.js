@@ -149,6 +149,7 @@ export class CustomerListComponent extends Component {
               return (
                 <>
                   <Button
+                    size="small"
                     type="primary"
                     icon="edit"
                     onClick={() =>
@@ -157,7 +158,7 @@ export class CustomerListComponent extends Component {
                   >
                     Sửa
                   </Button>{" "}
-                  <Button type="danger" icon="delete">
+                  <Button size="small" type="danger" icon="delete">
                     Xóa
                   </Button>
                 </>

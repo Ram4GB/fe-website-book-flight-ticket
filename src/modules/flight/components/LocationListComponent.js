@@ -106,6 +106,7 @@ export class LocationListComponent extends Component {
               return (
                 <>
                   <Button
+                    size="small"
                     onClick={() => this.handleShowFormEditLocation(record)}
                     icon="edit"
                     type="primary"
