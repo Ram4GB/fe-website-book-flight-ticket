@@ -5,6 +5,7 @@ import UnderConstruction from "./components/UnderConstruction";
 /** Pages */
 import MainLayout from "./hocs/MainLayout";
 import LoginPage from "./hocs/LoginPage";
+import NewAccount from "../pages/NewAccount";
 import StaffPage from "../pages/StaffPage";
 import MainLayoutFrontPage from "./hocs/MainLayoutFrontPage";
 import { Result, Button } from "antd";
@@ -205,6 +206,11 @@ export class routes extends Component {
                   <LoginPage></LoginPage>
                 </MainLayoutFrontPage>
               </Route>
+              <Route exact path="/new-account">
+                <MainLayoutFrontPage>
+                  <NewAccount></NewAccount>
+                </MainLayoutFrontPage>
+              </Route>
               <Route path="*">
                 <MainLayoutFrontPage>
                   <Result
@@ -237,6 +243,7 @@ export class routes extends Component {
           <Switch>
             <Route exact component={RegisterFlyPage} path="/" />
             <Route exact component={LoginPage} path="/login" />
+            <Route exact component={NewAccount} path="/new-account" />
             <Route exact component={RegisterFlyPage} path="/register" />
             <Route exact component={StepRegisterPage} path="/step-register" />
             <Route exact component={Homepage} path="/homepage" />
