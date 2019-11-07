@@ -52,6 +52,12 @@ const menu = {
       children: []
     },
     {
+      key: "admin/customer",
+      name: "Khách hàng",
+      icon: "user",
+      children: []
+    },
+    {
       key: "admin/order",
       name: "Hóa đơn",
       icon: "file-text",

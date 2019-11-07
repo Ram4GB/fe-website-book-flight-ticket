@@ -174,6 +174,16 @@ export class routes extends Component {
                   <OrderListPage></OrderListPage>
                 </MainLayout>
               </Route>
+              <Route exact path="/admin/customer">
+                <MainLayout mode="staff">
+                  <CustomerPage></CustomerPage>
+                </MainLayout>
+              </Route>
+              <Route exact path="/admin/customer/:id">
+                <MainLayout mode="staff">
+                  <CustomerInfomationPage></CustomerInfomationPage>
+                </MainLayout>
+              </Route>
               {/* Front Page */}
               <Route exact path="/">
                 <MainLayoutFrontPage>
