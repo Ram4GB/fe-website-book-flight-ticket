@@ -174,6 +174,7 @@ export class UserComponent extends Component {
               return (
                 <>
                   <Button
+                    size="small"
                     onClick={() =>
                       this.props.history.push(`/admin/staff/${record.id}`)
                     }
@@ -182,7 +183,7 @@ export class UserComponent extends Component {
                   >
                     Sửa
                   </Button>{" "}
-                  <Button type="danger" icon="delete">
+                  <Button size="small" type="danger" icon="delete">
                     Xóa
                   </Button>
                 </>

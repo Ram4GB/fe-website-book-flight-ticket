@@ -132,6 +132,7 @@ export class AirplaneListComponent extends Component {
               return (
                 <>
                   <Button
+                    size="small"
                     onClick={() => {
                       this.props.history.push(`/admin/airplane/${record.id}`);
                     }}
@@ -143,6 +144,7 @@ export class AirplaneListComponent extends Component {
                   </Button>
                   &nbsp;
                   <Button
+                    size="small"
                     onClick={() => {
                       this.props.history.push(
                         `/admin/airplane/${record.id}/edit`
@@ -155,7 +157,12 @@ export class AirplaneListComponent extends Component {
                     Sửa
                   </Button>
                   &nbsp;
-                  <Button type="danger" icon="delete" key="deleteButton">
+                  <Button
+                    size="small"
+                    type="danger"
+                    icon="delete"
+                    key="deleteButton"
+                  >
                     Xoá
                   </Button>
                 </>
