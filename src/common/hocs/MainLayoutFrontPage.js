@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 import { Layout, Row, Col, Input, Icon, notification } from "antd";
 import logo from "../assets/images/logo.png";
 import logofooter from "../assets/images/logo-footer.png";
@@ -14,7 +15,7 @@ const { Footer } = Layout;
 export class MainLayoutFrontPage extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { path: "" };
     this.logout = this.logout.bind(this);
   }
   async logout() {
@@ -27,8 +28,15 @@ export class MainLayoutFrontPage extends Component {
     }, 1000);
   }
   componentDidMount() {}
+  componentWillReceiveProps() {
+    let path = this.props.history.location.pathname;
+    this.setState({
+      path
+    });
+  }
   render() {
     const { user } = this.props;
+    const { path } = this.state;
     console.log(
       _.isEmpty(this.props.user) ? "khong co user" : "co user",
       this.props.user
@@ -60,8 +68,19 @@ export class MainLayoutFrontPage extends Component {
 
           <div className="collapse navbar-collapse" id="navbarColor01">
             <ul className="navbar-nav ml-auto">
+              <li
+                className={`nav-item ${
+                  path === "/new-account" ? "active" : null
+                }`}
+              >
+                <Link className="nav-link" to="/new-account">
+                  Đăng ký <span className="sr-only">(current)</span>
+                </Link>
+              </li>
               {_.isEmpty(user) === false ? null : (
-                <li className="nav-item active">
+                <li
+                  className={`nav-item ${path === "/login" ? "active" : null}`}
+                >
                   <Link className="nav-link" to="/login">
                     Đăng nhập <span className="sr-only">(current)</span>
                   </Link>
@@ -74,7 +93,11 @@ export class MainLayoutFrontPage extends Component {
                   </a>
                 </li>
               ) : null}
-              <li className="nav-item">
+              <li
+                className={`nav-item ${
+                  path === "/admin/dashboard" ? "active" : null
+                }`}
+              >
                 <Link className="nav-link" to="/admin/dashboard">
                   Admin Page
                 </Link>
@@ -141,7 +164,9 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(MainLayoutFrontPage);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(MainLayoutFrontPage)
+);
