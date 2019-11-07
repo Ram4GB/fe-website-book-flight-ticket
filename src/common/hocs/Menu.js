@@ -50,6 +50,12 @@ const menu = {
       name: "Bảng điều khiển",
       icon: "safety-certificate",
       children: []
+    },
+    {
+      key: "admin/order",
+      name: "Hóa đơn",
+      icon: "file-text",
+      children: []
     }
   ]
 };

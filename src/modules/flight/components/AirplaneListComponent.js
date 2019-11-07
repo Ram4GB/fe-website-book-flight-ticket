@@ -117,7 +117,7 @@ export class AirplaneListComponent extends Component {
             key="contact_info"
             align="center"
           ></Column>
-          <Column
+          {/* <Column
             title="Mô tả"
             dataIndex="description"
             key="description"
@@ -125,7 +125,7 @@ export class AirplaneListComponent extends Component {
             render={value => {
               return <p dangerouslySetInnerHTML={{ __html: value }}></p>;
             }}
-          ></Column>
+          ></Column> */}
           <Column
             title="Thao tác"
             render={record => {
