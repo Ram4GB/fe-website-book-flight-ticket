@@ -42,12 +42,12 @@ export class FlightListComponent extends Component {
         <div style={{ overflow: "hidden", marginBottom: 5 }}>
           <Input
             placeholder="Tìm tên chuyến bay"
-            style={{ float: "left", width: 200, marginLeft: 5 }}
+            style={{ float: "left", width: 200, marginRight: 15 }}
           />
           <Button
             icon="plus"
             type="primary"
-            style={{ float: "right", marginLeft: 5 }}
+            style={{ float: "right", marginLeft: 15 }}
             onClick={this.handleShowFormAddFlight}
           >
             Thêm chuyến bay

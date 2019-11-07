@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Table, Input, Button, Tag, Avatar } from "antd";
+import { Card, Table, Input, Button, Tag, Avatar, Row, Col } from "antd";
 import Column from "antd/lib/table/Column";
 import { catchErrorAndNotification } from "../../../common/utils/Notification";
 import modal from "../../../common/components/widgets/Modal";
@@ -47,14 +47,14 @@ export class AirplaneListComponent extends Component {
     return (
       <Card>
         <div style={{ overflow: "hidden", marginBottom: 5 }}>
-          <Input
+          <Input.Search
             placeholder="Tìm tên máy bay"
-            style={{ float: "left", width: 200, marginLeft: 5 }}
+            style={{ float: "left", width: 200, marginRight: 15 }}
           />
           <Button
             icon="plus"
             type="primary"
-            style={{ float: "right", marginLeft: 5 }}
+            style={{ float: "right", marginLeft: 15 }}
             onClick={this.handleShowFormAddAirplane}
           >
             Thêm máy bay
@@ -78,31 +78,36 @@ export class AirplaneListComponent extends Component {
           dataSource={airlines}
         >
           <Column
-            key="logo"
-            title="Logo"
-            render={record => {
-              return record.logo ? <Avatar src={record.logo} /> : <Avatar />;
-            }}
-          ></Column>
-          <Column
             title="Tên công ty"
             key="name"
             render={record => {
               return (
                 <>
-                  <p
+                  <Row
                     onClick={() =>
                       this.props.history.push(`/admin/airplane/${record.id}`)
                     }
                     className="table-name"
                   >
-                    {record.name}
-                  </p>
-                  <p>
-                    <Tag color="#1890ff">{record.short_name}</Tag>
-                  </p>
+                    <Col lg={12}>
+                      <Avatar
+                        style={{ borderRadius: 5, marginRight: 5 }}
+                        src=""
+                      />
+                    </Col>
+                    <Col lg={12}>{record.name}</Col>
+                  </Row>
                 </>
               );
+            }}
+          ></Column>
+          <Column
+            title="Tên viết tắt"
+            dataIndex="short_name"
+            key="short_name"
+            align="center"
+            render={value => {
+              return <Tag color="#1890FF">{value}</Tag>;
             }}
           ></Column>
           <Column

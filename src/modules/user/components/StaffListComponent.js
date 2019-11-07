@@ -84,18 +84,18 @@ export class UserComponent extends Component {
     return (
       <Card>
         <div style={{ overflow: "hidden", marginBottom: 5 }}>
-          <Input
+          <Input.Search
             placeholder="Tìm bằng họ và tên"
-            style={{ float: "left", width: 200, marginLeft: 5 }}
+            style={{ float: "left", width: 200, marginRight: 15 }}
           />
-          <Input
+          <Input.Search
             placeholder="Tìm bằng CMND"
             style={{ float: "left", width: 200, marginLeft: 5 }}
           />
           <Button
             icon="plus"
             type="primary"
-            style={{ float: "right", marginLeft: 5 }}
+            style={{ float: "right", marginLeft: 15 }}
             onClick={this.handleShowFormAddStaff}
           >
             Thêm nhân viên

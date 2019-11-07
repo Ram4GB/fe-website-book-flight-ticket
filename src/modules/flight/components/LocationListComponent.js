@@ -68,14 +68,14 @@ export class LocationListComponent extends Component {
     return (
       <Card>
         <div style={{ overflow: "hidden", marginBottom: 5 }}>
-          <Input
+          <Input.Search
             placeholder="Tìm tên địa điểm"
-            style={{ float: "left", width: 200, marginLeft: 5 }}
+            style={{ float: "left", width: 200, marginRight: 15 }}
           />
           <Button
             icon="plus"
             type="primary"
-            style={{ float: "right", marginLeft: 5 }}
+            style={{ float: "right", marginLeft: 15 }}
             onClick={this.handleShowFormAddLocation}
           >
             Thêm địa điểm
@@ -109,6 +109,7 @@ export class LocationListComponent extends Component {
                     onClick={() => this.handleShowFormEditLocation(record)}
                     icon="edit"
                     type="primary"
+                    size="small"
                   >
                     Sửa
                   </Button>{" "}
