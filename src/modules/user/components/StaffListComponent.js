@@ -84,11 +84,11 @@ export class UserComponent extends Component {
     return (
       <Card>
         <div style={{ overflow: "hidden", marginBottom: 5 }}>
-          <Input
+          <Input.Search
             placeholder="Tìm bằng họ và tên"
             style={{ float: "left", width: 200, marginLeft: 5 }}
           />
-          <Input
+          <Input.Search
             placeholder="Tìm bằng CMND"
             style={{ float: "left", width: 200, marginLeft: 5 }}
           />

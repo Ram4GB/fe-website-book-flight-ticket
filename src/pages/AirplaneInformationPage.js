@@ -54,8 +54,8 @@ export class AirplaneInformationPage extends Component {
         <>
           {this.state.airline ? (
             <Row gutter={6} style={{ display: "flex" }}>
-              <Col style={{ height: "100%" }} lg={7}>
-                <Card>
+              <Col lg={7}>
+                <Card style={{ height: "100%" }}>
                   <Avatar
                     src=""
                     style={{

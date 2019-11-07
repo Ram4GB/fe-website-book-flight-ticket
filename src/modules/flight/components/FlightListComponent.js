@@ -40,7 +40,7 @@ export class FlightListComponent extends Component {
     return (
       <Card>
         <div style={{ overflow: "hidden", marginBottom: 5 }}>
-          <Input
+          <Input.Search
             placeholder="Tìm tên chuyến bay"
             style={{ float: "left", width: 200, marginLeft: 5 }}
           />

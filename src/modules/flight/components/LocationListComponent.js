@@ -68,7 +68,7 @@ export class LocationListComponent extends Component {
     return (
       <Card>
         <div style={{ overflow: "hidden", marginBottom: 5 }}>
-          <Input
+          <Input.Search
             placeholder="Tìm tên địa điểm"
             style={{ float: "left", width: 200, marginLeft: 5 }}
           />
