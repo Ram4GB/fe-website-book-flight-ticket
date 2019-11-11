@@ -138,6 +138,11 @@ export class routes extends Component {
                   <LoginPage></LoginPage>
                 </MainLayoutFrontPage>
               </Route>
+              <Route exact path="/new-account">
+                <MainLayoutFrontPage>
+                  <NewAccount></NewAccount>
+                </MainLayoutFrontPage>
+              </Route>
               <Route path="*">
                 <MainLayoutFrontPage>
                   <Result
@@ -234,6 +239,7 @@ export class routes extends Component {
           return (
             <MainLayout mode="">
               <Route path="*" component={UnderConstruction} />
+              <Route exact component={NewAccount} path="/new-account" />
             </MainLayout>
           );
       }
