@@ -98,9 +98,11 @@ export class MainLayoutFrontPage extends Component {
                   path === "/admin/dashboard" ? "active" : null
                 }`}
               >
-                <Link className="nav-link" to="/admin/dashboard">
-                  Admin Page
-                </Link>
+                {user.role === "ADMIN" || user.role === "STAFF" ? (
+                  <Link className="nav-link" to="/admin/dashboard">
+                    Admin Page
+                  </Link>
+                ) : null}
               </li>
             </ul>
           </div>
