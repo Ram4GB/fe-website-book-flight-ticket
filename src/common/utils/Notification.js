@@ -17,12 +17,18 @@ export const catchErrorAndNotification = (data, componentThis) => {
           });
         });
       } else {
-        componentThis.props.form.setFields({
-          [data.field]: {
-            value: data.value,
-            errors: [new Error(data.message)]
-          }
-        });
+        if (componentThis.props.form.getFieldValue(data.field)) {
+          componentThis.props.form.setFields({
+            [data.field]: {
+              value: data.value,
+              errors: [new Error(data.message)]
+            }
+          });
+        } else {
+          notification.error({
+            message: data
+          });
+        }
       }
     } else
       notification.error({

@@ -30,7 +30,7 @@ export class FormAddStaff extends Component {
           });
           modal.hide();
           this.props.getData();
-        } else catchErrorAndNotification(result.error);
+        } else catchErrorAndNotification(result.error, this);
       }
     });
   }

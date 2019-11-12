@@ -26,6 +26,12 @@ const menu = {
       children: []
     },
     {
+      key: "admin/seat",
+      name: "Loại vé",
+      icon: "credit-card",
+      children: []
+    },
+    {
       key: "admin/airplane",
       name: "Hãng hàng không",
       icon: "rocket",
