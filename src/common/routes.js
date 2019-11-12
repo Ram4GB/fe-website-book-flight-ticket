@@ -25,6 +25,7 @@ import AirplaneListPage from "../pages/AirplaneListPage";
 import AirplaneInformationPage from "../pages/AirplaneInformationPage";
 import AirplaneEditPage from "../pages/AirplaneEditPage";
 import LocationListPage from "../pages/LocationListPage";
+import SeatClassListPage from "../pages/SeatClassListPage";
 
 export class routes extends Component {
   constructor(props) {
@@ -80,6 +81,11 @@ export class routes extends Component {
               <Route exact path="/admin/flight">
                 <MainLayout mode="admin">
                   <FlightPage></FlightPage>
+                </MainLayout>
+              </Route>
+              <Route exact path="/admin/seat">
+                <MainLayout mode="admin">
+                  <SeatClassListPage></SeatClassListPage>
                 </MainLayout>
               </Route>
               <Route exact path="/admin/flight/create">

@@ -1,87 +1,85 @@
-import React, { Component } from 'react'
-import { Modal } from 'antd'
+import React, { Component } from "react";
+import { Modal } from "antd";
 
-let instanceModalComponent
+let instanceModalComponent;
 class ModalComponent extends Component {
-  constructor (props) {
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
       isShow: false,
       params: {},
       component: undefined
-    }
+    };
 
-    this.activateModal = this.activateModal.bind(this)
-    this.deactivateModal = this.deactivateModal.bind(this)
-    this.getApplicationNode = this.getApplicationNode.bind(this)
+    this.activateModal = this.activateModal.bind(this);
+    this.deactivateModal = this.deactivateModal.bind(this);
+    this.getApplicationNode = this.getApplicationNode.bind(this);
   }
 
-  activateModal (component, params) {
+  activateModal(component, params) {
     this.setState({
       isShow: true,
       component,
       params
-    })
+    });
   }
 
-  deactivateModal () {
-    const { deactiveCallback } = this.state
-    deactiveCallback && deactiveCallback()
+  deactivateModal() {
+    const { deactiveCallback } = this.state;
+    deactiveCallback && deactiveCallback();
     this.setState({
       isShow: false,
-      title: '',
+      title: "",
       component: undefined
-    })
+    });
   }
 
-  getApplicationNode () {
-    return document.getElementById('application')
+  getApplicationNode() {
+    return document.getElementById("application");
   }
 
-  componentDidMount () {
-    const { global } = this.props
+  componentDidMount() {
+    const { global } = this.props;
     if (global) {
-      instanceModalComponent = this
+      instanceModalComponent = this;
     }
   }
 
-  componentWillUnmount () {
-    const { global } = this.props
+  componentWillUnmount() {
+    const { global } = this.props;
     if (global) {
-      instanceModalComponent = null
+      instanceModalComponent = null;
     }
   }
 
-  render () {
+  render() {
     // const { classes } = this.props
-    const { isShow, component, params = {} } = this.state
-    if (!isShow || !component) {
-      return null
-    }
+    const { isShow, component, params = {} } = this.state;
+
     const props = {
-      title: params.title || 'Notification',
-      visible: true,
+      title: params.title || "Notification",
+      visible: isShow && component,
       footer: null,
       onCancel: this.deactivateModal,
       ...params
-    }
-    return <Modal {...props}>{component}</Modal>
+    };
+    return <Modal {...props}>{component}</Modal>;
   }
 }
 
 export default {
   Component: ModalComponent,
-  show (component, params = {}) {
+  show(component, params = {}) {
     instanceModalComponent &&
-      instanceModalComponent.activateModal(component, params)
+      instanceModalComponent.activateModal(component, params);
   },
-  hide () {
-    instanceModalComponent && instanceModalComponent.deactivateModal()
+  hide() {
+    instanceModalComponent && instanceModalComponent.deactivateModal();
   },
-  getApplicationNode () {
+  getApplicationNode() {
     return (
       (instanceModalComponent && instanceModalComponent.getApplicationNode()) ||
       undefined
-    )
+    );
   }
-}
+};
