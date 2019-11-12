@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { LIMIT, emptyString } from "../models";
 import { catchErrorAndNotification } from "../../../common/utils/Notification";
-import { Table, Button, notification, Card, Input } from "antd";
+import { Table, Button, notification, Card, Input, Avatar } from "antd";
 import modal from "../../../common/components/widgets/Modal";
 import Column from "antd/lib/table/Column";
 import FormAddStaff from "./Forms/FormAddStaff";
@@ -127,14 +127,30 @@ export class UserComponent extends Component {
             key="name"
             render={value => {
               return (
-                <p
-                  className="table-name"
-                  onClick={() =>
-                    this.props.history.push(`/admin/staff/${value.id}`)
-                  }
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center"
+                  }}
                 >
-                  {value.name}
-                </p>
+                  <div style={{ marginRight: 5 }}>
+                    {value.photo_location ? (
+                      <Avatar src="" />
+                    ) : value.gender === "male" ? (
+                      <Avatar src="https://png.pngtree.com/png-vector/20190710/ourlarge/pngtree-user-vector-avatar-png-image_1541962.jpg" />
+                    ) : (
+                      <Avatar src="https://cdn0.iconfinder.com/data/icons/user-avatar-19/64/59-woman-512.png" />
+                    )}
+                  </div>
+                  <div
+                    className="table-name"
+                    onClick={() =>
+                      this.props.history.push(`/admin/staff/${value.id}`)
+                    }
+                  >
+                    {value.name}
+                  </div>
+                </div>
               );
             }}
           ></Column>

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Input, Button, Table } from "antd";
+import { Card, Input, Button, Table, Avatar } from "antd";
 import { catchErrorAndNotification } from "../../../common/utils/Notification";
 import Column from "antd/lib/table/Column";
 import modal from "../../../common/components/widgets/Modal";
@@ -97,8 +97,23 @@ export class LocationListComponent extends Component {
           rowKey={e => e.id}
           dataSource={locations}
         >
-          <Column key="id" title="ID" dataIndex="id"></Column>
-          <Column key="name" title="Tên địa điểm" dataIndex="name"></Column>
+          <Column
+            key="name"
+            title="Tên địa điểm"
+            dataIndex="name"
+            render={value => {
+              return (
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <div style={{ marginRight: 5 }}>
+                    <Avatar src="https://i-love-png.com/images/location_559008.png" />
+                  </div>
+                  <div>
+                    {value ? <p className="table-name">{value}</p> : "---"}
+                  </div>
+                </div>
+              );
+            }}
+          ></Column>
           <Column
             key="action"
             title="Thao tác"
@@ -113,6 +128,9 @@ export class LocationListComponent extends Component {
                   >
                     Sửa
                   </Button>{" "}
+                  <Button type="danger" size="small" icon="delete">
+                    Xóa
+                  </Button>
                 </>
               );
             }}

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Table, notification, Button, Card, Input } from "antd";
+import { Table, notification, Button, Card, Input, Avatar } from "antd";
 import Column from "antd/lib/table/Column";
 import { catchErrorAndNotification } from "../../../common/utils/Notification";
 import { LIMIT, emptyString } from "../models";
@@ -119,16 +119,34 @@ export class CustomerListComponent extends Component {
           <Column
             key="name"
             title="Họ và tên"
-            render={record => (
-              <p
-                className="table-name"
-                onClick={() =>
-                  this.props.history.push(`/admin/customer/${record.id}`)
-                }
-              >
-                {record.name}
-              </p>
-            )}
+            render={value => {
+              return (
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center"
+                  }}
+                >
+                  <div style={{ marginRight: 5 }}>
+                    {value.photo_location ? (
+                      <Avatar src="" />
+                    ) : value.gender === "male" ? (
+                      <Avatar src="https://cdn3.iconfinder.com/data/icons/business-round-flat-vol-1-1/36/user_account_profile_avatar_person_student_male-512.png" />
+                    ) : (
+                      <Avatar src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTV7vv0SvWZo46XzOzRmhaIF887hr6P4wDpAn37BhBkSYnt1lK-&s" />
+                    )}
+                  </div>
+                  <div
+                    className="table-name"
+                    onClick={() =>
+                      this.props.history.push(`/admin/customer/${value.id}`)
+                    }
+                  >
+                    {value.name}
+                  </div>
+                </div>
+              );
+            }}
           ></Column>
           <Column title="CMND" dataIndex="identifier" key="identifier"></Column>
           <Column

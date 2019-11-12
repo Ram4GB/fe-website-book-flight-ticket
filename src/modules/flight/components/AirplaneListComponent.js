@@ -4,6 +4,7 @@ import Column from "antd/lib/table/Column";
 import { catchErrorAndNotification } from "../../../common/utils/Notification";
 import modal from "../../../common/components/widgets/Modal";
 import AirPlaneFormAdd from "./Form/AirPlaneFormAdd";
+import imageFlight from "../../../common/assets/images/flight.png";
 
 export class AirplaneListComponent extends Component {
   constructor(props) {
@@ -78,30 +79,28 @@ export class AirplaneListComponent extends Component {
           dataSource={airlines}
         >
           <Column
-            key="logo"
-            title="Logo"
-            render={record => {
-              return record.logo ? <Avatar src={record.logo} /> : <Avatar />;
-            }}
-          ></Column>
-          <Column
             title="Tên công ty"
             key="name"
             render={record => {
               return (
-                <>
-                  <p
-                    onClick={() =>
-                      this.props.history.push(`/admin/airplane/${record.id}`)
-                    }
-                    className="table-name"
-                  >
-                    {record.name}
-                  </p>
-                  <p>
-                    <Tag color="#1890ff">{record.short_name}</Tag>
-                  </p>
-                </>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <div style={{ marginRight: 5 }}>
+                    <Avatar src={imageFlight} />
+                  </div>
+                  <div>
+                    <p
+                      onClick={() =>
+                        this.props.history.push(`/admin/airplane/${record.id}`)
+                      }
+                      className="table-name"
+                    >
+                      {record.name}
+                    </p>
+                    <p>
+                      <Tag color="#1890ff">{record.short_name}</Tag>
+                    </p>
+                  </div>
+                </div>
               );
             }}
           ></Column>
@@ -110,6 +109,13 @@ export class AirplaneListComponent extends Component {
             dataIndex="website"
             key="website"
             align="center"
+            render={value => {
+              return (
+                <a rel="noopener noreferrer" target="_blank" href={value}>
+                  {value}
+                </a>
+              );
+            }}
           ></Column>
           <Column
             title="Liên lạc"

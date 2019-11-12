@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import { Card, Table, Button, Input } from "antd";
+import { Card, Table, Button, Input, Avatar } from "antd";
 import Column from "antd/lib/table/Column";
 import { catchErrorAndNotification } from "../../../common/utils/Notification";
 import modal from "../../../common/components/widgets/Modal";
 import FormAddSeatClass from "./Form/FormAddSeatClass";
 import { sortTable } from "../../../common/utils/sortTable";
+import { emptyString } from "../models";
 
 export class SeatClassList extends Component {
   constructor(props) {
@@ -102,9 +103,28 @@ export class SeatClassList extends Component {
           }}
           dataSource={seatClasses}
         >
-          <Column title="Mã" sorter dataIndex="id"></Column>
-          <Column title="Tên" sorter dataIndex="name"></Column>
-          <Column title="Mô tả" dataIndex="description"></Column>
+          <Column
+            title="Tên"
+            sorter
+            dataIndex="name"
+            render={value => {
+              return (
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <div style={{ marginRight: 5 }}>
+                    <Avatar src="https://cdn3.iconfinder.com/data/icons/hotel-and-restaurant-volume-3-2/48/123-512.png" />
+                  </div>
+                  <div>{value ? value : emptyString}</div>
+                </div>
+              );
+            }}
+          ></Column>
+          <Column
+            title="Mô tả"
+            dataIndex="description"
+            render={value => {
+              return value ? value : emptyString;
+            }}
+          ></Column>
           <Column
             title="Thao tác"
             render={value => {

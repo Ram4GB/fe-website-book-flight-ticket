@@ -51,7 +51,7 @@ export class FormAddSeatClass extends Component {
         </Form.Item>
         <div style={{ textAlign: "right" }}>
           <Button htmlType="submit" type="primary">
-            Thêm
+            {!edit ? <>Thêm</> : <>Sửa</>}
           </Button>
         </div>
       </Form>
