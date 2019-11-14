@@ -72,6 +72,7 @@ code {
 .nav-link {
   font-weight: bold;
   text-transform: uppercase;
+  font-size: 14px;
 }
 .navbar-brand img {
   width: 60px;
