@@ -39,6 +39,12 @@ code {
   left: 0;
 }
 
+.fix-icon .anticon {
+  position: relative;
+  top: -3px;
+  left: 0;
+}
+
 .ant-btn .anticon {
   position: relative;
   top: -3px;
@@ -51,4 +57,23 @@ code {
 }
 .table-name:hover {
   text-decoration: underline;
+}
+
+.logo-brand {
+  margin: 0px 15px;
+  height: 40px;
+  max-width: 100%;
+}
+
+.wrap-image img {
+  width: 55px;
+  margin-top: 10px;
+}
+.nav-link {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.navbar-brand img {
+  width: 60px;
+  height: 60px;
 }

@@ -84,7 +84,7 @@ export class StepRegisterComponent extends Component {
     const { current } = this.state;
     return (
       <Card style={{ margin: 24 }}>
-        <Steps current={current}>
+        <Steps className="fix-icon" current={current}>
           {steps.map(item => (
             <Step key={item.title} title={item.title} />
           ))}

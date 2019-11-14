@@ -127,11 +127,13 @@ export class MainLayoutFrontPage extends Component {
               />
             </Col>
             <Col lg={6}>
-              <p>ĐỊA CHỈ FLY NOW</p>
+              <p style={{ fontWeight: "bold", fontSize: 15 }}>
+                ĐỊA CHỈ FLY NOW
+              </p>
               <p>Thành phố Hồ Chí Minh: Đại học Sài Gòn</p>
             </Col>
             <Col lg={6}>
-              <p>LIÊN HỆ</p>
+              <p style={{ fontWeight: "bold", fontSize: 15 }}>LIÊN HỆ</p>
               <p>
                 <Icon type="phone" />
                 <span className="icon-description">123456789</span>
@@ -142,9 +144,11 @@ export class MainLayoutFrontPage extends Component {
               </p>
             </Col>
             <Col lg={6}>
-              <p>ĐĂNG KÍ NHẬN EMAIL</p>
+              <p style={{ fontWeight: "bold", fontSize: 15 }}>
+                ĐĂNG KÍ NHẬN EMAIL
+              </p>
               <p>
-                <Input style={{ width: 200 }} />
+                <Input />
               </p>
             </Col>
           </Row>
@@ -167,8 +171,5 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(MainLayoutFrontPage)
+  connect(mapStateToProps, mapDispatchToProps)(MainLayoutFrontPage)
 );
