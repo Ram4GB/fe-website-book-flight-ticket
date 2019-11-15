@@ -33,6 +33,26 @@ export const getAirplaneByID = async id => {
   else return { success: false, error: "Server error" };
 };
 
+export const addAirport = async data => {
+  let result = await fetchAuthLoading({
+    url: `${DEFAULT_URL}/airport`,
+    method: "POST",
+    data
+  });
+  if (result && result.data) return result.data;
+  return { success: false, error: "Server error" };
+};
+
+export const updateAirport = async (id, data) => {
+  let result = await fetchAuthLoading({
+    url: `${DEFAULT_URL}/airport/` + id,
+    method: "PUT",
+    data
+  });
+  if (result && result.data) return result.data;
+  return { success: false, error: "Server error" };
+};
+
 export default function(dispatch, props) {
   return {
     getListAirPlane: async (page, params) => {
@@ -94,6 +114,20 @@ export default function(dispatch, props) {
       });
       if (result && result.data) return result.data;
       return { success: false, error: "Server error" };
+    },
+    getListAirport: async (page, params) => {
+      let result = await fetchAuthLoading({
+        url: `${DEFAULT_URL}/airport`,
+        method: "GET",
+        params: {
+          page,
+          ...params
+        }
+      });
+      if (result && result.data) {
+        dispatch(actions.getListAirport(result.data.data));
+        return result.data;
+      } else return { success: false, error: "Server error" };
     }
   };
 }

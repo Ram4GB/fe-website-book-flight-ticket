@@ -38,6 +38,13 @@ const menu = {
       children: []
     },
     {
+      key: "admin/airport",
+      name: "Sân bay",
+      icon: "bank",
+      children: []
+    },
+
+    {
       key: "admin/location",
       name: "Địa điểm",
       icon: "bank",
