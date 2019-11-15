@@ -28,9 +28,8 @@ export class LocationListComponent extends Component {
       });
     else catchErrorAndNotification(result.error);
   }
-  async componentDidMount() {
-    // this.props.getListLocation();
-    await this.getData();
+  componentDidMount() {
+    this.props.getListLocation();
   }
   handleShowFormAddLocation() {
     modal.show(
