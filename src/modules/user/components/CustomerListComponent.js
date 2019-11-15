@@ -5,6 +5,7 @@ import { catchErrorAndNotification } from "../../../common/utils/Notification";
 import { LIMIT, emptyString } from "../models";
 import modal from "../../../common/components/widgets/Modal";
 import FormAddCustomer from "./Forms/FormAddCustomer";
+import { sortTable } from "../../../common/utils/sortTable";
 
 export class CustomerListComponent extends Component {
   constructor(props) {
@@ -43,8 +44,9 @@ export class CustomerListComponent extends Component {
   componentDidMount() {
     this.getData();
   }
-  handleChangeTable(pagination, filter, sorter) {
+  async handleChangeTable(pagination, filter, sorter) {
     this.getData(pagination.current);
+    await sortTable(this, pagination, sorter);
   }
   renderDataSource() {
     let arr = [];
@@ -117,6 +119,7 @@ export class CustomerListComponent extends Component {
           rowKey={e => e.id}
         >
           <Column
+            sorter
             key="name"
             title="Họ và tên"
             render={value => {
@@ -148,8 +151,14 @@ export class CustomerListComponent extends Component {
               );
             }}
           ></Column>
-          <Column title="CMND" dataIndex="identifier" key="identifier"></Column>
           <Column
+            title="CMND"
+            sorter
+            dataIndex="identifier"
+            key="identifier"
+          ></Column>
+          <Column
+            sorter
             title="Điện thoại"
             dataIndex="phone"
             key="phone"
@@ -158,8 +167,13 @@ export class CustomerListComponent extends Component {
               else return emptyString;
             }}
           ></Column>
-          <Column title="Email" dataIndex="email" key="email"></Column>
-          <Column title="Giới tính" dataIndex="gender" key="gender"></Column>
+          <Column title="Email" sorter dataIndex="email" key="email"></Column>
+          <Column
+            title="Giới tính"
+            sorter
+            dataIndex="gender"
+            key="gender"
+          ></Column>
           {/* <Column title="Giới tính" dataIndex="gender" key='gender'></Column> */}
           <Column
             title="Thao tác"

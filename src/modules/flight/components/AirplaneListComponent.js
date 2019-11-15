@@ -5,6 +5,7 @@ import { catchErrorAndNotification } from "../../../common/utils/Notification";
 import modal from "../../../common/components/widgets/Modal";
 import AirPlaneFormAdd from "./Form/AirPlaneFormAdd";
 import imageFlight from "../../../common/assets/images/flight.png";
+import { sortTable } from "../../../common/utils/sortTable";
 
 export class AirplaneListComponent extends Component {
   constructor(props) {
@@ -39,8 +40,9 @@ export class AirplaneListComponent extends Component {
   componentDidMount() {
     this.getData();
   }
-  handleChangeTable(pagination) {
+  async handleChangeTable(pagination, filter, sorter) {
     this.getData(pagination.current);
+    await sortTable(this, pagination, sorter);
   }
   render() {
     const { airlines } = this.props;
@@ -80,6 +82,7 @@ export class AirplaneListComponent extends Component {
         >
           <Column
             title="Tên công ty"
+            sorter
             key="name"
             render={record => {
               return (
@@ -106,6 +109,7 @@ export class AirplaneListComponent extends Component {
           ></Column>
           <Column
             title="Website"
+            sorter
             dataIndex="website"
             key="website"
             align="center"
@@ -119,6 +123,7 @@ export class AirplaneListComponent extends Component {
           ></Column>
           <Column
             title="Liên lạc"
+            sorter
             dataIndex="contact_info"
             key="contact_info"
             align="center"
