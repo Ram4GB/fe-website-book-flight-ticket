@@ -4,6 +4,7 @@ import { catchErrorAndNotification } from "../../../common/utils/Notification";
 import Column from "antd/lib/table/Column";
 import modal from "../../../common/components/widgets/Modal";
 import LocationAddForm from "./Form/LocationAddForm";
+import { sortTable } from "../../../common/utils/sortTable";
 
 export class LocationListComponent extends Component {
   constructor(props) {
@@ -15,6 +16,7 @@ export class LocationListComponent extends Component {
     };
     this.getData = this.getData.bind(this);
     this.handleShowFormAddLocation = this.handleShowFormAddLocation.bind(this);
+    this.handleChangeTable = this.handleChangeTable.bind(this);
   }
   async getData(input) {
     let next = input || this.state.page;
@@ -26,8 +28,9 @@ export class LocationListComponent extends Component {
       });
     else catchErrorAndNotification(result.error);
   }
-  componentDidMount() {
-    this.props.getListLocation();
+  async componentDidMount() {
+    // this.props.getListLocation();
+    await this.getData();
   }
   handleShowFormAddLocation() {
     modal.show(
@@ -62,6 +65,9 @@ export class LocationListComponent extends Component {
       }
     );
   }
+  async handleChangeTable(pagination, filter, sorter) {
+    await sortTable(this, pagination, sorter);
+  }
   render() {
     const { locations } = this.props;
     const { page, total } = this.state;
@@ -89,6 +95,7 @@ export class LocationListComponent extends Component {
           </Button>
         </div>
         <Table
+          onChange={this.handleChangeTable}
           pagination={{
             size: "small",
             total,
@@ -99,6 +106,7 @@ export class LocationListComponent extends Component {
         >
           <Column
             key="name"
+            sorter
             title="Tên địa điểm"
             dataIndex="name"
             render={value => {

@@ -5,6 +5,7 @@ import { Table, Button, notification, Card, Input, Avatar } from "antd";
 import modal from "../../../common/components/widgets/Modal";
 import Column from "antd/lib/table/Column";
 import FormAddStaff from "./Forms/FormAddStaff";
+import { sortTable } from "../../../common/utils/sortTable";
 
 export class UserComponent extends Component {
   constructor(props) {
@@ -60,6 +61,7 @@ export class UserComponent extends Component {
 
   async handleChangeTableStaffs(pagination, filter, sorter) {
     this.getData(pagination.current);
+    await sortTable(this, pagination, sorter);
   }
   renderDataSource() {
     let arr = [];
@@ -124,6 +126,7 @@ export class UserComponent extends Component {
         >
           <Column
             title="Họ và tên"
+            sorter
             key="name"
             render={value => {
               return (
@@ -154,9 +157,15 @@ export class UserComponent extends Component {
               );
             }}
           ></Column>
-          <Column title="CMND" dataIndex="identifier" key="identifier"></Column>
+          <Column
+            title="CMND"
+            sorter
+            dataIndex="identifier"
+            key="identifier"
+          ></Column>
           <Column
             title="Điện thoại"
+            sorter
             dataIndex="phone"
             key="phone"
             render={value => {
@@ -164,11 +173,17 @@ export class UserComponent extends Component {
               else return emptyString;
             }}
           ></Column>
-          <Column title="Email" dataIndex="email" key="email"></Column>
-          <Column title="Giới tính" dataIndex="gender" key="gender"></Column>
+          <Column title="Email" sorter dataIndex="email" key="email"></Column>
+          <Column
+            title="Giới tính"
+            sorter
+            dataIndex="gender"
+            key="gender"
+          ></Column>
           {/* <Column title="Giới tính" dataIndex="gender" key='gender'></Column> */}
           <Column
             title="Địa chỉ"
+            sorter
             dataIndex="address"
             key="address"
             width="20%"

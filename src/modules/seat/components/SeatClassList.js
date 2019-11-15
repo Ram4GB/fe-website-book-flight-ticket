@@ -101,6 +101,7 @@ export class SeatClassList extends Component {
             current: page,
             size: "small"
           }}
+          rowKey={e => e.id}
           dataSource={seatClasses}
         >
           <Column

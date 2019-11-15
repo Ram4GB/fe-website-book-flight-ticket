@@ -4,11 +4,13 @@ import Column from "antd/lib/table/Column";
 import numeral from "numeral";
 import modal from "../../../common/components/widgets/Modal";
 import OrderRejectForm from "./Form/OrderRejectForm";
+import { sortTable } from "../../../common/utils/sortTable";
 
 export class OrderListComponent extends Component {
   constructor(props) {
     super(props);
     this.showEvidence = this.showEvidence.bind(this);
+    this.handleChangeTable = this.handleChangeTable.bind(this);
   }
   renderDataSource() {
     let arr = [];
@@ -19,7 +21,7 @@ export class OrderListComponent extends Component {
         status: 1
       });
     }
-    for (let i = 0; i < 5; i++) {
+    for (let i = 5; i < 10; i++) {
       arr.push({
         id: i,
         total: 20000,
@@ -58,13 +60,26 @@ export class OrderListComponent extends Component {
       message: "Xác nhận thành công"
     });
   }
+  async handleChangeTable(pagination, filter, sorter) {
+    await sortTable(this, pagination, sorter);
+  }
   render() {
     return (
       <Card>
-        <Table rowKey={e => e.id} dataSource={this.renderDataSource()}>
-          <Column align="center" title="Mã hóa đơn" dataIndex="id"></Column>
+        <Table
+          onChange={this.handleChangeTable}
+          rowKey={e => e.id}
+          dataSource={this.renderDataSource()}
+        >
+          <Column
+            align="center"
+            title="Mã hóa đơn"
+            sorter
+            dataIndex="id"
+          ></Column>
           <Column
             title="Tổng tiền"
+            sorter
             dataIndex="total"
             render={value => {
               return (
@@ -76,6 +91,7 @@ export class OrderListComponent extends Component {
           ></Column>
           <Column
             title="Trạng thái"
+            sorter
             dataIndex="status"
             render={value => {
               return value ? (
