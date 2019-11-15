@@ -6,3 +6,4 @@ export const getListAirPlane = createAction(
 );
 
 export const getListLocation = createAction(`${MODULE_NAME}_LIST_LOCATION`);
+export const getListAirport = createAction(`${MODULE_NAME}_LIST_AIRPORT`);

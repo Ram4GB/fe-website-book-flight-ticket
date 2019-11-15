@@ -17,6 +17,10 @@ const reducerMap = {
     ...state,
     flights: action.payload
   }),
+  [actions.getListAirport]: (state, action) => ({
+    ...state,
+    airports: action.payload
+  }),
   [actions.getListLocation]: (state, action) => ({
     ...state,
     locations: action.payload
