@@ -12,6 +12,7 @@ import {
 import CustomBreadcrumb from "../common/components/widgets/CustomBreadcrumb";
 import { getAirplaneByID } from "../modules/flight/handlers";
 import { emptyString } from "../modules/flight/models";
+import { DEFAULT_URL } from "../common/url";
 
 export class AirplaneInformationPage extends Component {
   constructor(props) {
@@ -57,7 +58,7 @@ export class AirplaneInformationPage extends Component {
               <Col lg={7}>
                 <Card style={{ height: "100%" }}>
                   <Avatar
-                    src=""
+                    src={`${DEFAULT_URL}/${airline.logo}`}
                     style={{
                       width: "100%",
                       maxWidth: 200,
@@ -71,7 +72,7 @@ export class AirplaneInformationPage extends Component {
                     style={{ textAlign: "center", marginTop: 15 }}
                     level={4}
                   >
-                    Airline
+                    {airline.name}
                   </Typography.Title>
                   <div style={{ textAlign: "center" }}>
                     <Tag color="#1890ff">Active</Tag>

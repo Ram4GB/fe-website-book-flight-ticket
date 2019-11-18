@@ -6,6 +6,7 @@ export class InformationUserComponent extends Component {
   getUser(user) {
     if (user.Admin) return user.Admin;
     if (user.Staff) return user.Staff;
+    if (user.Customer) return user.Customer;
   }
   render() {
     let { user } = this.props;

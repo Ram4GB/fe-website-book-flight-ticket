@@ -60,7 +60,7 @@ export class AirplaneListComponent extends Component {
             style={{ float: "right", marginLeft: 5 }}
             onClick={this.handleShowFormAddAirplane}
           >
-            Thêm máy bay
+            Thêm hãng hàng không
           </Button>
           <Button
             icon="filter"
