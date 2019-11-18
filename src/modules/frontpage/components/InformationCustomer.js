@@ -203,7 +203,7 @@ class InformationCustomer extends Component {
                         showIcon
                       />
                     )}
-                    <Row>
+                    {/* <Row>
                       <Button
                         style={{ width: "80%" }}
                         type="primary"
@@ -212,7 +212,7 @@ class InformationCustomer extends Component {
                       >
                         BƯỚC TIẾP THEO
                       </Button>
-                    </Row>
+                    </Row> */}
                   </Form>
                 </Card>
               </div>

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Steps, Button, message, Card, Form } from "antd";
+import { Steps, Button, message, Card, Form, notification } from "antd";
 import FindFly from "./FindFly";
 import InformationCustomer from "./InformationCustomer";
 import FinishStepRegister from "./FinishStepRegister";
@@ -34,8 +34,14 @@ export class StepRegisterComponent extends Component {
     const { validateFields } = this.props.form;
     switch (current) {
       case 0:
-        this.props.setParamsRegisterFly({ flight_id: id });
-        return this.setState({ current: current + 1 });
+        if (id) {
+          this.props.setParamsRegisterFly({ flight_id: id });
+          return this.setState({ current: current + 1 });
+        } else
+          notification.error({
+            message: "Mời bạn chọn chuyến bay"
+          });
+        break;
       case 1:
         validateFields((errors, values) => {
           if (!errors) {
@@ -93,7 +99,11 @@ export class StepRegisterComponent extends Component {
   render() {
     const { current } = this.state;
     return (
-      <Card className="fix-card-padding-6" style={{ margin: 24 }}>
+      <Card
+        bordered={false}
+        className="fix-card-padding-6"
+        style={{ margin: 24 }}
+      >
         <Steps className="fix-icon" current={current}>
           {steps.map(item => (
             <Step key={item.title} title={item.title} />
@@ -101,6 +111,18 @@ export class StepRegisterComponent extends Component {
         </Steps>
         <div className="steps-content">
           <Card className="card-step">{this.showStepContent(current)}</Card>
+        </div>
+        <div className="steps-action">
+          {current < steps.length - 1 && (
+            <Button type="primary" onClick={() => this.next()}>
+              Tiếp theo
+            </Button>
+          )}
+          {current > 0 && current !== steps.length - 1 && (
+            <Button style={{ marginLeft: 8 }} onClick={() => this.prev()}>
+              Lùi lại
+            </Button>
+          )}
         </div>
       </Card>
     );

@@ -1,4 +1,4 @@
-import { fetchAuthLoading } from "../../common/effects";
+import { fetchAuthLoading, fetchLoading } from "../../common/effects";
 import { DEFAULT_URL } from "../../common/url";
 import * as actions from "./actions";
 import removeNullObject from "../../common/utils/removeObjectNull";
@@ -73,7 +73,7 @@ export default function(dispatch, props) {
       } else return { success: false, error: "Server error" };
     },
     getListFlight: async (page, params) => {
-      let result = await fetchAuthLoading({
+      let result = await fetchLoading({
         url: `${DEFAULT_URL}/flight`,
         method: "GET",
         params: {

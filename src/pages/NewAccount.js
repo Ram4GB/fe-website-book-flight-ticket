@@ -32,7 +32,7 @@ export class RegisterForm extends Component {
     this.props.form.validateFields(async (error, values) => {
       if (!error) {
         delete values.confirmPassword;
-        let result = await this.props.addCustomer(values);
+        let result = await this.props.signUp(values);
         if (result && result.success === true) {
           notification.success({
             message: "Tạo tài khoản thành công"
@@ -228,7 +228,7 @@ export class RegisterForm extends Component {
               options={{
                 animationData: successAnimation
               }}
-              width={400}
+              width={"100%"}
               height={400}
             />
             <div style={{ textAlign: "center" }}>

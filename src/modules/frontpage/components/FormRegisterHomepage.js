@@ -22,7 +22,7 @@ class FormRegisterHomepage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      type: 1,
+      type: 2,
       seatClass: []
     };
     this.handleSubmit = this.handleSubmit.bind(this);

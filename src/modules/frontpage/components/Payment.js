@@ -124,13 +124,13 @@ export class Payment extends Component {
                         toán
                       </Button>
                     </Upload> */}
-                    <Button
+                    {/* <Button
                       type="primary"
                       onClick={() => this.props.next()}
                       size="large"
                     >
                       BƯỚC TIẾP THEO
-                    </Button>
+                    </Button> */}
                   </div>
                 </div>
               </div>
