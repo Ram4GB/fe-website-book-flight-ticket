@@ -32,7 +32,7 @@
   "scripts": {
     "start": "set PORT=3000 && react-scripts start",
     "dev": "set PORT=3000 && react-scripts start",
-    "build": "react-scripts build",
+    "build": "rm ./src/common/url.js && cp ./src/common/url-production.js ./src/common/url.js react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "./node_modules/.bin/standard",
