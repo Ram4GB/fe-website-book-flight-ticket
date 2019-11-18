@@ -6,7 +6,8 @@ export default function(dispatch, props) {
     orderTicket: async data => {
       let dataSend = {};
       let flight_id = data.flight_id;
-      dataSend.seat_class_id = data.seat_class_id;
+      let temp = JSON.parse(data.seatClass);
+      dataSend.seat_class_id = temp.id;
       dataSend.passengers = data.passengers;
       let result = await fetchAuthLoading({
         url: `${DEFAULT_URL}/flight/${flight_id}/order`,

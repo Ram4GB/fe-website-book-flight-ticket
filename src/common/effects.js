@@ -15,7 +15,7 @@ export const fetchLoading = async ({ params, method, data, url }) => {
     data
   })
     .then(response => response)
-    .catch(errors => errors);
+    .catch(errors => errors.response);
 };
 
 export const fetchAuthLoading = async ({
