@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Table, Tag, Button, notification } from "antd";
+import { Card, Table, Tag, Button, notification, Avatar } from "antd";
 import Column from "antd/lib/table/Column";
 import numeral from "numeral";
 import modal from "../../../common/components/widgets/Modal";
@@ -78,7 +78,7 @@ export class OrderListComponent extends Component {
     await sortTable(this, pagination, sorter);
   }
   render() {
-    const { orders } = this.props;
+    const { orders, user } = this.props;
     const { total, page } = this.state;
     return (
       <Card>
@@ -91,14 +91,26 @@ export class OrderListComponent extends Component {
           dataSource={orders}
           onChange={this.handleChangeTable}
           rowKey={e => e.id}
+          scroll={{ x: 1300 }}
         >
           <Column
+            fixed={"left"}
+            width={120}
             align="center"
             title="Mã hóa đơn"
             sorter
             dataIndex="id"
+            render={value => {
+              return (
+                <>
+                  <Avatar src="https://static.vecteezy.com/system/resources/previews/000/350/512/non_2x/invoice-vector-icon.jpg" />
+                  {value}
+                </>
+              );
+            }}
           ></Column>
           <Column
+            width={200}
             title="Tổng tiền"
             sorter
             dataIndex="total_price"
@@ -111,56 +123,70 @@ export class OrderListComponent extends Component {
             }}
           ></Column>
           <Column
+            width={100}
             title="Trạng thái"
             sorter
             dataIndex="status"
             render={value => {
               return value === "New" ? (
-                <Tag color="#678DD7">Chờ xét duyệt</Tag>
+                <Tag color="orange">Cần update bằng chứng</Tag>
               ) : value === "Approved" ? (
                 <Tag color="#1EDB31">Đã thanh toán</Tag>
-              ) : (
+              ) : value === "Rejected" ? (
                 <Tag color="red">Đã hủy</Tag>
-              );
+              ) : null;
             }}
           ></Column>
           <Column
             align="center"
             title="Bằng chứng thanh toán"
             render={record => {
-              return (
-                <p
-                  onClick={this.showEvidence}
-                  style={{ color: "blue", cursor: "pointer" }}
-                >
-                  Xem
-                </p>
-              );
+              if (record.status === "New") return <Tag>None</Tag>;
+              else
+                return (
+                  <p
+                    onClick={this.showEvidence}
+                    style={{ color: "blue", cursor: "pointer" }}
+                  >
+                    Xem
+                  </p>
+                );
             }}
           ></Column>
           <Column
             title="Thao tác"
             render={record => {
-              return (
-                <>
-                  <Button
-                    onClick={() => this.handleConfirm(record.id)}
-                    size="small"
-                    type="primary"
-                    icon="edit"
-                  >
-                    Xác nhận
-                  </Button>{" "}
-                  <Button
-                    onClick={() => this.showModalReject(record.id)}
-                    size="small"
-                    type="danger"
-                    icon="close-circle"
-                  >
-                    Từ chối
+              console.log(user);
+              if (user && user.role === "CUSTOMER" && record.status === "New")
+                return (
+                  <Button icon="edit" size="small" type="primary">
+                    Thêm bằng chứng thanh toán
                   </Button>
-                </>
-              );
+                );
+              else if (
+                (user && user.role === "STAFF") ||
+                (user.role === "ADMIN" && record.status === "New")
+              )
+                return (
+                  <>
+                    <Button
+                      onClick={() => this.handleConfirm(record.id)}
+                      size="small"
+                      type="primary"
+                      icon="edit"
+                    >
+                      Xác nhận
+                    </Button>{" "}
+                    <Button
+                      onClick={() => this.showModalReject(record.id)}
+                      size="small"
+                      type="danger"
+                      icon="close-circle"
+                    >
+                      Từ chối
+                    </Button>
+                  </>
+                );
             }}
           ></Column>
         </Table>

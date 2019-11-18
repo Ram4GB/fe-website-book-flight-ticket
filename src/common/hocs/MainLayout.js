@@ -28,7 +28,6 @@ export class MainLayout extends Component {
     const { pathname } = this.props.location;
     let split = pathname.split("/");
     let defaultPath = `admin/` + split[2];
-    console.log(defaultPath);
     // /admin/customer/1
     // /admin/customer
     const { mode } = this.props;
@@ -196,8 +195,5 @@ const mapDispatchToProps = dispatch => {
   };
 };
 export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(MainLayout)
+  connect(mapStateToProps, mapDispatchToProps)(MainLayout)
 );

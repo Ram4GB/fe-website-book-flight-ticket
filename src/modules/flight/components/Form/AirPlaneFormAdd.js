@@ -1,5 +1,14 @@
 import React, { Component } from "react";
-import { Form, Input, Row, Col, Button, notification } from "antd";
+import {
+  Form,
+  Input,
+  Row,
+  Col,
+  Button,
+  notification,
+  Upload,
+  Icon
+} from "antd";
 import ReactQuill from "react-quill";
 import { addAirplane } from "../../handlers";
 import { catchErrorAndNotification } from "../../../../common/utils/Notification";
@@ -10,6 +19,16 @@ class AirPlaneFormAdd extends Component {
     super(props);
     this.state = {};
     this.handleSubmit = this.handleSubmit.bind(this);
+    /**
+     * Start upload Image
+     */
+    this.dummyRequest = this.dummyRequest.bind(this);
+    this.beforeUpload = this.beforeUpload.bind(this);
+    this.normFile = this.normFile.bind(this);
+    this.handleChangeFile = this.handleChangeFile.bind(this);
+    /**
+     * End upload Image
+     */
     this.editorModules = {
       toolbar: [
         [{ header: "1" }, { header: "2" }, { font: [] }],
@@ -59,10 +78,62 @@ class AirPlaneFormAdd extends Component {
       }
     });
   }
+  /**
+   *
+   * Upload Logo
+   */
+  dummyRequest({ file, onSuccess }) {
+    setTimeout(() => {
+      onSuccess("ok");
+    }, 0);
+  }
+
+  beforeUpload(file, fileList) {
+    return true;
+  }
+
+  handleChangeFile(info) {
+    if (info.file.status === "uploading") {
+      return this.normFile(info);
+    }
+    if (info.file.status === "done") {
+    }
+    return this.normFile(info);
+  }
+  normFile(e) {
+    console.log("Upload event:", e);
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e && e.fileList;
+  }
+  /**End Upload Logo */
+
   render() {
     const { getFieldDecorator } = this.props.form;
+    const { form } = this.props;
+    const file = form.getFieldValue("file") || [];
     return (
       <Form onSubmit={this.handleSubmit}>
+        <Form.Item label="File">
+          {getFieldDecorator("document", {
+            valuePropName: "fileList",
+            getValueFromEvent: this.handleChangeFile
+          })(
+            <Upload
+              name="file"
+              listType="text"
+              customRequest={this.dummyRequest}
+              beforeUpload={this.beforeUpload}
+            >
+              {file.length <= 0 ? (
+                <Button>
+                  <Icon type="plus" /> Nhấn đế thêm logo
+                </Button>
+              ) : null}
+            </Upload>
+          )}
+        </Form.Item>
         <Form.Item label="Tên hãng hàng không">
           {getFieldDecorator("name", {
             rules: [

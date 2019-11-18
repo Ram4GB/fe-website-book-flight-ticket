@@ -68,23 +68,27 @@ export class MainLayoutFrontPage extends Component {
 
           <div className="collapse navbar-collapse" id="navbarColor01">
             <ul className="navbar-nav ml-auto">
-              <li
-                className={`nav-item ${
-                  path === "/new-account" ? "active" : null
-                }`}
-              >
-                <Link className="nav-link" to="/new-account">
-                  Đăng ký <span className="sr-only">(current)</span>
-                </Link>
-              </li>
               {_.isEmpty(user) === false ? null : (
-                <li
-                  className={`nav-item ${path === "/login" ? "active" : null}`}
-                >
-                  <Link className="nav-link" to="/login">
-                    Đăng nhập <span className="sr-only">(current)</span>
-                  </Link>
-                </li>
+                <>
+                  <li
+                    className={`nav-item ${
+                      path === "/login" ? "active" : null
+                    }`}
+                  >
+                    <Link className="nav-link" to="/login">
+                      Đăng nhập <span className="sr-only">(current)</span>
+                    </Link>
+                  </li>
+                  <li
+                    className={`nav-item ${
+                      path === "/new-account" ? "active" : null
+                    }`}
+                  >
+                    <Link className="nav-link" to="/new-account">
+                      Đăng ký <span className="sr-only">(current)</span>
+                    </Link>
+                  </li>
+                </>
               )}
               {!_.isEmpty(user) ? (
                 <li className="nav-item">
@@ -98,7 +102,9 @@ export class MainLayoutFrontPage extends Component {
                   path === "/admin/dashboard" ? "active" : null
                 }`}
               >
-                {user.role === "ADMIN" || user.role === "STAFF" ? (
+                {user.role === "ADMIN" ||
+                user.role === "STAFF" ||
+                user.role === "CUSTOMER" ? (
                   <Link className="nav-link" to="/admin/dashboard">
                     Admin Page
                   </Link>

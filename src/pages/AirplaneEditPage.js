@@ -22,6 +22,16 @@ export class AirplaneEditPage extends Component {
       airline: {}
     };
     this.handleSubmit = this.handleSubmit.bind(this);
+    /**
+     * Start upload Image
+     */
+    this.dummyRequest = this.dummyRequest.bind(this);
+    this.beforeUpload = this.beforeUpload.bind(this);
+    this.normFile = this.normFile.bind(this);
+    this.handleChangeFile = this.handleChangeFile.bind(this);
+    /**
+     * End upload Image
+     */
   }
   handleSubmit(e) {
     e.preventDefault();
@@ -47,10 +57,41 @@ export class AirplaneEditPage extends Component {
   async componentDidMount() {
     await this.getAirplaneByID();
   }
+  /**
+   *
+   * Upload Logo
+   */
+  dummyRequest({ file, onSuccess }) {
+    setTimeout(() => {
+      onSuccess("ok");
+    }, 0);
+  }
+
+  beforeUpload(file, fileList) {
+    return true;
+  }
+
+  handleChangeFile(info) {
+    if (info.file.status === "uploading") {
+      return this.normFile(info);
+    }
+    if (info.file.status === "done") {
+    }
+    return this.normFile(info);
+  }
+  normFile(e) {
+    console.log("Upload event:", e);
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e && e.fileList;
+  }
+  /**End Upload Logo */
   render() {
     const { getFieldDecorator } = this.props.form;
     const { airline } = this.state;
-
+    const { form } = this.props;
+    const file = form.getFieldValue("file") || [];
     return (
       <>
         <CustomBreadcrumb
@@ -108,16 +149,20 @@ export class AirplaneEditPage extends Component {
                 </Col>
                 <Col lg={8}>
                   <Form.Item label="Logo">
-                    {getFieldDecorator("logo", {
+                    {getFieldDecorator("document", {
                       rules: [
                         {
                           required: false,
                           message: "Xin chọn logo"
                         }
                       ],
-                      initialValue: airline.logo
+                      valuePropName: "fileList",
+                      getValueFromEvent: this.handleChangeFile
                     })(
-                      <Upload>
+                      <Upload
+                        customRequest={this.dummyRequest}
+                        beforeUpload={this.beforeUpload}
+                      >
                         <Button>
                           <Icon type="upload" /> Click to Upload
                         </Button>

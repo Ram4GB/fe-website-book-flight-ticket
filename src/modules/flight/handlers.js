@@ -2,12 +2,13 @@ import { fetchAuthLoading, fetchLoading } from "../../common/effects";
 import { DEFAULT_URL } from "../../common/url";
 import * as actions from "./actions";
 import removeNullObject from "../../common/utils/removeObjectNull";
+import { upLoadFile } from "../../common/utils/uploadFile";
 
 export const addAirplane = async data => {
   let result = await fetchAuthLoading({
     url: `${DEFAULT_URL}/airline`,
     method: "POST",
-    data
+    data: upLoadFile(data)
   });
   if (result && result.data) return result.data;
   else return { success: false, error: "Server error" };
@@ -18,7 +19,7 @@ export const updateAirpplane = async (id, data) => {
   delete data.phone;
   let result = await fetchAuthLoading({
     url: `${DEFAULT_URL}/airline/${id}`,
-    data,
+    data: upLoadFile(data),
     method: "PUT"
   });
   if (result && result.data) return result.data;
@@ -67,7 +68,6 @@ export default function(dispatch, props) {
         }
       });
       if (result && result.data) {
-        console.log(1);
         dispatch(actions.getListAirPlane(result.data.data));
         return result.data;
       } else return { success: false, error: "Server error" };
