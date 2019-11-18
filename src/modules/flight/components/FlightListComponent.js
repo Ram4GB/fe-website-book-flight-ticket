@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Card, Table, Input, Button } from "antd";
 import Column from "antd/lib/table/Column";
 import { catchErrorAndNotification } from "../../../common/utils/Notification";
+import moment from "moment";
 
 export class FlightListComponent extends Component {
   constructor(props) {
@@ -29,7 +30,7 @@ export class FlightListComponent extends Component {
     } else catchErrorAndNotification(result.error);
   }
   componentDidMount() {
-    // this.getData();
+    this.getData();
   }
   handleChangeTable(pagination) {
     this.getData(pagination.current);
@@ -69,23 +70,27 @@ export class FlightListComponent extends Component {
           rowKey={e => e.airlines}
           dataSource={flights}
         >
-          <Column
+          {/* <Column
             title="Hãng hàng không"
             key="airlines"
             width="25%"
             render={record => {
-              return <p className="table-name">{record.airlines}</p>;
+              return (
+                <>
+                  <p className="table-name">{record.airlines}</p>
+                </>
+              );
             }}
-          ></Column>
+          ></Column> */}
           <Column
             title="Điểm đi"
             key="from"
             render={record => {
               return (
                 <>
-                  <strong>{record.departure}</strong>
+                  {/* <strong>{record.departure}</strong> */}
                   <p className="table-name" style={{ fontSize: "13px" }}>
-                    {record.departureTime}
+                    {record.start_airport.name}
                   </p>
                 </>
               );
@@ -97,19 +102,31 @@ export class FlightListComponent extends Component {
             render={record => {
               return (
                 <>
-                  <strong>{record.arrival}</strong>
+                  {/* <strong>{record.arrival}</strong> */}
                   <p className="table-name" style={{ fontSize: "13px" }}>
-                    {record.arrivalTime}
+                    {record.end_airport.name}
                   </p>
                 </>
               );
             }}
           ></Column>
           <Column
-            title="Số lượng ghế"
-            dataIndex="slot"
-            key="slot"
+            title="Số lượng loại ghế"
+            dataIndex="seats"
+            key="seats"
             align="center"
+            render={record => {
+              return record.length;
+            }}
+          ></Column>
+          <Column
+            title="Ngày bay"
+            dataIndex="flight_date"
+            key="flight_date"
+            align="center"
+            render={record => {
+              return moment(record).format("DD/MM/YYYY");
+            }}
           ></Column>
           <Column
             title="Thao tác"

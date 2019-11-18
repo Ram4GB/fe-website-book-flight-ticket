@@ -57,6 +57,7 @@ code {
 }
 .table-name:hover {
   text-decoration: underline;
+  font-weight: bold;
 }
 
 .logo-brand {
@@ -77,4 +78,9 @@ code {
 .navbar-brand img {
   width: 60px;
   height: 60px;
+}
+
+.seat .ant-card-head {
+  background-color: #1890ff;
+  color: #e9e9e9;
 }

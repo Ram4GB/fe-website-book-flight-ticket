@@ -1,6 +1,7 @@
 import { fetchAuthLoading } from "../../common/effects";
 import { DEFAULT_URL } from "../../common/url";
 import * as actions from "./actions";
+import removeNullObject from "../../common/utils/removeObjectNull";
 
 export const addAirplane = async data => {
   let result = await fetchAuthLoading({
@@ -56,6 +57,7 @@ export const updateAirport = async (id, data) => {
 export default function(dispatch, props) {
   return {
     getListAirPlane: async (page, params) => {
+      params = removeNullObject(params);
       let result = await fetchAuthLoading({
         url: `${DEFAULT_URL}/airline`,
         method: "GET",
@@ -65,6 +67,7 @@ export default function(dispatch, props) {
         }
       });
       if (result && result.data) {
+        console.log(1);
         dispatch(actions.getListAirPlane(result.data.data));
         return result.data;
       } else return { success: false, error: "Server error" };
@@ -116,6 +119,7 @@ export default function(dispatch, props) {
       return { success: false, error: "Server error" };
     },
     getListAirport: async (page, params) => {
+      params = removeNullObject(params);
       let result = await fetchAuthLoading({
         url: `${DEFAULT_URL}/airport`,
         method: "GET",
@@ -128,6 +132,16 @@ export default function(dispatch, props) {
         dispatch(actions.getListAirport(result.data.data));
         return result.data;
       } else return { success: false, error: "Server error" };
+    },
+    addFlight: async data => {
+      delete data.airline_id;
+      let result = await fetchAuthLoading({
+        url: `${DEFAULT_URL}/flight`,
+        method: "POST",
+        data: data
+      });
+      if (result && result.data) return result.data;
+      else return { success: false, error: "Server error" };
     }
   };
 }
