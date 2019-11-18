@@ -4,7 +4,7 @@ import * as actions from "./actions";
 
 export default function(dispatch) {
   return {
-    getListSeatClass: async (page, params) => {
+    getListSeatClass: async (page = 1, params = {}) => {
       let result = await fetchAuthLoading({
         url: `${DEFAULT_URL}/seatclass`,
         method: "GET",
@@ -13,14 +13,15 @@ export default function(dispatch) {
           page
         }
       });
+      console.log(result);
       if (result && result.data) {
         dispatch(actions.getListClassSeat(result.data.data));
         return result.data;
-      } else
-        return {
-          success: false,
-          error: "Server error"
-        };
+      }
+      return {
+        success: false,
+        error: "Seat Class is not published"
+      };
     },
     createSeatClass: async data => {
       let result = await fetchAuthLoading({

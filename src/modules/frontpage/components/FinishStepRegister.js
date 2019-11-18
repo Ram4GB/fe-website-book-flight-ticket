@@ -1,10 +1,18 @@
 import React, { Component } from "react";
-import { Row, Col, Card } from "antd";
+import { Row, Col, Card, notification } from "antd";
 import Lottie from "../../../common/libraries/Lottie";
+import { connect } from "react-redux";
+import handlers from "../../order/handlers";
+import { catchErrorAndNotification } from "../../../common/utils/Notification";
 
 export class FinishStepRegister extends Component {
-  componentDidMount() {
-    console.log(this.props.paramsRegisterFly);
+  async componentDidMount() {
+    let result = await this.props.orderTicket(this.props.paramsRegisterFly);
+    if (result && result.success) {
+      notification.success({
+        message: "Bạn đã order thành công"
+      });
+    } else catchErrorAndNotification(result.error);
   }
   render() {
     const { paramsRegisterFly } = this.props;
@@ -61,4 +69,10 @@ export class FinishStepRegister extends Component {
   }
 }
 
-export default FinishStepRegister;
+const mapDispatchToProps = dispatch => {
+  return {
+    ...handlers(dispatch)
+  };
+};
+
+export default connect(null, mapDispatchToProps)(FinishStepRegister);

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, notification } from "antd";
 import Modal from "../../../../common/components/widgets/Modal";
+import { catchErrorAndNotification } from "../../../../common/utils/Notification";
 
 class OrderRejectForm extends Component {
   constructor(props) {
@@ -9,9 +10,16 @@ class OrderRejectForm extends Component {
   }
   handleSubmit(e) {
     e.preventDefault();
-    this.props.form.validateFields((errors, values) => {
+    this.props.form.validateFields(async (errors, values) => {
       if (!errors) {
-        console.log(values);
+        let result = await this.props.rejectOrder(this.props.id, values);
+        if (result && result.success) {
+          notification.success({
+            message: "Xác nhận thành công"
+          });
+          this.props.getData();
+          Modal.hide();
+        } else catchErrorAndNotification(result.error);
       }
     });
   }
@@ -20,7 +28,7 @@ class OrderRejectForm extends Component {
     return (
       <Form onSubmit={this.handleSubmit}>
         <Form.Item label={<strong>Lý do từ chối</strong>}>
-          {getFieldDecorator("text", {
+          {getFieldDecorator("reject_reason", {
             rules: [{ message: "Xin mời nhập lý do", required: true }]
           })(
             <Input.TextArea

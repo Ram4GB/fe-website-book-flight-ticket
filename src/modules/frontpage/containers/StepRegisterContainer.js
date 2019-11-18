@@ -1,11 +1,13 @@
 import StepRegisterComponent from "../components/StepRegisterComponent";
 import { connect } from "react-redux";
+import { MODULE_NAME as MODULE_USER } from "../../user/models";
 import { MODULE_NAME } from "../models";
-import handlers from '../handlers'
+import handlers from "../handlers";
 
 const mapStateToProps = state => {
   return {
-    paramsRegisterFly:state[MODULE_NAME].paramsRegisterFly
+    paramsRegisterFly: state[MODULE_NAME].paramsRegisterFly,
+    user: state[MODULE_USER].user
   };
 };
 
