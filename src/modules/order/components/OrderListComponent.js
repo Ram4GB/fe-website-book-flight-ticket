@@ -5,39 +5,36 @@ import numeral from "numeral";
 import modal from "../../../common/components/widgets/Modal";
 import OrderRejectForm from "./Form/OrderRejectForm";
 import { sortTable } from "../../../common/utils/sortTable";
+import { catchErrorAndNotification } from "../../../common/utils/Notification";
 
 export class OrderListComponent extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      page: 1,
+      params: {},
+      total: 0
+    };
     this.showEvidence = this.showEvidence.bind(this);
     this.handleChangeTable = this.handleChangeTable.bind(this);
+    this.handleConfirm = this.handleConfirm.bind(this);
+    this.getData = this.getData.bind(this);
   }
-  renderDataSource() {
-    let arr = [];
-    for (let i = 0; i < 5; i++) {
-      arr.push({
-        id: i,
-        total: 20000,
-        status: 1
-      });
-    }
-    for (let i = 5; i < 10; i++) {
-      arr.push({
-        id: i,
-        total: 20000,
-        status: 0
-      });
-    }
-    return arr;
-  }
-  showModalReject() {
-    modal.show(<OrderRejectForm></OrderRejectForm>, {
-      title: <strong>TỪ CHỐI ĐƠN HÀNG</strong>,
-      width: "50%",
-      style: {
-        top: 20
+  showModalReject(id) {
+    modal.show(
+      <OrderRejectForm
+        rejectOrder={this.props.rejectOrder}
+        getData={this.getData}
+        id={id}
+      ></OrderRejectForm>,
+      {
+        title: <strong>TỪ CHỐI ĐƠN HÀNG</strong>,
+        width: "50%",
+        style: {
+          top: 20
+        }
       }
-    });
+    );
   }
   showEvidence() {
     modal.show(
@@ -55,21 +52,45 @@ export class OrderListComponent extends Component {
       }
     );
   }
-  handleConfirm() {
-    notification.success({
-      message: "Xác nhận thành công"
-    });
+  async handleConfirm(id) {
+    let result = await this.props.approveOrder(id);
+    if (result && result.success) {
+      notification.success({
+        message: "Xác nhận thành công"
+      });
+      this.getData();
+    } else catchErrorAndNotification(result.error);
+  }
+  async getData(input = 1) {
+    let next = input || this.state.page;
+    let result = await this.props.getListOrder(next, this.state.params);
+    if (result && result.success) {
+      this.setState({
+        total: result.totalRecord,
+        page: next
+      });
+    } else catchErrorAndNotification(result.error);
+  }
+  componentDidMount() {
+    this.getData();
   }
   async handleChangeTable(pagination, filter, sorter) {
     await sortTable(this, pagination, sorter);
   }
   render() {
+    const { orders } = this.props;
+    const { total, page } = this.state;
     return (
       <Card>
         <Table
+          pagination={{
+            total,
+            current: page,
+            size: "small"
+          }}
+          dataSource={orders}
           onChange={this.handleChangeTable}
           rowKey={e => e.id}
-          dataSource={this.renderDataSource()}
         >
           <Column
             align="center"
@@ -80,7 +101,7 @@ export class OrderListComponent extends Component {
           <Column
             title="Tổng tiền"
             sorter
-            dataIndex="total"
+            dataIndex="total_price"
             render={value => {
               return (
                 <p style={{ color: "#FFA801", fontWeight: "bold" }}>
@@ -94,10 +115,12 @@ export class OrderListComponent extends Component {
             sorter
             dataIndex="status"
             render={value => {
-              return value ? (
+              return value === "New" ? (
+                <Tag color="#678DD7">Chờ xét duyệt</Tag>
+              ) : value === "Approved" ? (
                 <Tag color="#1EDB31">Đã thanh toán</Tag>
               ) : (
-                <Tag color="#678DD7">Chờ xét duyệt</Tag>
+                <Tag color="red">Đã hủy</Tag>
               );
             }}
           ></Column>
@@ -121,7 +144,7 @@ export class OrderListComponent extends Component {
               return (
                 <>
                   <Button
-                    onClick={this.handleConfirm}
+                    onClick={() => this.handleConfirm(record.id)}
                     size="small"
                     type="primary"
                     icon="edit"

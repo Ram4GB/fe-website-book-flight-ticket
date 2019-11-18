@@ -1,12 +1,11 @@
-import React, { Component } from 'react'
-import StepRegisterContainer from '../modules/frontpage/containers/StepRegisterContainer'
+import React, { Component } from "react";
+import StepRegisterContainer from "../modules/frontpage/containers/StepRegisterContainer";
 
 class StepRegisterPage extends Component {
-    render() {
-        return (
-            <StepRegisterContainer></StepRegisterContainer>
-        )
-    }
+  render() {
+    const { history } = this.props;
+    return <StepRegisterContainer history={history}></StepRegisterContainer>;
+  }
 }
 
-export default StepRegisterPage
+export default StepRegisterPage;

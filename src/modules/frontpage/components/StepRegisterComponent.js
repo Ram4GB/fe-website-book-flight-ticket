@@ -25,19 +25,20 @@ export class StepRegisterComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      current: 2
+      current: 0
     };
+    this.next = this.next.bind(this);
   }
-  next() {
+  next(id) {
     const current = this.state.current;
     const { validateFields } = this.props.form;
     switch (current) {
       case 0:
+        this.props.setParamsRegisterFly({ flight_id: id });
         return this.setState({ current: current + 1 });
       case 1:
         validateFields((errors, values) => {
           if (!errors) {
-            console.log(values);
             this.props.setParamsRegisterFly(values);
             return this.setState({ current: current + 1 });
           }
@@ -58,18 +59,27 @@ export class StepRegisterComponent extends Component {
   }
   showStepContent(current) {
     const { paramsRegisterFly } = this.props;
+    console.log(this.props.paramsRegisterFly);
     switch (current) {
       case 0:
-        return <FindFly paramsRegisterFly={paramsRegisterFly}></FindFly>;
+        return (
+          <FindFly
+            next={this.next}
+            paramsRegisterFly={paramsRegisterFly}
+          ></FindFly>
+        );
       case 1:
         return (
           <InformationCustomer
+            user={this.props.user}
+            history={this.props.history}
+            next={this.next}
             paramsRegisterFly={paramsRegisterFly}
             form={this.props.form}
           ></InformationCustomer>
         );
       case 2:
-        return <Payment></Payment>;
+        return <Payment next={this.next}></Payment>;
       case 3:
         return (
           <FinishStepRegister
@@ -83,34 +93,14 @@ export class StepRegisterComponent extends Component {
   render() {
     const { current } = this.state;
     return (
-      <Card style={{ margin: 24 }}>
+      <Card className="fix-card-padding-6" style={{ margin: 24 }}>
         <Steps className="fix-icon" current={current}>
           {steps.map(item => (
             <Step key={item.title} title={item.title} />
           ))}
         </Steps>
         <div className="steps-content">
-          <Card>{this.showStepContent(current)}</Card>
-        </div>
-        <div className="steps-action">
-          {current < steps.length - 1 && (
-            <Button type="primary" onClick={() => this.next()}>
-              Next
-            </Button>
-          )}
-          {current === steps.length - 1 && (
-            <Button
-              type="primary"
-              onClick={() => message.success("Processing complete!")}
-            >
-              Done
-            </Button>
-          )}
-          {current > 0 && (
-            <Button style={{ marginLeft: 8 }} onClick={() => this.prev()}>
-              Previous
-            </Button>
-          )}
+          <Card className="card-step">{this.showStepContent(current)}</Card>
         </div>
       </Card>
     );

@@ -8,9 +8,13 @@ import {
   DatePicker,
   InputNumber,
   Button,
-  Icon
+  Icon,
+  Select
 } from "antd";
 import moment from "moment";
+import { connect } from "react-redux";
+import handlers from "../../seat/handlers";
+import { catchErrorAndNotification } from "../../../common/utils/Notification";
 
 const nowDate = new Date();
 
@@ -18,10 +22,12 @@ class FormRegisterHomepage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      type: 1
+      type: 1,
+      seatClass: []
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChangeType = this.handleChangeType.bind(this);
+    this.showSeatClass = this.showSeatClass.bind(this);
   }
   handleSubmit(e) {
     e.preventDefault();
@@ -37,6 +43,26 @@ class FormRegisterHomepage extends Component {
       type: this.state.type === 1 ? 2 : 1
     });
   }
+  async getSeatClass() {
+    let result = await this.props.getListSeatClass();
+    if (result && result.success) {
+      this.setState({
+        seatClass: result.data
+      });
+    } else catchErrorAndNotification(result.error);
+  }
+  showSeatClass() {
+    return this.state.seatClass.map(seat => {
+      return (
+        <Select.Option key={seat.id} value={JSON.stringify(seat)}>
+          {seat.name}
+        </Select.Option>
+      );
+    });
+  }
+  async componentDidMount() {
+    await this.getSeatClass();
+  }
   render() {
     const { getFieldDecorator } = this.props.form;
     const { paramsRegisterFly } = this.props;
@@ -45,7 +71,7 @@ class FormRegisterHomepage extends Component {
       <Form onSubmit={this.handleSubmit}>
         <Form.Item>
           {getFieldDecorator("type", {
-            initialValue: 1
+            initialValue: 2
           })(
             <Radio.Group onChange={this.handleChangeType}>
               <Radio value={1}>Khứ hồi</Radio>
@@ -60,7 +86,7 @@ class FormRegisterHomepage extends Component {
         </Form.Item>
         <Form.Item label="Điểm đến">
           {getFieldDecorator("to", {
-            initialValue: ""
+            initialValue: paramsRegisterFly ? paramsRegisterFly.to : ""
           })(<Input size={"large"} prefix={<Icon type="environment" />} />)}
         </Form.Item>
         <Row gutter={6}>
@@ -93,19 +119,38 @@ class FormRegisterHomepage extends Component {
         </Row>
         <Row gutter={6}>
           <Col lg={12}>
-            <Form.Item label="Số người">
-              {getFieldDecorator("count", {
-                initialValue: 0
-              })(
-                <InputNumber
-                  className="w-100"
-                  prefix={<Icon type="user" />}
-                  size={"large"}
-                ></InputNumber>
-              )}
+            <Form.Item label="Loại ghế">
+              {getFieldDecorator("seatClass", {
+                rules: [
+                  {
+                    required: true,
+                    message: "Mời chọn loại ghế"
+                  }
+                ],
+                initialValue: paramsRegisterFly
+                  ? paramsRegisterFly.seatClass
+                  : ""
+              })(<Select size={"large"}>{this.showSeatClass()}</Select>)}
             </Form.Item>
           </Col>
           <Col lg={12}>
+            <Form.Item label="Số lượng">
+              {getFieldDecorator("count", {
+                rules: [
+                  {
+                    required: true,
+                    message: "Mời chọn số lượng"
+                  }
+                ],
+                initialValue: paramsRegisterFly ? paramsRegisterFly.count : ""
+              })(
+                <InputNumber size={"large"} style={{ width: "100%" }} min={0} />
+              )}
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row>
+          <Col lg={24}>
             <Form.Item style={{ paddingTop: 48 }}>
               <Button
                 className="w-100"
@@ -123,4 +168,17 @@ class FormRegisterHomepage extends Component {
   }
 }
 
-export default Form.create({ name: "form-create" })(FormRegisterHomepage);
+const mapStateToProps = state => {
+  return {};
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    ...handlers(dispatch)
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Form.create({ name: "form-create" })(FormRegisterHomepage));
