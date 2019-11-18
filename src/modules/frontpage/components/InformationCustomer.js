@@ -20,7 +20,13 @@ class InformationCustomer extends Component {
                 initialValue:
                   paramsRegisterFly && paramsRegisterFly.passengers
                     ? paramsRegisterFly.passengers[i].name
-                    : ""
+                    : "",
+                rules: [
+                  {
+                    required: true,
+                    message: "Mời bạn điền tên"
+                  }
+                ]
               })(
                 <Input
                   prefix={<Icon type="user" />}
@@ -40,7 +46,13 @@ class InformationCustomer extends Component {
                 initialValue:
                   paramsRegisterFly && paramsRegisterFly.passengers
                     ? paramsRegisterFly.passengers[i].identifier
-                    : ""
+                    : "",
+                rules: [
+                  {
+                    required: true,
+                    message: "Mời bạn điền CMND"
+                  }
+                ]
               })(
                 <Input
                   prefix={<Icon type="code" />}
