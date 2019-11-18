@@ -1,11 +1,11 @@
-import { fetchAuthLoading } from "../../common/effects";
+import { fetchAuthLoading, fetchLoading } from "../../common/effects";
 import { DEFAULT_URL } from "../../common/url";
 import * as actions from "./actions";
 
 export default function(dispatch) {
   return {
     getListSeatClass: async (page = 1, params = {}) => {
-      let result = await fetchAuthLoading({
+      let result = await fetchLoading({
         url: `${DEFAULT_URL}/seatclass`,
         method: "GET",
         params: {

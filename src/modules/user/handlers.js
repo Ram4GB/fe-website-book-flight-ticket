@@ -140,6 +140,17 @@ export default function(dispatch, props) {
     },
     addCustomer: async data => {
       let result = await addCustomerAsync(data);
+      console.log(result);
+      if (result && result.data) {
+        return result.data;
+      } else return { success: false, error: "Server error" };
+    },
+    signUp: async data => {
+      let result = await fetchLoading({
+        url: `${DEFAULT_URL}/customer/signup`,
+        data,
+        method: "POST"
+      });
       if (result && result.data) {
         return result.data;
       } else return { success: false, error: "Server error" };
