@@ -1,8 +1,28 @@
 import React, { Component } from "react";
 import { Card, Form, Input, Icon, Col, Row, Tag, Button, Alert } from "antd";
 import point from "../../../common/assets/images/01-point.png";
+import numeral from "numeral";
+import { withRouter } from "react-router";
 
 class InformationCustomer extends Component {
+  showTotalPrice(count, seats, seatClass) {
+    let ticket = seats.filter(item => {
+      let id = JSON.parse(seatClass).id;
+      if (id === item.seat_class_id) return true;
+      else return false;
+    })[0];
+    if (ticket) return ticket.price * count;
+    else return "No API";
+  }
+  showPrice(count, seats, seatClass) {
+    let ticket = seats.filter(item => {
+      let id = JSON.parse(seatClass).id;
+      if (id === item.seat_class_id) return true;
+      else return false;
+    })[0];
+    if (ticket) return ticket.price;
+    else return "No API";
+  }
   showCustomer(count) {
     const { paramsRegisterFly } = this.props;
     const { getFieldDecorator } = this.props.form;
@@ -14,11 +34,13 @@ class InformationCustomer extends Component {
             <Form.Item
               key={i}
               className="text-left"
-              label={<strong>Họ và tên</strong>}
+              label={<strong>Họ và tên hành khách {i + 1}</strong>}
             >
               {getFieldDecorator(`passengers[${i}].name`, {
                 initialValue:
-                  paramsRegisterFly && paramsRegisterFly.passengers
+                  paramsRegisterFly &&
+                  paramsRegisterFly.passengers &&
+                  paramsRegisterFly.passengers[i]
                     ? paramsRegisterFly.passengers[i].name
                     : "",
                 rules: [
@@ -40,11 +62,13 @@ class InformationCustomer extends Component {
             <Form.Item
               key={i}
               className="text-left"
-              label={<strong>CMND</strong>}
+              label={<strong>CMND hành khách {i + 1}</strong>}
             >
               {getFieldDecorator(`passengers[${i}].identifier`, {
                 initialValue:
-                  paramsRegisterFly && paramsRegisterFly.passengers
+                  paramsRegisterFly &&
+                  paramsRegisterFly.passengers &&
+                  paramsRegisterFly.passengers[i]
                     ? paramsRegisterFly.passengers[i].identifier
                     : "",
                 rules: [
@@ -68,7 +92,7 @@ class InformationCustomer extends Component {
     return arr;
   }
   render() {
-    const { paramsRegisterFly, user } = this.props;
+    const { paramsRegisterFly, user, flight } = this.props;
     const customer = user && user.Customer ? user.Customer : null;
     const { getFieldDecorator } = this.props.form;
     const { count } = this.props.paramsRegisterFly;
@@ -114,15 +138,37 @@ class InformationCustomer extends Component {
                 </div>
                 <div className="col">
                   <p className="strong">Số lượng:</p>
-                  <p>2</p>
+                  <p>
+                    {paramsRegisterFly && paramsRegisterFly.count
+                      ? paramsRegisterFly.count
+                      : 0}
+                  </p>
                 </div>
                 <div className="col">
                   <p className="strong">Giá vé:</p>
-                  <p>200.000đ</p>
+                  <p>
+                    {numeral(
+                      this.showPrice(
+                        paramsRegisterFly.count,
+                        flight.seats,
+                        paramsRegisterFly.seatClass
+                      )
+                    ).format("0,0")}
+                    đ
+                  </p>
                 </div>
                 <div className="col">
                   <p className="font-weight-bold strong">Tổng cộng</p>
-                  <p>400.000đ</p>
+                  <p>
+                    {numeral(
+                      this.showTotalPrice(
+                        paramsRegisterFly.count,
+                        flight.seats,
+                        paramsRegisterFly.seatClass
+                      )
+                    ).format("0,0")}
+                    đ
+                  </p>
                 </div>
               </div>
               <div className="row">
@@ -132,7 +178,14 @@ class InformationCustomer extends Component {
                     className="font-weight-bold"
                     style={{ color: "#FFA801" }}
                   >
-                    400.000đ
+                    {numeral(
+                      this.showTotalPrice(
+                        paramsRegisterFly.count,
+                        flight.seats,
+                        paramsRegisterFly.seatClass
+                      )
+                    ).format("0,0")}
+                    đ
                   </span>
                 </div>
               </div>
@@ -236,4 +289,4 @@ class InformationCustomer extends Component {
   }
 }
 
-export default InformationCustomer;
+export default withRouter(InformationCustomer);

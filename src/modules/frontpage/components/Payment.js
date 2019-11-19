@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Upload, Icon, Tag, Button } from "antd";
+import { Card, Tag } from "antd";
 import point from "../../../common/assets/images/01-point.png";
 
 export class Payment extends Component {

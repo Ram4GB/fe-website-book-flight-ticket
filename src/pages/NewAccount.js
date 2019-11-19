@@ -58,6 +58,7 @@ export class RegisterForm extends Component {
     const { success } = this.state;
     return (
       <Card
+        className="card-md-100"
         style={{
           width: "70%",
           margin: "10px auto"
@@ -67,6 +68,10 @@ export class RegisterForm extends Component {
           <Row>
             <Col lg={12}>
               <div>
+                <p className="text-intro">
+                  Là thành viên bạn sẽ nhận được nhiều ưu đãi. <br /> Thông tin
+                  này sẽ được dùng để liên hệ khi bạn đặt vé
+                </p>
                 <img
                   src={registerImg}
                   alt=""
@@ -91,6 +96,7 @@ export class RegisterForm extends Component {
                   strong="true"
                   level={4}
                   style={{ textAlign: "center" }}
+                  className="strong"
                 >
                   ĐĂNG KÝ NGAY
                 </Title>

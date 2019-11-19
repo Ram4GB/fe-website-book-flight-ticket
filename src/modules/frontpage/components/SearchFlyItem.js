@@ -27,8 +27,8 @@ export class SearchFlyItem extends Component {
     if (ticket) return ticket.price;
     else return "No API";
   }
-  handleClickItem(id) {
-    this.props.next(id);
+  handleClickItem(flight) {
+    this.props.next(flight);
   }
   render() {
     const { id, flight, paramsRegisterFly } = this.props;
@@ -88,7 +88,7 @@ export class SearchFlyItem extends Component {
             </div>
             <div className="col">
               <Button
-                onClick={() => this.handleClickItem(flight.id)}
+                onClick={() => this.handleClickItem(flight)}
                 size="large"
                 type="primary"
                 shape="round"

@@ -2,9 +2,7 @@ import { handleActions } from "redux-actions";
 import * as actions from "./actions";
 
 const initialState = {
-  paramsRegisterFly: {
-    count:4
-  }
+  paramsRegisterFly: {}
 };
 
 const reducerMap = {

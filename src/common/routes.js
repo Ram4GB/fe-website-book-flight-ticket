@@ -256,11 +256,6 @@ export class routes extends Component {
                   <InformationUser></InformationUser>
                 </MainLayout>
               </Route>
-              <Route exact path="/admin/dashboard">
-                <MainLayout mode="customer">
-                  <UnderConstruction></UnderConstruction>
-                </MainLayout>
-              </Route>
               <Route exact path="/admin/order">
                 <MainLayout mode="customer">
                   <OrderListPage></OrderListPage>

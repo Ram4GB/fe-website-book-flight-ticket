@@ -142,9 +142,12 @@ class FormRegisterHomepage extends Component {
                     message: "Mời chọn số lượng"
                   }
                 ],
-                initialValue: paramsRegisterFly ? paramsRegisterFly.count : ""
+                initialValue:
+                  paramsRegisterFly && paramsRegisterFly.count
+                    ? paramsRegisterFly.count
+                    : 1
               })(
-                <InputNumber size={"large"} style={{ width: "100%" }} min={0} />
+                <InputNumber size={"large"} style={{ width: "100%" }} min={1} />
               )}
             </Form.Item>
           </Col>

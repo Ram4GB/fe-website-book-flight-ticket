@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Steps, Button, message, Card, Form, notification } from "antd";
+import { Steps, Button, Card, Form, notification } from "antd";
 import FindFly from "./FindFly";
 import InformationCustomer from "./InformationCustomer";
 import FinishStepRegister from "./FinishStepRegister";
@@ -29,13 +29,13 @@ export class StepRegisterComponent extends Component {
     };
     this.next = this.next.bind(this);
   }
-  next(id) {
+  next(flight) {
     const current = this.state.current;
     const { validateFields } = this.props.form;
     switch (current) {
       case 0:
-        if (id) {
-          this.props.setParamsRegisterFly({ flight_id: id });
+        if (flight) {
+          this.props.setParamsRegisterFly({ flight_id: flight.id, flight });
           return this.setState({ current: current + 1 });
         } else
           notification.error({
@@ -82,6 +82,7 @@ export class StepRegisterComponent extends Component {
             next={this.next}
             paramsRegisterFly={paramsRegisterFly}
             form={this.props.form}
+            flight={paramsRegisterFly.flight}
           ></InformationCustomer>
         );
       case 2:
