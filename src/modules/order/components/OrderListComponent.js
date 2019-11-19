@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Table, Tag, Button, notification, Avatar } from "antd";
+import { Card, Table, Tag, Button, notification, Avatar, Input } from "antd";
 import Column from "antd/lib/table/Column";
 import numeral from "numeral";
 import modal from "../../../common/components/widgets/Modal";
@@ -82,6 +82,12 @@ export class OrderListComponent extends Component {
     const { total, page } = this.state;
     return (
       <Card>
+        <div style={{ overflow: "hidden", marginBottom: 5 }}>
+          <Input.Search
+            placeholder="Tìm mã hóa đơn"
+            style={{ float: "left", width: 200, marginLeft: 5 }}
+          />
+        </div>
         <Table
           pagination={{
             total,
@@ -94,8 +100,6 @@ export class OrderListComponent extends Component {
           scroll={{ x: 1300 }}
         >
           <Column
-            fixed={"left"}
-            width={120}
             align="center"
             title="Mã hóa đơn"
             sorter
@@ -110,7 +114,6 @@ export class OrderListComponent extends Component {
             }}
           ></Column>
           <Column
-            width={200}
             title="Tổng tiền"
             sorter
             dataIndex="total_price"
@@ -123,7 +126,6 @@ export class OrderListComponent extends Component {
             }}
           ></Column>
           <Column
-            width={100}
             title="Trạng thái"
             sorter
             dataIndex="status"

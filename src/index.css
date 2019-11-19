@@ -90,7 +90,36 @@ code {
   color: #111;
 }
 
+.ant-layout-sider-zero-width-trigger.ant-layout-sider-zero-width-trigger-left {
+  top: 7px;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background-color: #f5f5f5;
+}
+
+.image-logo-flight {
+  width: 50px;
+  margin-top: 10px;
+  margin-right: 30px;
+}
+
+.text-intro {
+  margin-top: 50px;
+  font-size: 1.2em;
+  text-align: justify;
+  color: #1890ff;
+  text-align: center;
+  line-height: 1.5;
+  font-weight: bold;
+}
+
 @media screen and (max-width: 600px) {
+  .text-intro {
+    font-size: 1em;
+  }
   .card-step > .ant-card-body {
     padding: 5px;
   }
@@ -140,6 +169,12 @@ code {
     color: #111;
   }
   .evidence-img {
+    width: 100%;
+  }
+  .card-md-100 {
+    width: 90% !important;
+  }
+  .card-md-100 .ant-card-body {
     width: 100%;
   }
 }

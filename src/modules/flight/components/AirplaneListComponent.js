@@ -4,8 +4,9 @@ import Column from "antd/lib/table/Column";
 import { catchErrorAndNotification } from "../../../common/utils/Notification";
 import modal from "../../../common/components/widgets/Modal";
 import AirPlaneFormAdd from "./Form/AirPlaneFormAdd";
-import imageFlight from "../../../common/assets/images/flight.png";
+// import imageFlight from "../../../common/assets/images/flight.png";
 import { sortTable } from "../../../common/utils/sortTable";
+import { DEFAULT_URL } from "../../../common/url";
 
 export class AirplaneListComponent extends Component {
   constructor(props) {
@@ -88,7 +89,7 @@ export class AirplaneListComponent extends Component {
               return (
                 <div style={{ display: "flex", alignItems: "center" }}>
                   <div style={{ marginRight: 5 }}>
-                    <Avatar src={imageFlight} />
+                    <Avatar src={DEFAULT_URL + "/" + record.logo} />
                   </div>
                   <div>
                     <p

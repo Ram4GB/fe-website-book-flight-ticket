@@ -105,21 +105,35 @@ export class FlightAddPage extends Component {
         <Row key={`seat-${i}`} gutter={8}>
           <Col lg={8}>
             <Form.Item label="Hạng ghế">
-              {getFieldDecorator(`seat[${i}].seat_class_id`)(
-                <Select>{this.showOption()}</Select>
-              )}
+              {getFieldDecorator(`seat[${i}].seat_class_id`, {
+                rules: [
+                  {
+                    required: true
+                  }
+                ]
+              })(<Select>{this.showOption()}</Select>)}
             </Form.Item>
           </Col>
           <Col lg={6}>
             <Form.Item label="Số lượng">
-              {getFieldDecorator(`seat[${i}].quantity`)(
-                <InputNumber style={{ width: "100%" }} min={0} />
-              )}
+              {getFieldDecorator(`seat[${i}].quantity`, {
+                rules: [
+                  {
+                    required: true
+                  }
+                ]
+              })(<InputNumber style={{ width: "100%" }} min={0} />)}
             </Form.Item>
           </Col>
           <Col lg={6}>
             <Form.Item label="Giá">
-              {getFieldDecorator(`seat[${i}].price`)(
+              {getFieldDecorator(`seat[${i}].price`, {
+                rules: [
+                  {
+                    required: true
+                  }
+                ]
+              })(
                 <InputNumber
                   style={{ width: "100%" }}
                   formatter={value =>

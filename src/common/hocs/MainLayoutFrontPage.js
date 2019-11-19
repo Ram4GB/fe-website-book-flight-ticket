@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { Layout, Row, Col, Input, Icon, notification } from "antd";
-import logo from "../assets/images/logo.png";
-import logofooter from "../assets/images/logo-footer.png";
+// import logo from "../assets/images/logo.png";
+// import logofooter from "../assets/images/logo-footer.png";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import handlers from "../../modules/user/handlers";
@@ -52,7 +52,11 @@ export class MainLayoutFrontPage extends Component {
           className="navbar navbar-expand-lg navbar-dark"
         >
           <a className="navbar-brand" href="/#">
-            <img alt="logo" src={logo} />
+            <img
+              style={{ width: 100, height: "auto" }}
+              alt="logo"
+              src="https://res.flynow.vn/logoflynow.png"
+            />
           </a>
           <button
             className="navbar-toggler"
@@ -105,8 +109,15 @@ export class MainLayoutFrontPage extends Component {
                 {user.role === "ADMIN" ||
                 user.role === "STAFF" ||
                 user.role === "CUSTOMER" ? (
-                  <Link className="nav-link" to="/admin/dashboard">
-                    Admin Page
+                  <Link
+                    className="nav-link"
+                    to={
+                      user.role === "CUSTOMER"
+                        ? "/admin/order"
+                        : "/admin/dashboard"
+                    }
+                  >
+                    {user.role === "CUSTOMER" ? "Hóa đơn" : "Admin Page"}
                   </Link>
                 ) : null}
               </li>
@@ -127,9 +138,9 @@ export class MainLayoutFrontPage extends Component {
           <Row>
             <Col lg={6}>
               <img
-                alt="logo-footer"
-                style={{ width: "auto", height: 70 }}
-                src={logofooter}
+                style={{ width: 150, height: "auto" }}
+                alt="logo"
+                src="https://res.flynow.vn/logoflynow.png"
               />
             </Col>
             <Col lg={6}>

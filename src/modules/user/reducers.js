@@ -4,10 +4,19 @@ const initialState = {
   users: [],
   staffs: [],
   user: {},
-  login: false
+  login: false,
+  loading: false
 };
 
 const reducerMap = {
+  [actions.loadingTrue]: (state, action) => ({
+    ...state,
+    loading: true
+  }),
+  [actions.loadingFalse]: (state, action) => ({
+    ...state,
+    loading: false
+  }),
   [actions.login]: (state, action) => {
     return {
       ...state,

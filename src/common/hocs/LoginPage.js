@@ -6,10 +6,17 @@ import loginleftimg from "../assets/images/login-left-img.png";
 export class LoginPage extends Component {
   render() {
     return (
-      <Card style={{ margin: "24px auto", width: "60%", minWidth: 300 }}>
+      <Card
+        className="card-md-100"
+        style={{ margin: "10px auto", width: "70%", minWidth: 300 }}
+      >
         <Row style={{ padding: 30 }}>
           <Col lg={12}>
-            <img alt='' style={{ width: "100%", maxWidth: 400 }} src={loginleftimg} />
+            <img
+              alt=""
+              style={{ width: "100%", maxWidth: 400 }}
+              src={loginleftimg}
+            />
           </Col>
           <Col lg={12}>
             <p

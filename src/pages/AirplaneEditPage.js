@@ -90,8 +90,8 @@ export class AirplaneEditPage extends Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     const { airline } = this.state;
-    const { form } = this.props;
-    const file = form.getFieldValue("file") || [];
+    // const { form } = this.props;
+    // const file = form.getFieldValue("file") || [];
     return (
       <>
         <CustomBreadcrumb

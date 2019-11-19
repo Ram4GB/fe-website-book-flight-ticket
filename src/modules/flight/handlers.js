@@ -59,7 +59,7 @@ export default function(dispatch, props) {
   return {
     getListAirPlane: async (page, params) => {
       params = removeNullObject(params);
-      let result = await fetchAuthLoading({
+      let result = await fetchLoading({
         url: `${DEFAULT_URL}/airline`,
         method: "GET",
         params: {
