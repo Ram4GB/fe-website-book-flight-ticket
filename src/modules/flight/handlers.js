@@ -87,7 +87,7 @@ export default function(dispatch, props) {
       } else return { success: false, error: "Server error" };
     },
     getListLocation: async (page, params) => {
-      let result = await fetchAuthLoading({
+      let result = await fetchLoading({
         url: `${DEFAULT_URL}/location`,
         method: "GET",
         params: {

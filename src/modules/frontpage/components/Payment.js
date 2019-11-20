@@ -1,9 +1,30 @@
 import React, { Component } from "react";
 import { Card, Tag } from "antd";
 import point from "../../../common/assets/images/01-point.png";
+import moment from "moment";
+import numeral from "numeral";
 
 export class Payment extends Component {
+  showTotalPrice(count, seats, seatClass) {
+    let ticket = seats.filter(item => {
+      let id = JSON.parse(seatClass).id;
+      if (id === item.seat_class_id) return true;
+      else return false;
+    })[0];
+    if (ticket) return ticket.price * count;
+    else return "No API";
+  }
+  showPrice(count, seats, seatClass) {
+    let ticket = seats.filter(item => {
+      let id = JSON.parse(seatClass).id;
+      if (id === item.seat_class_id) return true;
+      else return false;
+    })[0];
+    if (ticket) return ticket.price;
+    else return "No API";
+  }
   render() {
+    const { flight, paramsRegisterFly } = this.props;
     return (
       <Card>
         <h5 className="font-weight-bold">
@@ -26,35 +47,74 @@ export class Payment extends Component {
                   }}
                 >
                   <div>
-                    <p className="font-weight-bold strong">Hà Nội</p>
-                    <Tag>21:15, 12/11/2019</Tag>
-                    <p className="strong">Sân bay Hà nội</p>
+                    <p className="font-weight-bold strong">
+                      {flight.start_airport.Location.name}
+                    </p>
+                    <Tag>
+                      {moment(flight.flight_date).format("HH:ss:a")},{" "}
+                      {moment(flight.flight_date).format("DD/MM/YYYY")}
+                    </Tag>
+                    <p className="strong">{flight.start_airport.name}</p>
                   </div>
                   <div>
                     <p className="strong">1h</p>
                     <img alt="" src={point} />
                   </div>
                   <div>
-                    <p className="font-weight-bold strong">Hồ Chí Minh</p>
-                    <Tag>21:15, 12/11/2019</Tag>
-                    <p className="strong">Sân bay Tân Sơn Nhất</p>
+                    <p className="font-weight-bold strong">
+                      {" "}
+                      {flight.end_airport.location}
+                    </p>
+                    <Tag>
+                      {moment(flight.flight_date)
+                        .add(flight.flight_time, "hours")
+                        .format("HH:ss:a")}
+                      ,{" "}
+                      {moment(flight.flight_date)
+                        .add(flight.flight_time, "hours")
+                        .format("DD/MM/YYYY")}
+                    </Tag>
+                    <p className="strong">{flight.end_airport.name}</p>
                   </div>
                 </div>
                 <div className="col">
                   <p className="strong">Loại vé:</p>
-                  <p>Vé loại 1</p>
+                  <p>{JSON.parse(paramsRegisterFly.seatClass).name}</p>
                 </div>
                 <div className="col">
                   <p className="strong">Số lượng:</p>
-                  <p>2</p>
+                  <p>
+                    {" "}
+                    {paramsRegisterFly && paramsRegisterFly.count
+                      ? paramsRegisterFly.count
+                      : 0}
+                  </p>
                 </div>
                 <div className="col">
                   <p className="strong">Giá vé:</p>
-                  <p>200.000đ</p>
+                  <p>
+                    {numeral(
+                      this.showPrice(
+                        paramsRegisterFly.count,
+                        flight.Seats,
+                        paramsRegisterFly.seatClass
+                      )
+                    ).format("0,0")}
+                    đ
+                  </p>
                 </div>
                 <div className="col">
                   <p className="font-weight-bold strong">Tổng cộng</p>
-                  <p>400.000đ</p>
+                  <p>
+                    {numeral(
+                      this.showTotalPrice(
+                        paramsRegisterFly.count,
+                        flight.Seats,
+                        paramsRegisterFly.seatClass
+                      )
+                    ).format("0,0")}
+                    đ
+                  </p>
                 </div>
               </div>
               <div className="row">
@@ -64,7 +124,14 @@ export class Payment extends Component {
                     className="font-weight-bold strong"
                     style={{ color: "#FFA801" }}
                   >
-                    400.000đ
+                    {numeral(
+                      this.showTotalPrice(
+                        paramsRegisterFly.count,
+                        flight.Seats,
+                        paramsRegisterFly.seatClass
+                      )
+                    ).format("0,0")}
+                    đ
                   </span>
                 </div>
               </div>

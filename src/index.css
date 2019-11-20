@@ -116,6 +116,11 @@ code {
   font-weight: bold;
 }
 
+.highlight {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
 @media screen and (max-width: 600px) {
   .text-intro {
     font-size: 1em;
@@ -132,7 +137,7 @@ code {
     padding-top: 5px;
   }
   .text-right {
-    text-align: left !important;
+    text-align: center !important;
   }
   .image-flight {
     display: block;
@@ -176,5 +181,20 @@ code {
   }
   .card-md-100 .ant-card-body {
     width: 100%;
+  }
+  .responsive-collapse {
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+  .flex-column-style {
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+  .responsive-collapse .p-5 {
+    padding: 8px !important;
+  }
+  .point {
+    transform: rotate(90deg);
+    margin: 47px 0px;
   }
 }
