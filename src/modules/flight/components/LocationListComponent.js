@@ -5,6 +5,7 @@ import Column from "antd/lib/table/Column";
 import modal from "../../../common/components/widgets/Modal";
 import LocationAddForm from "./Form/LocationAddForm";
 import { sortTable } from "../../../common/utils/sortTable";
+import { searchTable } from "../../../common/utils/searchTable";
 
 export class LocationListComponent extends Component {
   constructor(props) {
@@ -67,6 +68,7 @@ export class LocationListComponent extends Component {
   async handleChangeTable(pagination, filter, sorter) {
     await sortTable(this, pagination, sorter);
   }
+
   render() {
     const { locations } = this.props;
     const { page, total } = this.state;
@@ -75,6 +77,7 @@ export class LocationListComponent extends Component {
         <div style={{ overflow: "hidden", marginBottom: 5 }}>
           <Input.Search
             placeholder="Tìm tên địa điểm"
+            onSearch={searchTable(this, "name", "like")} // => Field Name and Operator
             style={{ float: "left", width: 200, marginLeft: 5 }}
           />
           <Button
