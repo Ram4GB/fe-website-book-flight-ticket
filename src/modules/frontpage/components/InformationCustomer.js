@@ -3,6 +3,7 @@ import { Card, Form, Input, Icon, Col, Row, Tag, Button, Alert } from "antd";
 import point from "../../../common/assets/images/01-point.png";
 import numeral from "numeral";
 import { withRouter } from "react-router";
+import moment from "moment";
 
 class InformationCustomer extends Component {
   showTotalPrice(count, seats, seatClass) {
@@ -118,18 +119,33 @@ class InformationCustomer extends Component {
                   }}
                 >
                   <div>
-                    <p className="font-weight-bold">Hà Nội</p>
-                    <Tag>21:15, 12/11/2019</Tag>
-                    <p className="strong">Sân bay Hà nội</p>
+                    <p className="font-weight-bold">
+                      {flight.start_airport.location}
+                    </p>
+                    <Tag>
+                      {moment(flight.flight_date).format("HH:ss:a")},{" "}
+                      {moment(flight.flight_date).format("DD/MM/YYYY")}
+                    </Tag>
+                    <p className="strong">{flight.start_airport.name}</p>
                   </div>
                   <div>
                     <p>1h</p>
                     <img alt="" src={point} />
                   </div>
                   <div>
-                    <p className="font-weight-bold">Hồ Chí Minh</p>
-                    <Tag>21:15, 12/11/2019</Tag>
-                    <p className="strong">Sân bay Tân Sơn Nhất</p>
+                    <p className="font-weight-bold">
+                      {flight.end_airport.location}
+                    </p>
+                    <Tag>
+                      {moment(flight.flight_date)
+                        .add(flight.flight_time, "hours")
+                        .format("HH:ss:a")}
+                      ,{" "}
+                      {moment(flight.flight_date)
+                        .add(flight.flight_time, "hours")
+                        .format("DD/MM/YYYY")}
+                    </Tag>
+                    <p className="strong">{flight.end_airport.name}</p>
                   </div>
                 </div>
                 <div className="col">
@@ -150,7 +166,7 @@ class InformationCustomer extends Component {
                     {numeral(
                       this.showPrice(
                         paramsRegisterFly.count,
-                        flight.seats,
+                        flight.Seats,
                         paramsRegisterFly.seatClass
                       )
                     ).format("0,0")}
@@ -163,7 +179,7 @@ class InformationCustomer extends Component {
                     {numeral(
                       this.showTotalPrice(
                         paramsRegisterFly.count,
-                        flight.seats,
+                        flight.Seats,
                         paramsRegisterFly.seatClass
                       )
                     ).format("0,0")}
@@ -181,7 +197,7 @@ class InformationCustomer extends Component {
                     {numeral(
                       this.showTotalPrice(
                         paramsRegisterFly.count,
-                        flight.seats,
+                        flight.Seats,
                         paramsRegisterFly.seatClass
                       )
                     ).format("0,0")}

@@ -4,7 +4,7 @@ import FindFly from "./FindFly";
 import InformationCustomer from "./InformationCustomer";
 import FinishStepRegister from "./FinishStepRegister";
 import Payment from "./Payment";
-
+import _ from "lodash";
 const { Step } = Steps;
 const steps = [
   {
@@ -45,8 +45,14 @@ export class StepRegisterComponent extends Component {
       case 1:
         validateFields((errors, values) => {
           if (!errors) {
-            this.props.setParamsRegisterFly(values);
-            return this.setState({ current: current + 1 });
+            console.log(this.props.user);
+            if (!_.isEmpty(this.props.user)) {
+              this.props.setParamsRegisterFly(values);
+              return this.setState({ current: current + 1 });
+            } else
+              notification.error({
+                message: "Mời bạn đăng nhập"
+              });
           }
         });
         break;
@@ -65,7 +71,7 @@ export class StepRegisterComponent extends Component {
   }
   showStepContent(current) {
     const { paramsRegisterFly } = this.props;
-    console.log(this.props.paramsRegisterFly);
+    console.log(this.props.user);
     switch (current) {
       case 0:
         return (
@@ -86,7 +92,15 @@ export class StepRegisterComponent extends Component {
           ></InformationCustomer>
         );
       case 2:
-        return <Payment next={this.next}></Payment>;
+        return (
+          <Payment
+            user={this.props.user}
+            form={this.props.form}
+            flight={paramsRegisterFly.flight}
+            paramsRegisterFly={paramsRegisterFly}
+            next={this.next}
+          ></Payment>
+        );
       case 3:
         return (
           <FinishStepRegister

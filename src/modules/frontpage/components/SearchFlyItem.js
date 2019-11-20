@@ -54,16 +54,18 @@ export class SearchFlyItem extends Component {
               </span>
             </div>
             <div className="col padding">
-              <strong>21:15</strong>
-              <p>{flight.start_airport.location}</p>
+              <strong>{moment(flight.flight_date).format("HH:ss:a")}</strong>
+              <p>{flight.start_airport.Location.name}</p>
             </div>
             <div className="col">
-              <p>1h</p>
-              <img alt="flight" src={point} />
+              <strong style={{ display: "block" }}>
+                {flight.flight_time}h
+              </strong>
+              <img className="point" alt="flight" src={point} />
             </div>
             <div className="col">
-              <p className="text-center font-weight-bold">22:15</p>
-              <p className="text-center">{flight.end_airport.location}</p>
+              <strong>22:15</strong>
+              <p className="text-center">{flight.end_airport.Location.name}</p>
             </div>
             <div className="col">
               <p
@@ -79,7 +81,7 @@ export class SearchFlyItem extends Component {
                 {numeral(
                   this.showTotalPrice(
                     paramsRegisterFly.count,
-                    flight.seats,
+                    flight.Seats,
                     paramsRegisterFly.seatClass
                   )
                 ).format("0,0")}
@@ -102,19 +104,23 @@ export class SearchFlyItem extends Component {
             style={{ marginRight: 0, marginLeft: 0 }}
           >
             <div id={id} className="col collapse multi-collapse">
-              <div className="d-flex p-3 justify-content-center">
-                <div className="m-auto d-flex align-items-center justify-content-between">
+              <div className="d-flex p-3 justify-content-center responsive-collapse">
+                <div className="m-auto d-flex align-items-center justify-content-between flex-column-style">
                   <div>
                     <p className="font-weight-bold">
                       {flight.start_airport.location}
                     </p>
                     <p>
-                      21:15, {moment(flight.flight_date).format("DD/MM/YYYY")}
+                      <strong>
+                        {moment(flight.flight_date).format("HH:ss:a")},{" "}
+                        {moment(flight.flight_date).format("DD/MM/YYYY")}
+                      </strong>
                     </p>
-                    <p>{flight.start_airport.name}</p>
+                    <p className="highlight">{flight.start_airport.name}</p>
                   </div>
                   <div>
                     <img
+                      className="point"
                       alt="point"
                       style={{ paddingBottom: 10, paddingLeft: 7 }}
                       src={point}
@@ -124,25 +130,41 @@ export class SearchFlyItem extends Component {
                     <p className="font-weight-bold">
                       {flight.end_airport.location}
                     </p>
-                    <p>21:15, 12/11/2019</p>
-                    <p>{flight.end_airport.name}</p>
+                    <p>
+                      <strong>
+                        {moment(flight.flight_date)
+                          .add(flight.flight_time, "hours")
+                          .format("HH:ss:a")}
+                        ,{" "}
+                        {moment(flight.flight_date)
+                          .add(flight.flight_time, "hours")
+                          .format("DD/MM/YYYY")}
+                      </strong>
+                    </p>
+                    <p className="highlight">{flight.end_airport.name}</p>
                   </div>
                 </div>
                 <div className="border-left p-5">
-                  <p>Loại vé:</p>
+                  <p>
+                    <strong>Loại vé:</strong>
+                  </p>
                   <p>{JSON.parse(paramsRegisterFly.seatClass).name}</p>
                 </div>
                 <div className="border-left p-5">
-                  <p>Số lượng:</p>
+                  <p>
+                    <strong>Số lượng:</strong>
+                  </p>
                   <p>{paramsRegisterFly.count}</p>
                 </div>
                 <div className="border-left p-5">
-                  <p>Giá vé:</p>
+                  <p>
+                    <strong>Giá vé:</strong>
+                  </p>
                   <p>
                     {numeral(
                       this.showPrice(
                         paramsRegisterFly.count,
-                        flight.seats,
+                        flight.Seats,
                         paramsRegisterFly.seatClass
                       )
                     ).format("0,0")}
@@ -150,12 +172,14 @@ export class SearchFlyItem extends Component {
                   </p>
                 </div>
                 <div className="border-left p-5">
-                  <p className="font-weight-bold">Tổng cộng</p>
+                  <p className="font-weight-bold">
+                    <strong>Tổng cộng</strong>
+                  </p>
                   <p>
                     {numeral(
                       this.showTotalPrice(
                         paramsRegisterFly.count,
-                        flight.seats,
+                        flight.Seats,
                         paramsRegisterFly.seatClass
                       )
                     ).format("0,0")}
@@ -173,7 +197,7 @@ export class SearchFlyItem extends Component {
                     {numeral(
                       this.showTotalPrice(
                         paramsRegisterFly.count,
-                        flight.seats,
+                        flight.Seats,
                         paramsRegisterFly.seatClass
                       )
                     ).format("0,0")}

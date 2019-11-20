@@ -2,18 +2,17 @@ import React, { Component } from "react";
 import {
   Form,
   Radio,
-  Input,
   Row,
   Col,
   DatePicker,
   InputNumber,
   Button,
-  Icon,
   Select
 } from "antd";
 import moment from "moment";
 import { connect } from "react-redux";
 import handlers from "../../seat/handlers";
+import handlersFlight from "../../flight/handlers";
 import { catchErrorAndNotification } from "../../../common/utils/Notification";
 
 const nowDate = new Date();
@@ -23,11 +22,20 @@ class FormRegisterHomepage extends Component {
     super(props);
     this.state = {
       type: 2,
-      seatClass: []
+      seatClass: [],
+      locationTo: [],
+      locationFrom: []
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChangeType = this.handleChangeType.bind(this);
     this.showSeatClass = this.showSeatClass.bind(this);
+    this.getLocationTo = this.getLocationTo.bind(this);
+    this.handleSearchLocationTo = this.handleSearchLocationTo.bind(this);
+    this.timeOutTo = 0;
+    this.getLocationFrom = this.getLocationFrom.bind(this);
+    this.handleSearchLocationFrom = this.handleSearchLocationFrom.bind(this);
+    this.timeOutFrom = 0;
+    this.showLocationTo = this.showLocationTo.bind(this);
   }
   handleSubmit(e) {
     e.preventDefault();
@@ -60,8 +68,55 @@ class FormRegisterHomepage extends Component {
       );
     });
   }
+
   async componentDidMount() {
     await this.getSeatClass();
+    await this.getLocationTo();
+    await this.getLocationFrom();
+  }
+  async getLocationTo(value) {
+    let result = await this.props.getListLocation(1, {
+      offset: 100,
+      name: value
+    });
+    if (result && result.success) {
+      this.setState({
+        locationTo: result.data
+      });
+    } else catchErrorAndNotification(result.error);
+  }
+  showLocationTo() {
+    return this.state.locationTo.map(location => {
+      return <Select.Option value={location.id}>{location.name}</Select.Option>;
+    });
+  }
+  async handleSearchLocationTo(value) {
+    if (this.timeOutTo) clearTimeout(this.timeOutTo);
+    this.timeOutTo = setTimeout(async () => {
+      await this.getLocationTo(value);
+    }, 1000);
+  }
+  async getLocationFrom(value) {
+    let result = await this.props.getListLocation(1, {
+      offset: 100,
+      name: value
+    });
+    if (result && result.success) {
+      this.setState({
+        locationFrom: result.data
+      });
+    } else catchErrorAndNotification(result.error);
+  }
+  showLocationFrom() {
+    return this.state.locationFrom.map(location => {
+      return <Select.Option value={location.id}>{location.name}</Select.Option>;
+    });
+  }
+  async handleSearchLocationFrom(value) {
+    if (this.timeOutFrom) clearTimeout(this.timeOutFrom);
+    this.timeOutFrom = setTimeout(async () => {
+      await this.getLocationFrom(value);
+    }, 1000);
   }
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -80,14 +135,42 @@ class FormRegisterHomepage extends Component {
           )}
         </Form.Item>
         <Form.Item label="Điểm đi">
-          {getFieldDecorator("from", {
-            initialValue: paramsRegisterFly ? paramsRegisterFly.from : ""
-          })(<Input size={"large"} prefix={<Icon type="environment" />} />)}
+          {getFieldDecorator("start_location", {
+            initialValue: paramsRegisterFly
+              ? paramsRegisterFly.start_location
+              : ""
+          })(
+            <Select
+              showSearch
+              style={this.props.style}
+              defaultActiveFirstOption={false}
+              showArrow={false}
+              filterOption={false}
+              onSearch={this.handleSearchLocationFrom}
+              notFoundContent={null}
+            >
+              {this.showLocationFrom()}
+            </Select>
+          )}
         </Form.Item>
         <Form.Item label="Điểm đến">
-          {getFieldDecorator("to", {
-            initialValue: paramsRegisterFly ? paramsRegisterFly.to : ""
-          })(<Input size={"large"} prefix={<Icon type="environment" />} />)}
+          {getFieldDecorator("end_location", {
+            initialValue: paramsRegisterFly
+              ? paramsRegisterFly.end_location
+              : ""
+          })(
+            <Select
+              showSearch
+              style={this.props.style}
+              defaultActiveFirstOption={false}
+              showArrow={false}
+              filterOption={false}
+              onSearch={this.handleSearchLocationTo}
+              notFoundContent={null}
+            >
+              {this.showLocationTo()}
+            </Select>
+          )}
         </Form.Item>
         <Row gutter={6}>
           <Col lg={type === 1 ? 12 : 24}>
@@ -177,7 +260,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    ...handlers(dispatch)
+    ...handlers(dispatch),
+    ...handlersFlight(dispatch)
   };
 };
 

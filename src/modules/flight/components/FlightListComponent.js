@@ -112,11 +112,11 @@ export class FlightListComponent extends Component {
           ></Column>
           <Column
             title="Số lượng loại ghế"
-            dataIndex="seats"
+            dataIndex="Seats"
             key="seats"
             align="center"
             render={record => {
-              return record.length;
+              return record && record.length ? record.length : "0";
             }}
           ></Column>
           <Column

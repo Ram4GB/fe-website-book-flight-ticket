@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import handlers from "../../flight/handlers";
 import { catchErrorAndNotification } from "../../../common/utils/Notification";
 import { MODULE_NAME } from "../models";
+import removeNullObject from "../../../common/utils/removeObjectNull";
 
 export class FindFly extends Component {
   constructor(props) {
@@ -14,14 +15,31 @@ export class FindFly extends Component {
     };
     this.showFlyFrom = this.showFlyFrom.bind(this);
     this.getDataFlight = this.getDataFlight.bind(this);
+    this.handleChangePrice = this.handleChangePrice.bind(this);
   }
   async componentDidMount() {
     // fetch api flight here and show
-    console.log(this.props.paramsRegisterFly);
     await this.getDataFlight();
   }
-  async getDataFlight() {
-    let result = await this.props.getListFlight();
+  async getDataFlight(extraParams) {
+    const { paramsRegisterFly } = this.props;
+    let params = {};
+    if (paramsRegisterFly.start_location)
+      params.start_location = paramsRegisterFly.start_location;
+    if (paramsRegisterFly.end_location)
+      params.end_location = paramsRegisterFly.end_location;
+    if (paramsRegisterFly.seatClass)
+      params.seat_class_id = JSON.parse(paramsRegisterFly.seatClass).id;
+    if (paramsRegisterFly.quantity)
+      params.quantity = paramsRegisterFly.quantity;
+    params.offset = 100; // this is the first time I do this
+    params = {
+      ...params,
+      ...extraParams
+    };
+    params = removeNullObject(params);
+    let result = await this.props.getListFlight(1, params);
+    console.log(result.data);
     if (result && result.success) {
       this.setState({
         flightFrom: result.data
@@ -55,7 +73,14 @@ export class FindFly extends Component {
       );
     return arr;
   }
+  handleChangePrice(value) {
+    this.getDataFlight({
+      sort: "price",
+      direction: value
+    });
+  }
   render() {
+    console.log(this.props.paramsRegisterFly);
     const { type } = this.props.paramsRegisterFly;
     const { paramsRegisterFly } = this.props;
     const { flightFrom } = this.state;
@@ -118,11 +143,13 @@ export class FindFly extends Component {
                     <strong className="text">Giá vé: </strong>{" "}
                   </span>{" "}
                   <Select
+                    onChange={this.handleChangePrice}
                     style={{ width: 200, marginRight: 5 }}
                     placeholder="Tăng dần"
                   >
-                    <Select.Option value="1">Tăng dần </Select.Option>
-                    <Select.Option value="2">Giảm dần</Select.Option>
+                    <Select.Option value="">Mặc định </Select.Option>
+                    <Select.Option value="asc">Tăng dần </Select.Option>
+                    <Select.Option value="desc">Giảm dần</Select.Option>
                   </Select>
                 </div>
               </div>
