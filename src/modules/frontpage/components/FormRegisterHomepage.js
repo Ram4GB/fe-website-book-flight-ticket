@@ -87,7 +87,11 @@ class FormRegisterHomepage extends Component {
   }
   showLocationTo() {
     return this.state.locationTo.map(location => {
-      return <Select.Option value={location.id}>{location.name}</Select.Option>;
+      return (
+        <Select.Option key={location.id} value={location.id}>
+          {location.name}
+        </Select.Option>
+      );
     });
   }
   async handleSearchLocationTo(value) {
@@ -109,7 +113,11 @@ class FormRegisterHomepage extends Component {
   }
   showLocationFrom() {
     return this.state.locationFrom.map(location => {
-      return <Select.Option value={location.id}>{location.name}</Select.Option>;
+      return (
+        <Select.Option key={location.id} value={location.id}>
+          {location.name}
+        </Select.Option>
+      );
     });
   }
   async handleSearchLocationFrom(value) {
