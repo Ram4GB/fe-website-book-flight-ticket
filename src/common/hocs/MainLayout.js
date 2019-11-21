@@ -5,7 +5,6 @@ import menuConstant from "./Menu";
 import LoginPage from "./LoginPage";
 import { connect } from "react-redux";
 import handlers from "../../modules/user/handlers";
-import logo from "../assets/images/logo-footer.png";
 import "bootstrap/dist/css/bootstrap-grid.css";
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -106,15 +105,12 @@ export class MainLayout extends Component {
             <div
               onClick={() => this.props.history.push("/")}
               style={{
-                textAlign: "center",
-                fontSize: "1.2em",
-                padding: "20px 0px",
-                color: "#fff",
-                cursor: "pointer"
+                cursor: "pointer",
+                padding: 10
               }}
             >
               {/* {nameLogo} */}
-              <img alt="" src={logo} />
+              <img width={100} alt="" src="https://res.flynow.vn/logoflynow.png" />
             </div>
             {this.handleShowMenu()}
           </Sider>
@@ -128,7 +124,7 @@ export class MainLayout extends Component {
                     theme="light"
                     mode="horizontal"
                     defaultSelectedKeys={["2"]}
-                    style={{ lineHeight: "64px", float: "right" }}
+                    style={{ lineHeight: "64px", float: "right", marginRight: 20 }}
                   >
                     <Menu.Item>
                       <Dropdown
@@ -151,8 +147,8 @@ export class MainLayout extends Component {
                         }
                       >
                         <Avatar
-                          style={{ width: 50, height: 50 }}
-                          src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                          style={{ width: 40, height: 40 }}
+                          src={require('../../common/assets/images/user.svg')}
                         />
                       </Dropdown>
                     </Menu.Item>

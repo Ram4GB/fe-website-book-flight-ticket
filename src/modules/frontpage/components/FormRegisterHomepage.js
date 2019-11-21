@@ -132,18 +132,24 @@ class FormRegisterHomepage extends Component {
     const { type } = this.state;
     return (
       <Form onSubmit={this.handleSubmit}>
-        <Form.Item>
-          {getFieldDecorator("type", {
-            initialValue: 2
-          })(
-            <Radio.Group onChange={this.handleChangeType}>
-              <Radio value={1}>Khứ hồi</Radio>
-              <Radio value={2}>Một chiều</Radio>
-            </Radio.Group>
-          )}
-        </Form.Item>
+          <div className="text-center">
+            {getFieldDecorator("type", {
+              initialValue: type || 1
+            })(
+              <Radio.Group onChange={this.handleChangeType}>
+                <Radio value={1}>Khứ hồi</Radio>
+                <Radio value={2}>Một chiều</Radio>
+              </Radio.Group>
+            )}
+          </div>
         <Form.Item label="Điểm đi">
           {getFieldDecorator("start_location", {
+            rules: [
+              {
+                required: true,
+                message: "Mời chọn điểm đi"
+              }
+            ],
             initialValue: paramsRegisterFly
               ? paramsRegisterFly.start_location
               : ""
@@ -163,6 +169,12 @@ class FormRegisterHomepage extends Component {
         </Form.Item>
         <Form.Item label="Điểm đến">
           {getFieldDecorator("end_location", {
+            rules: [
+              {
+                required: true,
+                message: "Mời chọn điểm đến"
+              }
+            ],
             initialValue: paramsRegisterFly
               ? paramsRegisterFly.end_location
               : ""
@@ -243,20 +255,15 @@ class FormRegisterHomepage extends Component {
             </Form.Item>
           </Col>
         </Row>
-        <Row>
-          <Col lg={24}>
-            <Form.Item style={{ paddingTop: 48 }}>
-              <Button
-                className="w-100"
-                size="large"
-                type="primary"
-                htmlType="submit"
-              >
-                Tìm chuyến bay
-              </Button>
-            </Form.Item>
-          </Col>
-        </Row>
+        <br />
+        <Button
+          block
+          size="large"
+          type="primary"
+          htmlType="submit"
+        >
+          Tìm chuyến bay
+        </Button>
       </Form>
     );
   }

@@ -94,11 +94,22 @@ code {
   top: 7px;
 }
 
+
+::-webkit-scrollbar-track {
+  background-color: #f5f5f5;
+}
+
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
   background-color: #f5f5f5;
 }
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #868686ab;
+}
+
 
 .image-logo-flight {
   width: 50px;
@@ -208,4 +219,14 @@ code {
   .ant-alert-with-description {
     padding: 15px 15px 15px 15px !important;
   }
+}
+
+/* Override Bootstrap */
+.ant-form-item label {
+  margin: 0px;
+}
+
+/* Override nprogress */
+#nprogress .spinner {
+  top: 23px;
 }

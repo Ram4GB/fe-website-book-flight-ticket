@@ -17,11 +17,14 @@ import { catchErrorAndNotification } from "../utils/Notification";
 class LoginForm extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      loading: false
+    };
     this.handleSubmitLoginForm = this.handleSubmitLoginForm.bind(this);
   }
 
   handleSubmitLoginForm(e) {
+    this.setState({ loading: true })
     e.preventDefault();
     const { validateFields } = this.props.form;
     validateFields(async (errors, values) => {
@@ -30,14 +33,16 @@ class LoginForm extends Component {
         const result = await login(values.email, values.password);
         if (result) {
           if (result && result.success === false) {
-            catchErrorAndNotification(result.error, this);
+            this.setState({ loading: false })
+            catchErrorAndNotification(result.error);
           } else {
+            this.setState({ loading: false })
             notification.success({
               message: "Đăng nhập thành công"
             });
             setTimeout(() => {
-              this.props.history.push("/");
-            }, 1000);
+              this.props.history.goBack();
+            }, 300);
           }
         }
       }
@@ -83,7 +88,7 @@ class LoginForm extends Component {
             </Col>
           </Row>
         </Form.Item>
-        <Button htmlType="submit" type="primary" style={{ width: "100%" }}>
+        <Button loading={this.state.loading} htmlType="submit" type="primary" style={{ width: "100%" }}>
           Đăng nhập
         </Button>
       </Form>
