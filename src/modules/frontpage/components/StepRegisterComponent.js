@@ -3,7 +3,6 @@ import { Steps, Button, Card, Form, notification } from "antd";
 import FindFly from "./FindFly";
 import InformationCustomer from "./InformationCustomer";
 import FinishStepRegister from "./FinishStepRegister";
-import Payment from "./Payment";
 import _ from "lodash";
 const { Step } = Steps;
 const steps = [
