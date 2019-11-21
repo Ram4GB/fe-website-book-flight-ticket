@@ -125,7 +125,9 @@ export class StepRegisterComponent extends Component {
           ))}
         </Steps>
         <div className="steps-content">
-          <Card className="card-step">{this.showStepContent(current)}</Card>
+          {/* <Card className="card-step"> */}
+          {this.showStepContent(current)}
+          {/* </Card> */}
         </div>
         <div className="steps-action">
           {current < steps.length - 1 && (
