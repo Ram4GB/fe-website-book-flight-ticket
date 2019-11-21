@@ -14,9 +14,6 @@ const steps = [
     title: "Thông tin khách hàng"
   },
   {
-    title: "Thanh toán"
-  },
-  {
     title: "Hoàn thành"
   }
 ];
@@ -92,16 +89,6 @@ export class StepRegisterComponent extends Component {
           ></InformationCustomer>
         );
       case 2:
-        return (
-          <Payment
-            user={this.props.user}
-            form={this.props.form}
-            flight={paramsRegisterFly.flight}
-            paramsRegisterFly={paramsRegisterFly}
-            next={this.next}
-          ></Payment>
-        );
-      case 3:
         return (
           <FinishStepRegister
             paramsRegisterFly={paramsRegisterFly}

@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { Row, Col, Card, notification } from "antd";
+import { Row, Col, Card, notification, Alert, Button } from "antd";
 import Lottie from "../../../common/libraries/Lottie";
 import { connect } from "react-redux";
 import handlers from "../../order/handlers";
 import { catchErrorAndNotification } from "../../../common/utils/Notification";
+import { withRouter } from "react-router";
 
 export class FinishStepRegister extends Component {
   async componentDidMount() {
@@ -18,23 +19,55 @@ export class FinishStepRegister extends Component {
     const { paramsRegisterFly } = this.props;
     return (
       <Card>
-        <Row>
+        <Row
+          style={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}
+        >
           <Col
-            style={{ display: "flex", alignItems: "center" }}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              flexDirection: "column",
+              borderRight: "1px solid #efdede"
+            }}
             sm={24}
             lg={12}
           >
-            <Lottie
-              options={{
-                animationData: require("../../../common/assets/animations/782-check-mark-success.json")
-              }}
-              style={{
-                marginBottom: 150,
-                height: 200
-              }}
+            <div>
+              <Lottie
+                options={{
+                  animationData: require("../../../common/assets/animations/782-check-mark-success.json")
+                }}
+                style={{
+                  height: 200,
+                  display: "block"
+                }}
+              />
+            </div>
+
+            <Alert
+              style={{ display: "block" }}
+              message={<strong>Thông báo</strong>}
+              description={
+                <>
+                  <p>Bạn vừa đặt thành công chuyến bay.</p>
+                  <p>Tài khoản của chúng tôi: 1234567890</p>
+                  <p>
+                    Hãy đến ngân hàng gần nhất và cập nhật bằng chứng thanh toán
+                    trong hóa đơn
+                  </p>
+                  <Button
+                    type="primary"
+                    onClick={() => this.props.history.push("/admin/order")}
+                  >
+                    Cập nhật ngay
+                  </Button>
+                </>
+              }
+              type="info"
+              showIcon
             />
           </Col>
-          <Col className="text-left border" sm={24} lg={12}>
+          <Col className="text-left" sm={24} lg={12}>
             <div className="p-3">
               <span className="font-weight-bold">Khách hàng: </span>
               <span>
@@ -60,7 +93,11 @@ export class FinishStepRegister extends Component {
               </span>
             </div>
             <div className="p-3 text-center">
-              <p>Cảm ơn quý khách đã sử dụng dịch vụ của chúng tôi</p>
+              <p>
+                <strong style={{ textTransform: "uppercase" }}>
+                  Cảm ơn quý khách đã sử dụng dịch vụ của chúng tôi
+                </strong>
+              </p>
             </div>
           </Col>
         </Row>
@@ -75,4 +112,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(FinishStepRegister);
+export default connect(
+  null,
+  mapDispatchToProps
+)(withRouter(FinishStepRegister));
