@@ -1,40 +1,41 @@
 import React, { Component } from 'react'
-import Lottie from '../../../libraries/Lottie'
+import Lottie from '../../libraries/Lottie'
 
 class PageLoading extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
-      isShow: false
+      isShow: false,
     }
   }
 
-  show () {
+  show() {
     this.setState({
-      isShow: true
+      isShow: true,
     })
   }
 
-  hide () {
+  hide() {
     this.setState({
-      isShow: false
+      isShow: false,
     })
   }
 
-  isVisible () {
+  isVisible() {
     const { isShow } = this.state
     return isShow
   }
 
-  componentWillMount () {
+  UNSAFE_componentWillMount() {
     PageLoading.instance = this
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     delete PageLoading.instance
   }
 
-  render () {
+  render() {
+    console.log('xxx')
     const { isShow } = this.state
 
     if (!isShow) {
@@ -46,13 +47,16 @@ class PageLoading extends Component {
         <div className='loading-inner'>
           <Lottie
             options={{
-              animationData: require('../../../assets/animations/loading_common.json')
+              animationData: require('../../assets/animations/loading_common.json'),
             }}
-            style={{
-              marginBottom: 150
+            width={200}
+          />
+          <Lottie
+            options={{
+              animationData: require('../../assets/animations/loading_common_b.json'),
             }}
-            width={120}
-            height={120}
+            style={{ marginTop: '-50px' }}
+            width={200}
           />
         </div>
       </div>
@@ -62,13 +66,13 @@ class PageLoading extends Component {
 
 export default {
   Component: PageLoading,
-  show () {
+  show() {
     PageLoading.instance && PageLoading.instance.show()
   },
-  hide () {
+  hide() {
     PageLoading.instance && PageLoading.instance.hide()
   },
-  isVisible () {
+  isVisible() {
     return PageLoading.instance.isVisible()
-  }
+  },
 }
