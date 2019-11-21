@@ -13,6 +13,7 @@ import { connect } from "react-redux";
 import handlers from "../../modules/user/handlers";
 import { withRouter } from "react-router";
 import { catchErrorAndNotification } from "../utils/Notification";
+import PageLoading from "./widgets/PageLoading";
 
 class LoginForm extends Component {
   constructor(props) {
@@ -25,6 +26,7 @@ class LoginForm extends Component {
 
   handleSubmitLoginForm(e) {
     this.setState({ loading: true })
+    PageLoading.show()
     e.preventDefault();
     const { validateFields } = this.props.form;
     validateFields(async (errors, values) => {
@@ -33,9 +35,11 @@ class LoginForm extends Component {
         const result = await login(values.email, values.password);
         if (result) {
           if (result && result.success === false) {
+            PageLoading.hide()
             this.setState({ loading: false })
             catchErrorAndNotification(result.error);
           } else {
+            PageLoading.hide()
             this.setState({ loading: false })
             notification.success({
               message: "Đăng nhập thành công"
@@ -45,6 +49,9 @@ class LoginForm extends Component {
             }, 300);
           }
         }
+      } else {
+        PageLoading.hide()
+        this.setState({ loading: false })
       }
     });
   }

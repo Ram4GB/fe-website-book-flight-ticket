@@ -99,9 +99,6 @@ export class OrderListComponent extends Component {
       }
     );
   }
-  async handleChangeTable(pagination, filter, sorter) {
-    await sortTable(this, pagination, sorter);
-  }
   render() {
     const { orders, user } = this.props;
     const { total, page } = this.state;
