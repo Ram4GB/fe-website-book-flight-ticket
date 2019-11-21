@@ -91,7 +91,7 @@ export class MainLayout extends Component {
     const { mode } = this.props;
     if (mode) {
       return (
-        <Layout style={{ height: "100%" }}>
+        <Layout>
           <Sider
             breakpoint="lg"
             collapsedWidth="0"
@@ -110,7 +110,11 @@ export class MainLayout extends Component {
               }}
             >
               {/* {nameLogo} */}
-              <img width={100} alt="" src="https://res.flynow.vn/logoflynow.png" />
+              <img
+                width={100}
+                alt=""
+                src="https://res.flynow.vn/logoflynow.png"
+              />
             </div>
             {this.handleShowMenu()}
           </Sider>
@@ -124,7 +128,11 @@ export class MainLayout extends Component {
                     theme="light"
                     mode="horizontal"
                     defaultSelectedKeys={["2"]}
-                    style={{ lineHeight: "64px", float: "right", marginRight: 20 }}
+                    style={{
+                      lineHeight: "64px",
+                      float: "right",
+                      marginRight: 20
+                    }}
                   >
                     <Menu.Item>
                       <Dropdown
@@ -148,7 +156,7 @@ export class MainLayout extends Component {
                       >
                         <Avatar
                           style={{ width: 40, height: 40 }}
-                          src={require('../../common/assets/images/user.svg')}
+                          src={require("../../common/assets/images/user.svg")}
                         />
                       </Dropdown>
                     </Menu.Item>
@@ -166,7 +174,6 @@ export class MainLayout extends Component {
                 style={{
                   padding: 24,
                   minHeight: 360,
-                  height: "100%",
                   minWidth: "calc(80vw)"
                 }}
               >

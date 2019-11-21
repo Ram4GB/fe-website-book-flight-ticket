@@ -65,7 +65,8 @@ export class FlightListComponent extends Component {
           onChange={this.handleChangeTable}
           pagination={{
             total,
-            current: page
+            current: page,
+            size: "small"
           }}
           rowKey={e => e.airlines}
           dataSource={flights}
