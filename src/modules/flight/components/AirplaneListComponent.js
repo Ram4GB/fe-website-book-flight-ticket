@@ -7,7 +7,6 @@ import AirPlaneFormAdd from "./Form/AirPlaneFormAdd";
 // import imageFlight from "../../../common/assets/images/flight.png";
 import { sortTable } from "../../../common/utils/sortTable";
 import { DEFAULT_URL } from "../../../common/url";
-import imageFlight from "../../../common/assets/images/flight.png";
 
 export class AirplaneListComponent extends Component {
   constructor(props) {
