@@ -45,7 +45,6 @@ export class AirportListComponent extends Component {
     this.getData();
   }
   async handleChangeTable(pagination, filter, sorter) {
-    this.getData(pagination.current);
     await sortTable(this, pagination, sorter);
   }
   render() {
@@ -89,6 +88,9 @@ export class AirportListComponent extends Component {
             title="Mô tả"
             sorter
             dataIndex="description"
+            render={value => {
+              return <div dangerouslySetInnerHTML={{ __html: value }} />;
+            }}
             key="description"
             align="center"
           ></Column>

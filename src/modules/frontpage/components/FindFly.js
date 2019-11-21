@@ -86,7 +86,7 @@ export class FindFly extends Component {
     const { flightFrom } = this.state;
     return (
       <div>
-        <h5 className="font-weight-bold">
+        <h5 className="font-weight-bold" style={{ margin: "20px" }}>
           Tìm chuyến bay từ {paramsRegisterFly.from} đến {paramsRegisterFly.to}
         </h5>
         <div className="row">

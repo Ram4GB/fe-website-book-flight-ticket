@@ -129,6 +129,15 @@ export class FlightListComponent extends Component {
             }}
           ></Column>
           <Column
+            title="Thời gian bay"
+            dataIndex="flight_time"
+            key="flight_time"
+            align="center"
+            render={record => {
+              return record ? record : "0";
+            }}
+          ></Column>
+          <Column
             title="Thao tác"
             render={() => {
               return (
