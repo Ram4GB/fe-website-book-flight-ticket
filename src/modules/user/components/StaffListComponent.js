@@ -8,7 +8,6 @@ import FormAddStaff from "./Forms/FormAddStaff";
 import { sortTable } from "../../../common/utils/sortTable";
 import { searchTable } from "../../../common/utils/searchTable";
 import removeNullObject from "../../../common/utils/removeObjectNull";
-import { onEventSocket } from "../../../common/utils/socketIO";
 
 export class UserComponent extends Component {
   constructor(props) {

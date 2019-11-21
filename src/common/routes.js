@@ -8,7 +8,7 @@ import LoginPage from "./hocs/LoginPage";
 import NewAccount from "../pages/NewAccount";
 import StaffPage from "../pages/StaffPage";
 import MainLayoutFrontPage from "./hocs/MainLayoutFrontPage";
-import { Result, Button } from "antd";
+import { Result, Button, notification } from "antd";
 import { withRouter } from "react-router";
 import RegisterFlyPage from "../pages/RegisterFlyPage";
 import StepRegisterPage from "../pages/StepRegisterPage";
@@ -27,6 +27,8 @@ import AirplaneEditPage from "../pages/AirplaneEditPage";
 import LocationListPage from "../pages/LocationListPage";
 import SeatClassListPage from "../pages/SeatClassListPage";
 import AirportPage from "../pages/AirportPage";
+import { socketService } from "./utils/socketIO";
+import { eventSocket } from "./events";
 
 export class routes extends Component {
   constructor(props) {
@@ -39,6 +41,33 @@ export class routes extends Component {
       if (user.Admin) return "admin";
       if (user.Staff) return "staff";
       if (user.Customer) return "customer";
+    }
+  }
+  componentDidMount() {
+    const { store } = this.props;
+    const { user } = store.getState()[MODULE_USER];
+    if (
+      (user && this.getRole(user) === "admin") ||
+      this.getRole(user) === "staff"
+    ) {
+      socketService.admin.instance.on(eventSocket.NEW_ORDER, data => {
+        notification.info({
+          message: "Có người đặt order"
+        });
+      });
+    } else if (user && this.getRole(user) === "customer") {
+      socketService.customer.instance.on(eventSocket.ORDER_APPROVED, data => {
+        console.log(data);
+        notification.info({
+          message: `Đơn hàng #${data.order.id} của bạn đã được xác nhận`
+        });
+      });
+      socketService.customer.instance.on(eventSocket.ORDER_REJECTED, data => {
+        console.log(data);
+        notification.error({
+          message: `Đơn hàng #${data.order.id} của bạn đã bị hủy`
+        });
+      });
     }
   }
   render() {

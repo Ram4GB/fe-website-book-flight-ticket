@@ -1,8 +1,9 @@
 import * as io from "socket.io-client";
 import Cookie from "js-cookie";
-import { DEFAULT_URL } from "../url";
 
-const getRole = user => {
+const urlSocketIO = "http://35.198.236.176:3001";
+
+export const getRole = user => {
   if (user.Admin) return "admin";
   if (user.Staff) return "staff";
   if (user.Customer) return "customer";
@@ -16,11 +17,15 @@ const getRole = user => {
  * io[roleType].instance it will return a [IO socket]
  */
 export const socketService = {
-  common: {
+  customer: {
     _instance: null,
     get instance() {
       if (!this._instance) {
-        this._instance = io(`${DEFAULT_URL}`);
+        this._instance = io(`${urlSocketIO}/customer`, {
+          query: {
+            token: `Bearer ${Cookie.get("token")}`
+          }
+        });
       }
       return this._instance;
     }
@@ -29,42 +34,13 @@ export const socketService = {
     _instance: null,
     get instance() {
       if (!this._instance) {
-        this._instance = io(`${DEFAULT_URL}/admin`, {
+        this._instance = io(`${urlSocketIO}/admin`, {
           query: {
             token: `Bearer ${Cookie.get("token")}`
           }
         });
       }
       return this._instance;
-    }
-  }
-};
-
-/**
- *
- * @param {String} eventName Name event
- * @param {String} type call [on or emit]
- * @example onEventSocket(EVENT.GET_DATA,'on')
- *
- */
-export const onEventSocket = (eventName, type) => {
-  let user = Cookie.get("user");
-  if (user) {
-    user = JSON.parse(user);
-    let role = getRole(user);
-    if (role && socketService[role].instance) {
-      switch (type) {
-        case "on":
-          return socketService[role].instance.on(eventName, data => {
-            return data;
-          });
-        case "emit":
-          return socketService[role].instance.emit(eventName, data => {
-            return data;
-          });
-        default:
-          console.error("Event not found");
-      }
     }
   }
 };
