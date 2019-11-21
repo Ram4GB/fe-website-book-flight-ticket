@@ -205,4 +205,7 @@ code {
   .ant-modal {
     width: 100% !important;
   }
+  .ant-alert-with-description {
+    padding: 15px 15px 15px 15px !important;
+  }
 }
