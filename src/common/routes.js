@@ -29,6 +29,7 @@ import SeatClassListPage from "../pages/SeatClassListPage";
 import AirportPage from "../pages/AirportPage";
 import { socketService } from "./utils/socketIO";
 import { eventSocket } from "./events";
+import DashboardAdmin from "../pages/DashboardAdmin";
 
 export class routes extends Component {
   constructor(props) {
@@ -81,7 +82,8 @@ export class routes extends Component {
             <Switch>
               <Route exact path="/admin/dashboard">
                 <MainLayout mode="admin">
-                  <UnderConstruction></UnderConstruction>
+                  <DashboardAdmin></DashboardAdmin>
+                  {/* <UnderConstruction></UnderConstruction> */}
                 </MainLayout>
               </Route>
               <Route exact path="/admin/staff">
