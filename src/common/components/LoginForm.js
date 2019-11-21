@@ -33,7 +33,7 @@ class LoginForm extends Component {
             catchErrorAndNotification(result.error);
           } else {
             notification.success({
-              message: "Login successfully"
+              message: "Đăng nhập thành công"
             });
             setTimeout(() => {
               this.props.history.push("/");

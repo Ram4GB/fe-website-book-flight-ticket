@@ -121,6 +121,11 @@ code {
   font-size: 1.2em;
 }
 
+.nav-link.member {
+  color: #fff !important;
+  font-weight: bold !important;
+}
+
 @media screen and (max-width: 600px) {
   .text-intro {
     font-size: 1em;
@@ -196,5 +201,8 @@ code {
   .point {
     transform: rotate(90deg);
     margin: 47px 0px;
+  }
+  .ant-modal {
+    width: 100% !important;
   }
 }

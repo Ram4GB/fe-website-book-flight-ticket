@@ -1,6 +1,7 @@
 import { fetchAuthLoading } from "../../common/effects";
 import { DEFAULT_URL } from "../../common/url";
 import * as actions from "./actions";
+import { upLoadFile } from "../../common/utils/uploadFile";
 export default function(dispatch, props) {
   return {
     orderTicket: async data => {
@@ -47,6 +48,15 @@ export default function(dispatch, props) {
       });
       if (result && result.data) return result.data;
       else return { success: false, error: "Server error" };
+    },
+    updateTransferContent: async (id, data) => {
+      let result = await fetchAuthLoading({
+        url: `${DEFAULT_URL}/order/${id}/transfer_content`,
+        method: "PUT",
+        data: upLoadFile(data, "transfer_content")
+      });
+      if (result && result.data) return result.data;
+      return { success: false, error: "Server error" };
     }
   };
 }

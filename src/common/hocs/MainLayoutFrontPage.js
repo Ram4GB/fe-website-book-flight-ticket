@@ -21,7 +21,7 @@ export class MainLayoutFrontPage extends Component {
   async logout() {
     await this.props.logout();
     notification.success({
-      message: "Logout success"
+      message: "Đăng xuất thành công"
     });
     setTimeout(() => {
       window.location.href = "/";
@@ -95,11 +95,24 @@ export class MainLayoutFrontPage extends Component {
                 </>
               )}
               {!_.isEmpty(user) ? (
-                <li className="nav-item">
-                  <a onClick={this.logout} className="nav-link" href="/#">
-                    Đăng xuất
-                  </a>
-                </li>
+                <>
+                  <li>
+                    <Link to="/admin/profile" className="nav-link member">
+                      {user && user.Admin
+                        ? user.Admin.name
+                        : user && user.Staff
+                        ? user.Staff.name
+                        : user && user.Customer
+                        ? user.Customer.name
+                        : "Thành viên"}
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <a onClick={this.logout} className="nav-link" href="/#">
+                      Đăng xuất
+                    </a>
+                  </li>
+                </>
               ) : null}
               <li
                 className={`nav-item ${
