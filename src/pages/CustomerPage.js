@@ -3,6 +3,9 @@ import CustomerListContainer from "../modules/user/containers/CustomerListContai
 import CustomBreadcrumb from "../common/components/widgets/CustomBreadcrumb";
 
 export class CustomerPage extends Component {
+  componentWillMount() {
+    document.title = "FlyNow | Quản lí Khách hàng";
+  }
   render() {
     const { history, match } = this.props;
     return (

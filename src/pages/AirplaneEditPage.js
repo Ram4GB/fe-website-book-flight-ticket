@@ -33,6 +33,9 @@ export class AirplaneEditPage extends Component {
      * End upload Image
      */
   }
+  componentWillMount() {
+    document.title = "FlyNow | Sửa hãng hàng không";
+  }
   handleSubmit(e) {
     e.preventDefault();
     this.props.form.validateFields(async (errors, values) => {

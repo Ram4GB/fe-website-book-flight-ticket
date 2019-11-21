@@ -3,6 +3,9 @@ import InformationUserContainer from "../modules/user/containers/InformationUser
 import CustomBreadcrumb from "../common/components/widgets/CustomBreadcrumb";
 
 export class InformationUser extends Component {
+  componentWillMount() {
+    document.title = "FlyNow | Thông tin cá nhân";
+  }
   render() {
     return (
       <>

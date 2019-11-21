@@ -27,6 +27,9 @@ export class RegisterForm extends Component {
       success: null
     };
   }
+  componentWillMount() {
+    document.title = "FlyNow | Đăng ký";
+  }
   handelSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields(async (error, values) => {

@@ -40,6 +40,9 @@ export class StaffInformationPage extends Component {
     this.showEdittingButton = this.showEdittingButton.bind(this);
     this.handleReset = this.handleReset.bind(this);
   }
+  componentWillMount() {
+    document.title = "FlyNow | Thông tin Nhân viên";
+  }
   async getStaff() {
     if (this.props.match.params.id) {
       let result = await getStaffByID(this.props.match.params.id);

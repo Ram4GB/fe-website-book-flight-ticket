@@ -3,6 +3,9 @@ import FlightListContainer from "../modules/flight/containers/FlightListContaine
 import CustomBreadcrumb from "../common/components/widgets/CustomBreadcrumb";
 
 export class FlightPage extends Component {
+  componentWillMount() {
+    document.title = "FlyNow | Quản lí Chuyến bay";
+  }
   render() {
     const { history } = this.props;
     return (

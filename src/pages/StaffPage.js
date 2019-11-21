@@ -3,6 +3,9 @@ import StaffListContainer from "../modules/user/containers/StaffListContainer";
 import CustomBreadcrumb from "../common/components/widgets/CustomBreadcrumb";
 
 export class CashierPage extends Component {
+  componentWillMount() {
+    document.title = "FlyNow | Quản lí Nhân Viên";
+  }
   render() {
     const { history } = this.props;
     return (

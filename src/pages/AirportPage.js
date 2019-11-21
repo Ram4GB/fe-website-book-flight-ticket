@@ -3,6 +3,9 @@ import CustomBreadcrumb from "../common/components/widgets/CustomBreadcrumb";
 import AirportListContainer from "../modules/flight/containers/AirportListContainer";
 
 export class AirportPage extends Component {
+  componentWillMount() {
+    document.title = "FlyNow | Quản lí Sân bay";
+  }
   render() {
     const { history, match } = this.props;
     return (
