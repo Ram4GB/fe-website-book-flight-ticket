@@ -6,6 +6,7 @@ import { LIMIT, emptyString } from "../models";
 import modal from "../../../common/components/widgets/Modal";
 import FormAddCustomer from "./Forms/FormAddCustomer";
 import { sortTable } from "../../../common/utils/sortTable";
+import { searchTable } from "../../../common/utils/searchTable";
 
 export class CustomerListComponent extends Component {
   constructor(props) {
@@ -84,10 +85,12 @@ export class CustomerListComponent extends Component {
       <Card>
         <div style={{ overflow: "hidden", marginBottom: 5 }}>
           <Input.Search
+            onSearch={searchTable(this, "name", "like")}
             placeholder="Tìm bằng họ và tên"
             style={{ float: "left", width: 200, marginLeft: 5 }}
           />
           <Input.Search
+            onSearch={searchTable(this, "identifier", "like")}
             placeholder="Tìm bằng CMND"
             style={{ float: "left", width: 200, marginLeft: 5 }}
           />

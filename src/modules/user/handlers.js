@@ -95,15 +95,16 @@ export default function(dispatch, props) {
         },
         method: "POST"
       });
-      if (result && result.data && result.data.success) {
+      if (result && result.data) {
         const { data, exp, token } = result.data;
         if (data) {
+          // isUserExist === true
           dispatch(actions.login(data));
           Cookies.set("user", data);
           Cookies.set("token", token);
           Cookies.set("exp", exp);
           return result.data;
-        }
+        } else return result.data;
       }
       return { success: false, error: "Server error" };
     },
