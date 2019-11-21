@@ -3,6 +3,7 @@
     "javascript.format.enable": false,
     "javascript.validate.enable": false,
     "standard.enable": true,
+    "editor.formatOnSave": false,
     "standard.validate": [
         "javascript",
         "javascriptreact"

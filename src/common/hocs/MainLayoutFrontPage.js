@@ -96,7 +96,13 @@ export class MainLayoutFrontPage extends Component {
               )}
               {!_.isEmpty(user) ? (
                 <>
-                  <li>
+                  <li className='d-flex'>
+                    <img
+                      src={require('../../common/assets/images/user.svg')}
+                      alt='avatar'
+                      width={35}
+                    />
+                    <div style={{ width: 5 }}></div>
                     <Link to="/admin/profile" className="nav-link member">
                       {user && user.Admin
                         ? user.Admin.name
@@ -146,7 +152,7 @@ export class MainLayoutFrontPage extends Component {
         </div>
         <Footer
           className="text-light"
-          style={{ backgroundColor: "#001529", color: "#fff" }}
+          style={{ backgroundColor: "#001529", color: "#fff", paddingBottom: 50 }}
         >
           <Row>
             <Col lg={6}>
@@ -178,7 +184,7 @@ export class MainLayoutFrontPage extends Component {
                 ĐĂNG KÍ NHẬN EMAIL
               </p>
               <p>
-                <Input />
+                <Input style={{ width: 233 }} placeholder='Email' />
               </p>
             </Col>
           </Row>

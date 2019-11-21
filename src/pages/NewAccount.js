@@ -10,7 +10,7 @@ import {
   Icon,
   Typography,
   notification,
-  Radio
+  Select
 } from "antd";
 import "antd/dist/antd.css";
 import handlers from "../modules/user/handlers";
@@ -109,6 +109,17 @@ export class RegisterForm extends Component {
                         prefix={
                           <Icon type="user" style={{ color: "#CACACA" }} />
                         }
+                        addonAfter={getFieldDecorator("gender", {
+                          rules: [
+                            { required: true, message: "Mời nhập giới tính" }
+                          ],
+                          initialValue: "male"
+                        })(
+                          <Select>
+                            <Select.Option value="male">Nam</Select.Option>
+                            <Select.Option value="female">Nữ</Select.Option>
+                          </Select>
+                        )}
                         placeholder="Họ và tên"
                       />
                     )}
@@ -123,19 +134,6 @@ export class RegisterForm extends Component {
                         }
                         placeholder="CMND"
                       />
-                    )}
-                  </Form.Item>
-                  <Form.Item label="Giới tính">
-                    {getFieldDecorator("gender", {
-                      rules: [
-                        { required: true, message: "Mời nhập giới tính" }
-                      ],
-                      initialValue: "male"
-                    })(
-                      <Radio.Group>
-                        <Radio value="male">Nam</Radio>
-                        <Radio value="female">Nữ</Radio>
-                      </Radio.Group>
                     )}
                   </Form.Item>
                   <Form.Item label="Email" hasFeedback>
