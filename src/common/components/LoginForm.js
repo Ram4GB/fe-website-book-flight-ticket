@@ -30,7 +30,7 @@ class LoginForm extends Component {
         const result = await login(values.email, values.password);
         if (result) {
           if (result && result.success === false) {
-            catchErrorAndNotification(result.error);
+            catchErrorAndNotification(result.error, this);
           } else {
             notification.success({
               message: "Đăng nhập thành công"

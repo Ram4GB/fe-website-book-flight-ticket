@@ -6,6 +6,8 @@ import modal from "../../../common/components/widgets/Modal";
 import Column from "antd/lib/table/Column";
 import FormAddStaff from "./Forms/FormAddStaff";
 import { sortTable } from "../../../common/utils/sortTable";
+import { searchTable } from "../../../common/utils/searchTable";
+import removeNullObject from "../../../common/utils/removeObjectNull";
 
 export class UserComponent extends Component {
   constructor(props) {
@@ -29,9 +31,11 @@ export class UserComponent extends Component {
   }
 
   async getData(input) {
-    const { page, params } = this.state;
+    const { page } = this.state;
+    let { params } = this.state;
     const { getListStaff } = this.props;
     const next = input || page;
+    params = removeNullObject(params);
     const result = await getListStaff(next, params);
     if (result && result.success === true) {
       this.setState({
@@ -87,11 +91,13 @@ export class UserComponent extends Component {
       <Card>
         <div style={{ overflow: "hidden", marginBottom: 5 }}>
           <Input.Search
+            onSearch={searchTable(this, "name", "like")}
             placeholder="Tìm bằng họ và tên"
             style={{ float: "left", width: 200, marginLeft: 5 }}
           />
           <Input.Search
             placeholder="Tìm bằng CMND"
+            onSearch={searchTable(this, "identifier", "like")}
             style={{ float: "left", width: 200, marginLeft: 5 }}
           />
           <Button

@@ -7,6 +7,7 @@ import AirPlaneFormAdd from "./Form/AirPlaneFormAdd";
 // import imageFlight from "../../../common/assets/images/flight.png";
 import { sortTable } from "../../../common/utils/sortTable";
 import { DEFAULT_URL } from "../../../common/url";
+import { searchTable } from "../../../common/utils/searchTable";
 
 export class AirplaneListComponent extends Component {
   constructor(props) {
@@ -52,6 +53,7 @@ export class AirplaneListComponent extends Component {
       <Card>
         <div style={{ overflow: "hidden", marginBottom: 5 }}>
           <Input.Search
+            onSearch={searchTable(this, "name", "like")}
             placeholder="Tìm tên máy bay"
             style={{ float: "left", width: 200, marginLeft: 5 }}
           />
