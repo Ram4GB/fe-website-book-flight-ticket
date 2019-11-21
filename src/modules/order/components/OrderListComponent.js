@@ -135,7 +135,7 @@ export class OrderListComponent extends Component {
           <Column
             title="Tổng tiền"
             sorter
-            dataIndex="total_price"
+            dataIndex="total"
             render={value => {
               return (
                 <p style={{ color: "#FFA801", fontWeight: "bold" }}>

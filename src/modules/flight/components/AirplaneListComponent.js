@@ -7,6 +7,7 @@ import AirPlaneFormAdd from "./Form/AirPlaneFormAdd";
 // import imageFlight from "../../../common/assets/images/flight.png";
 import { sortTable } from "../../../common/utils/sortTable";
 import { DEFAULT_URL } from "../../../common/url";
+import imageFlight from "../../../common/assets/images/flight.png";
 
 export class AirplaneListComponent extends Component {
   constructor(props) {
@@ -42,7 +43,6 @@ export class AirplaneListComponent extends Component {
     this.getData();
   }
   async handleChangeTable(pagination, filter, sorter) {
-    this.getData(pagination.current);
     await sortTable(this, pagination, sorter);
   }
   render() {
