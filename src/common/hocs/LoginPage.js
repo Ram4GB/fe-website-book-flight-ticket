@@ -4,6 +4,9 @@ import { Card, Row, Col } from "antd";
 import loginleftimg from "../assets/images/login-left-img.png";
 
 export class LoginPage extends Component {
+  componentWillMount() {
+    document.title = "FlyNow | Đăng nhập";
+  }
   render() {
     return (
       <Card

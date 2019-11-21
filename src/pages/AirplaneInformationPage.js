@@ -22,6 +22,9 @@ export class AirplaneInformationPage extends Component {
     };
     this.getAirplaneByID = this.getAirplaneByID.bind(this);
   }
+  componentWillMount() {
+    document.title = "FlyNow | Thông tin Hãng hàng không";
+  }
   async getAirplaneByID() {
     let result = await getAirplaneByID(this.props.match.params.id);
     if (result && result.success) {

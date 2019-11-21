@@ -39,6 +39,9 @@ export class CustomerInfomationPage extends Component {
     this.handleReset = this.handleReset.bind(this);
     this.showEdittingButton = this.showEdittingButton.bind(this);
   }
+  componentWillMount() {
+    document.title = "FlyNow | Thông tin Khách hàng";
+  }
   async getCustomer() {
     if (this.props.match.params.id) {
       let result = await getCustomerByID(this.props.match.params.id);

@@ -3,6 +3,9 @@ import AirplaneListContainer from "../modules/flight/containers/AirplaneListCont
 import CustomBreadcrumb from "../common/components/widgets/CustomBreadcrumb";
 
 export class AirplaneListPage extends Component {
+  componentWillMount() {
+    document.title = "FlyNow | Quản lí Hãng hàng không";
+  }
   render() {
     const { history } = this.props;
     return (

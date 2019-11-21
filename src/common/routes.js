@@ -12,7 +12,7 @@ import { Result, Button } from "antd";
 import { withRouter } from "react-router";
 import RegisterFlyPage from "../pages/RegisterFlyPage";
 import StepRegisterPage from "../pages/StepRegisterPage";
-import Homepage from "../pages/Homepage";
+// import Homepage from "../pages/Homepage";
 import CustomerPage from "../pages/CustomerPage";
 import OrderListPage from "../pages/OrderListPage";
 import InformationUser from "../pages/InformationUser";
@@ -323,7 +323,7 @@ export class routes extends Component {
             <Route exact component={NewAccount} path="/new-account" />
             <Route exact component={RegisterFlyPage} path="/register" />
             <Route exact component={StepRegisterPage} path="/step-register" />
-            <Route exact component={Homepage} path="/homepage" />
+            {/* <Route exact component={Homepage} path="/homepage" /> */}
             <Route path="*">
               <Result
                 status="404"

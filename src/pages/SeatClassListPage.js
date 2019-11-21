@@ -3,6 +3,9 @@ import SeatClassListContainer from "../modules/seat/containers/SeatClassListCont
 import CustomBreadcrumb from "../common/components/widgets/CustomBreadcrumb";
 
 export class SeatClassListPage extends Component {
+  componentWillMount() {
+    document.title = "FlyNow | Quản lí Loại vé";
+  }
   render() {
     return (
       <>
@@ -12,7 +15,7 @@ export class SeatClassListPage extends Component {
             {
               url: "/admin/seat",
               icon: "credit-card",
-              title: "Bảng điều khiển"
+              title: "Loại vé"
             }
           ]}
         ></CustomBreadcrumb>

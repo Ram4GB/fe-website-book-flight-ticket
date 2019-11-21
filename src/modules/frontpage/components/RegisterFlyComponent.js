@@ -35,6 +35,9 @@ class RegisterFlyComponent extends Component {
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+  componentWillMount() {
+    document.title = "FlyNow | Tìm chuyến bay";
+  }
   handleSubmit(e) {
     e.preventDefault();
     this.props.form.validateFields((errors, values) => {

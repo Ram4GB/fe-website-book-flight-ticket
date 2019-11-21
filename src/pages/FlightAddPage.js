@@ -41,6 +41,9 @@ export class FlightAddPage extends Component {
     this.getDataSeatClass = this.getDataSeatClass.bind(this);
     this.handleRemove = this.handleRemove.bind(this);
   }
+  componentWillMount() {
+    document.title = "FlyNow | Thêm chuyến bay";
+  }
   handleSubmit(e) {
     e.preventDefault();
     this.props.form.validateFields(async (errors, values) => {
