@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
-import { Card, Table, Button, Avatar, Tag } from 'antd'
+import { Card, Table, Input, Button, Tag, Avatar } from 'antd'
 import Column from 'antd/lib/table/Column'
 import { catchErrorAndNotification } from '../../../common/utils/Notification'
-import moment from 'moment'
+import modal from '../../../common/components/widgets/Modal'
+import AirPlaneFormAdd from './Form/AirlineFormAdd'
+// import imageFlight from "../../../common/assets/images/flight.png";
+import { sortTable } from '../../../common/utils/sortTable'
 import { DEFAULT_URL } from '../../../common/url'
+import { searchTable } from '../../../common/utils/searchTable'
 
-export class FlightListComponent extends Component {
+export class AirlineListComponent extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -13,16 +17,21 @@ export class FlightListComponent extends Component {
       total: 0,
       params: {},
     }
-    this.handleShowFormAddFlight = this.handleShowFormAddFlight.bind(this)
     this.getData = this.getData.bind(this)
     this.handleChangeTable = this.handleChangeTable.bind(this)
+    this.handleShowFormAddAirline = this.handleShowFormAddAirline.bind(this)
   }
-  handleShowFormAddFlight() {
-    this.props.history.push('/admin/flight/create')
+  handleShowFormAddAirline() {
+    // this.props.history.push("/admin/airline/create");
+    modal.show(<AirPlaneFormAdd getData={this.getData}></AirPlaneFormAdd>, {
+      title: 'Thêm hãng hàng không',
+      style: { top: 20 },
+      width: '60%',
+    })
   }
   async getData(input = 1) {
     let next = input || this.state.page
-    let result = await this.props.getListFlight(next, this.state.params)
+    let result = await this.props.getListAirPlane(next, this.state.params)
     if (result && result.success === true) {
       this.setState({
         total: result.totalRecord,
@@ -33,22 +42,28 @@ export class FlightListComponent extends Component {
   componentDidMount() {
     this.getData()
   }
-  handleChangeTable(pagination) {
+  async handleChangeTable(pagination, filter, sorter) {
     this.getData(pagination.current)
+    await sortTable(this, pagination, sorter)
   }
   render() {
-    const { flights } = this.props
+    const { airlines } = this.props
     const { page, total } = this.state
     return (
       <Card>
         <div style={{ overflow: 'hidden', marginBottom: 5 }}>
+          <Input.Search
+            onSearch={searchTable(this, 'name', 'like')}
+            placeholder='Tìm tên hãng hàng không'
+            style={{ float: 'left', width: 200, marginLeft: 5 }}
+          />
           <Button
             icon='plus'
             type='primary'
             style={{ float: 'right', marginLeft: 5 }}
-            onClick={this.handleShowFormAddFlight}
+            onClick={this.handleShowFormAddAirline}
           >
-            Thêm chuyến bay
+            Thêm hãng hàng không
           </Button>
           <Button
             icon='filter'
@@ -66,29 +81,29 @@ export class FlightListComponent extends Component {
             size: 'small',
           }}
           rowKey={e => e.id}
-          dataSource={flights}
+          dataSource={airlines}
         >
           <Column
             title='Hãng hàng không'
-            key='airline'
+            sorter
+            key='name'
             render={record => {
-              const { Airline = {} } = record
               return (
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                   <div style={{ marginRight: 5 }}>
-                    <Avatar src={DEFAULT_URL + '/' + Airline.logo} />
+                    <Avatar src={DEFAULT_URL + '/' + record.logo} />
                   </div>
                   <div>
                     <p
                       onClick={() =>
-                        this.props.history.push(`/admin/airline/${Airline.id}`)
+                        this.props.history.push(`/admin/airline/${record.id}`)
                       }
                       className='table-name'
                     >
-                      {Airline.name}
+                      {record.name}
                     </p>
                     <p>
-                      <Tag color='#1890ff'>{Airline.short_name}</Tag>
+                      <Tag color='#1890ff'>{record.short_name}</Tag>
                     </p>
                   </div>
                 </div>
@@ -96,87 +111,45 @@ export class FlightListComponent extends Component {
             }}
           ></Column>
           <Column
-            title='Điểm đi'
-            key='from'
-            render={record => {
-              return (
-                <>
-                  {/* <strong>{record.departure}</strong> */}
-                  <p className='table-name' style={{ fontSize: '13px' }}>
-                    {record.start_airport.name}
-                  </p>
-                </>
-              )
-            }}
-          ></Column>
-          <Column
-            title='Điểm đến'
-            key='to'
-            render={record => {
-              return (
-                <>
-                  {/* <strong>{record.arrival}</strong> */}
-                  <p className='table-name' style={{ fontSize: '13px' }}>
-                    {record.end_airport.name}
-                  </p>
-                </>
-              )
-            }}
-          ></Column>
-          <Column
-            title='Số lượng loại ghế'
-            dataIndex='Seats'
-            key='seats'
+            title='Website'
+            sorter
+            dataIndex='website'
+            key='website'
             align='center'
-            render={(record = []) => {
-              return record.map(r => {
-                const { SeatClass = {} } = r
-                return (
-                  <Tag color='blue' style={{ marginBottom: 5 }}>
-                    {SeatClass.name} - {r.quantity}
-                  </Tag>
-                )
-              })
-            }}
-          ></Column>
-          <Column
-            title='Ngày bay'
-            dataIndex='flight_date'
-            key='flight_date'
-            align='center'
-            render={(record, row) => {
+            render={value => {
               return (
-                row.flight_start_time +
-                ', ' +
-                moment(record).format('DD/MM/YYYY')
+                <a rel='noopener noreferrer' target='_blank' href={value}>
+                  {value}
+                </a>
               )
             }}
           ></Column>
           <Column
-            title='Thời gian bay'
-            dataIndex='flight_time'
-            key='flight_time'
+            title='Liên lạc'
+            sorter
+            dataIndex='contact_info'
+            key='contact_info'
             align='center'
-            render={record => {
-              const m = moment()
-                .startOf('day')
-                .add(record, 'hours')
-              return record ? (
-                <Tag>
-                  {m.format('HH')}h{m.format('mm')}p
-                </Tag>
-              ) : (
-                '0'
-              )
-            }}
           ></Column>
+          {/* <Column
+            title="Mô tả"
+            dataIndex="description"
+            key="description"
+            align="center"
+            render={value => {
+              return <p dangerouslySetInnerHTML={{ __html: value }}></p>;
+            }}
+          ></Column> */}
           <Column
             title='Thao tác'
-            render={() => {
+            render={record => {
               return (
                 <>
                   <Button
                     size='small'
+                    onClick={() => {
+                      this.props.history.push(`/admin/airline/${record.id}`)
+                    }}
                     type='primary'
                     icon='info-circle'
                     key='infoButton'
@@ -186,6 +159,11 @@ export class FlightListComponent extends Component {
                   &nbsp;
                   <Button
                     size='small'
+                    onClick={() => {
+                      this.props.history.push(
+                        `/admin/airline/${record.id}/edit`,
+                      )
+                    }}
                     type='primary'
                     icon='edit'
                     key='editButton'
@@ -214,4 +192,4 @@ export class FlightListComponent extends Component {
   }
 }
 
-export default FlightListComponent
+export default AirlineListComponent

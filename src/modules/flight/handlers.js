@@ -5,7 +5,7 @@ import removeNullObject from "../../common/utils/removeObjectNull";
 import { upLoadFile } from "../../common/utils/uploadFile";
 import moment from "moment";
 
-export const addAirplane = async data => {
+export const addAirline = async data => {
   let result = await fetchAuthLoading({
     url: `${DEFAULT_URL}/airline`,
     method: "POST",
@@ -27,7 +27,7 @@ export const updateAirpplane = async (id, data) => {
   else return { success: false, error: "Server error" };
 };
 
-export const getAirplaneByID = async id => {
+export const getAirlineByID = async id => {
   let result = await fetchAuthLoading({
     url: `${DEFAULT_URL}/airline/${id}`,
     method: "GET"
