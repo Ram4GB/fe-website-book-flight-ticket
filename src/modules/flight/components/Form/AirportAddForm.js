@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ReactQuill from "react-quill";
-import { addAirport } from "../../handlers";
+import { addAirport, updateAirport } from "../../handlers";
 import { Form, Input, Row, Col, Button, notification, Select } from "antd";
 import { catchErrorAndNotification } from "../../../../common/utils/Notification";
 import Modal from "../../../../common/components/widgets/Modal";
@@ -45,14 +45,18 @@ export class AirportAddForm extends Component {
     ];
   }
   handleSubmit(e) {
+    const { item, isEditing } = this.props;
     e.preventDefault();
     this.props.form.validateFields(async (errors, values) => {
-      console.log(values);
       if (!errors) {
-        let result = await addAirport(values);
+        let result = isEditing
+          ? await updateAirport(item && item.id ? item.id : null, values)
+          : await addAirport(values);
         if (result && result.success === true) {
           notification.success({
-            message: "Thêm sân bay thành công"
+            message: isEditing
+              ? "Sửa sân bay thành công"
+              : "Thêm sân bay thành công"
           });
           this.props.getData();
           Modal.hide();
@@ -76,10 +80,12 @@ export class AirportAddForm extends Component {
     const { getFieldDecorator } = this.props.form;
     const { locations } = this.state;
     const { Option } = Select;
+    const { item, isEditing } = this.props;
     return (
       <Form onSubmit={this.handleSubmit}>
         <Form.Item label="Tên sân bay">
           {getFieldDecorator("name", {
+            initialValue: isEditing ? item.name : "",
             rules: [
               {
                 required: true,
@@ -90,6 +96,7 @@ export class AirportAddForm extends Component {
         </Form.Item>
         <Form.Item label="Địa điểm">
           {getFieldDecorator("location_id", {
+            initialValue: isEditing ? item.Location.id : "",
             rules: [
               {
                 required: true,
@@ -113,7 +120,7 @@ export class AirportAddForm extends Component {
 
         <Form.Item label="Mô tả">
           {getFieldDecorator("description", {
-            initialValue: ""
+            initialValue: isEditing ? item.description : ""
           })(
             <ReactQuill
               modules={this.editorModules}
@@ -125,7 +132,7 @@ export class AirportAddForm extends Component {
           <Col style={{ textAlign: "right" }} lg={24}>
             <Button onClick={() => Modal.hide()}>Hủy</Button>{" "}
             <Button type="primary" htmlType="submit">
-              Thêm
+              {isEditing ? "Sửa" : "Thêm"}
             </Button>
           </Col>
         </Row>

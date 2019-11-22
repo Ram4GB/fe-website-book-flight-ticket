@@ -88,6 +88,9 @@ const data = [
   }
 ];
 export class DashboardAdmin extends Component {
+  componentWillMount() {
+    document.title = "FlyNow | Bảng điều khiển";
+  }
   render() {
     return (
       <div>
