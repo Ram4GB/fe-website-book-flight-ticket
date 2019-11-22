@@ -22,7 +22,7 @@ class FormRegisterHomepage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      type: 2,
+      type: 1,
       seatClass: [],
       locationTo: [],
       locationFrom: [],
@@ -48,9 +48,10 @@ class FormRegisterHomepage extends Component {
       }
     });
   }
-  handleChangeType() {
+  handleChangeType(e) {
+    console.log(e.target.value);
     this.setState({
-      type: this.state.type === 1 ? 2 : 1
+      type: e.target.value
     });
   }
   async getSeatClass() {
@@ -80,6 +81,14 @@ class FormRegisterHomepage extends Component {
         this.getLocationFrom()
       ]);
     });
+    this.setState(
+      {
+        type: this.props.paramsRegisterFly.type
+      },
+      () => {
+        console.log("componentDidMount", this.state.type);
+      }
+    );
   }
   async getLocationTo(value) {
     let result = await this.props.getListLocation(1, {
@@ -137,15 +146,19 @@ class FormRegisterHomepage extends Component {
     const { getFieldDecorator } = this.props.form;
     const { paramsRegisterFly } = this.props;
     const { type, firstItem } = this.state;
+    console.log(type);
     return (
       <Form onSubmit={this.handleSubmit}>
         <div className="text-center">
           {getFieldDecorator("type", {
-            initialValue: type || 1
+            initialValue:
+              paramsRegisterFly && paramsRegisterFly.type
+                ? paramsRegisterFly.type
+                : 1
           })(
             <Radio.Group onChange={this.handleChangeType}>
-              <Radio value={1}>Khứ hồi</Radio>
-              <Radio value={2}>Một chiều</Radio>
+              <Radio value={1}>Một chiều</Radio>
+              <Radio value={2}>Khứ hồi</Radio>
             </Radio.Group>
           )}
         </div>
@@ -200,10 +213,13 @@ class FormRegisterHomepage extends Component {
           )}
         </Form.Item>
         <Row gutter={6}>
-          <Col lg={type === 1 ? 12 : 24}>
+          <Col lg={type === 1 ? 24 : 12}>
             <Form.Item label="Ngày đi">
-              {getFieldDecorator("date_from", {
-                initialValue: moment(nowDate)
+              {getFieldDecorator("flight_date", {
+                initialValue:
+                  paramsRegisterFly && paramsRegisterFly.flight_date
+                    ? moment(paramsRegisterFly.flight_date)
+                    : moment(nowDate)
               })(
                 <DatePicker
                   style={{ width: "100%" }}
@@ -212,10 +228,10 @@ class FormRegisterHomepage extends Component {
               )}
             </Form.Item>
           </Col>
-          {type === 1 ? (
+          {type === 2 ? (
             <Col lg={12}>
               <Form.Item label="Ngày về">
-                {getFieldDecorator("date_to", {
+                {getFieldDecorator("flight_date_return", {
                   initialValue: moment(nowDate)
                 })(
                   <DatePicker
