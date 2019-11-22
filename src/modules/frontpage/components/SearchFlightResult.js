@@ -8,7 +8,7 @@ import { MODULE_NAME } from "../models";
 import removeNullObject from "../../../common/utils/removeObjectNull";
 import moment from "moment";
 
-export class FindFly extends Component {
+export class SearchFlightResult extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -337,4 +337,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(FindFly);
+export default connect(mapStateToProps, mapDispatchToProps)(SearchFlightResult);
