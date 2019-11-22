@@ -1,20 +1,7 @@
 import React, { Component } from "react";
-import { Card, Icon, List, Avatar } from "antd";
-import {
-  G2,
-  Chart,
-  Geom,
-  Axis,
-  Tooltip,
-  Coord,
-  Label,
-  Legend,
-  View,
-  Guide,
-  Shape,
-  Facet,
-  Util
-} from "bizcharts";
+import { Card, Icon, List, Avatar, Table, Col } from "antd";
+import { Chart, Geom, Axis, Tooltip } from "bizcharts";
+import Column from "antd/lib/table/Column";
 const data2 = [
   {
     year: "1991",
@@ -106,14 +93,14 @@ export class DashboardAdmin extends Component {
       <div>
         <div className="d-flex row-custom">
           <div className="col-card-3">
-            <Card>
+            <Card className="card-1">
               <div className="d-flex justify-content-between ">
                 <span className="card-header-custom">Khách hàng</span>
                 <div className="icon-wrap">
-                  <i className="user-icon"></i>
+                  <i className="fal fa-users icon-custom"></i>
                 </div>
               </div>
-              <div className="number">32000</div>
+              <div className="number">32,000</div>
               <div>
                 <Icon className="custom-icon" type="arrow-up" />
                 <span className="percent" style={{ color: "green" }}>
@@ -126,14 +113,14 @@ export class DashboardAdmin extends Component {
             </Card>
           </div>
           <div className="col-card-3">
-            <Card>
+            <Card className="card-1">
               <div className="d-flex justify-content-between ">
-                <span className="card-header-custom">Khách hàng</span>
+                <span className="card-header-custom">Đối tác</span>
                 <div className="icon-wrap">
-                  <i className="user-icon"></i>
+                  <i className="fal fa-handshake icon-custom"></i>
                 </div>
               </div>
-              <div className="number">32000</div>
+              <div className="number">32</div>
               <div>
                 <Icon className="custom-icon" type="arrow-up" />
                 <span className="percent" style={{ color: "green" }}>
@@ -146,14 +133,14 @@ export class DashboardAdmin extends Component {
             </Card>
           </div>
           <div className="col-card-3">
-            <Card>
+            <Card className="card-1">
               <div className="d-flex justify-content-between ">
-                <span className="card-header-custom">Khách hàng</span>
+                <span className="card-header-custom">Doanh thu</span>
                 <div className="icon-wrap">
-                  <i className="user-icon"></i>
+                  <i className="fal fa-money-bill icon-custom"></i>
                 </div>
               </div>
-              <div className="number">32000</div>
+              <div className="number">32,000,000</div>
               <div>
                 <Icon className="custom-icon" type="arrow-up" />
                 <span className="percent" style={{ color: "green" }}>
@@ -171,31 +158,55 @@ export class DashboardAdmin extends Component {
           style={{ marginTop: 25 }}
         >
           <Card
+            className="card-1"
             title={<div className="title">thống kê doanh thu tháng 11</div>}
-            style={{ width: "55.5%" }}
+            style={{ width: "49%", height: 620 }}
           >
-            <List
-              itemLayout="horizontal"
-              dataSource={data}
-              renderItem={item => (
-                <List.Item>
-                  <List.Item.Meta
-                    avatar={
-                      <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                    }
-                    title={<a href="https://ant.design">{item.title}</a>}
-                    description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-                  />
-                </List.Item>
-              )}
-            />
+            <Table
+              pagination={{
+                size: "small",
+                pageSize: 5
+              }}
+              rowKey={e => e.id}
+              dataSource={(function() {
+                let a = [];
+                for (let i = 0; i < 11; i++) {
+                  a.push({
+                    id: i,
+                    1: `MH37${i}`,
+                    2: "VietName Airline",
+                    3: 50,
+                    4: 40,
+                    5: "80%",
+                    6: "100$"
+                  });
+                }
+                return a;
+              })()}
+            >
+              <Column
+                title="Số hiệu chuyến bay"
+                align="center"
+                dataIndex="1"
+              ></Column>
+              <Column
+                align="center"
+                title="Hãng hàng không"
+                dataIndex="2"
+              ></Column>
+              <Column align="center" title="Tổng số vé" dataIndex="3"></Column>
+              <Column align="center" title="Số vé bán" dataIndex="4"></Column>
+              <Column align="center" title="Tỉ lệ" dataIndex="5"></Column>
+              <Column align="center" title="Doanh thu" dataIndex="6"></Column>
+            </Table>
             {/* <div className="title">thống kê doanh thu tháng 11</div> */}
           </Card>
           <Card
+            className="card-1"
             title={<div className="title">thống kê theo loại vé</div>}
-            style={{ width: "42.5%" }}
+            style={{ width: "49%" }}
           >
-            <Chart height={400} data={data} scale={cols} forceFit>
+            <Chart height={500} data={data} scale={cols} forceFit>
               <Axis name="year" />
               <Axis name="sales" />
               <Tooltip
@@ -209,6 +220,7 @@ export class DashboardAdmin extends Component {
           </Card>
         </div>
         <Card
+          className="card-1"
           title={<div className="title">thống kê doanh thu từng tháng</div>}
           style={{ marginTop: 25 }}
         >

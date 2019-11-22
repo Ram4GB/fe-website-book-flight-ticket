@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./common/styles/CardFood.css";
 import * as serviceWorker from "./serviceWorker";
 import { createStore } from "redux";
 import { createHashHistory } from "history";
@@ -13,6 +12,7 @@ import { persistStore, persistCombineReducers } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import "react-quill/dist/quill.snow.css"; // ES6
 import "./index.css";
+import "./common/styles/all.css";
 
 export const history = createHashHistory();
 
