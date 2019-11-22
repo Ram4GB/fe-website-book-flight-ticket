@@ -28,7 +28,11 @@ export class SearchFlyItem extends Component {
     else return "No API";
   }
   handleClickItem(flight) {
-    this.props.next(flight);
+    if (this.props.return) this.props.chooseFlightReturn(flight);
+    else this.props.chooseFlight(flight);
+  }
+  combineDateAndTime(date, time) {
+    return moment(date + " " + time);
   }
   render() {
     const { id, flight, paramsRegisterFly } = this.props;
@@ -46,15 +50,14 @@ export class SearchFlyItem extends Component {
                 style={{ width: 50, height: 50 }}
                 src="https://media.gettyimages.com/photos/road-trip-picture-id846454370?s=612x612"
               />
-              <span
-                className="title"
-                style={{ fontWeight: "bold", fontSize: "1.2em" }}
-              >
+              <span style={{ fontWeight: "bold", fontSize: "1.2em" }}>
                 Vietjet Air
               </span>
             </div>
             <div className="col padding">
-              <strong>{moment(flight.flight_date).format("HH:ss:a")}</strong>
+              <strong>
+                {moment(flight.flight_start_time, "HH:mm:ss").format("HH:mm")}
+              </strong>
               <p>{flight.start_airport.Location.name}</p>
             </div>
             <div className="col">
@@ -92,7 +95,7 @@ export class SearchFlyItem extends Component {
               <Button
                 onClick={() => this.handleClickItem(flight)}
                 size="large"
-                type="primary"
+                type={this.props.active ? "primary" : "ghost"}
                 shape="round"
               >
                 CHỌN
@@ -112,13 +115,16 @@ export class SearchFlyItem extends Component {
                     </p>
                     <p>
                       <strong>
-                        {moment(flight.flight_date).format("HH:ss:a")},{" "}
-                        {moment(flight.flight_date).format("DD/MM/YYYY")}
+                        {moment(flight.flight_start_time, "HH:mm:ss").format(
+                          "HH:mm"
+                        )}
+                        , {moment(flight.flight_date).format("DD/MM/YYYY")}
                       </strong>
                     </p>
                     <p className="highlight">{flight.start_airport.name}</p>
                   </div>
                   <div>
+                    <div>{flight.flight_time}h</div>
                     <img
                       className="point"
                       alt="point"
@@ -132,11 +138,17 @@ export class SearchFlyItem extends Component {
                     </p>
                     <p>
                       <strong>
-                        {moment(flight.flight_date)
+                        {this.combineDateAndTime(
+                          flight.flight_date,
+                          flight.flight_start_time
+                        )
                           .add(flight.flight_time, "hours")
-                          .format("HH:ss:a")}
+                          .format("HH:ss")}
                         ,{" "}
-                        {moment(flight.flight_date)
+                        {this.combineDateAndTime(
+                          flight.flight_date,
+                          flight.flight_start_time
+                        )
                           .add(flight.flight_time, "hours")
                           .format("DD/MM/YYYY")}
                       </strong>

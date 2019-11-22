@@ -92,6 +92,9 @@ class InformationCustomer extends Component {
     }
     return arr;
   }
+  combineDateAndTime(date, time) {
+    return moment(date + " " + time);
+  }
   render() {
     const { paramsRegisterFly, user, flight } = this.props;
     const customer = user && user.Customer ? user.Customer : null;
@@ -123,13 +126,15 @@ class InformationCustomer extends Component {
                       {flight.start_airport.location}
                     </p>
                     <Tag>
-                      {moment(flight.flight_date).format("HH:ss:a")},{" "}
-                      {moment(flight.flight_date).format("DD/MM/YYYY")}
+                      {moment(flight.flight_start_time, "HH:mm:ss").format(
+                        "HH:mm"
+                      )}
+                      , {moment(flight.flight_date).format("DD/MM/YYYY")}
                     </Tag>
                     <p className="strong">{flight.start_airport.name}</p>
                   </div>
                   <div>
-                    <p>1h</p>
+                    <p>{flight.flight_time}h</p>
                     <img alt="" src={point} />
                   </div>
                   <div>
@@ -137,11 +142,17 @@ class InformationCustomer extends Component {
                       {flight.end_airport.location}
                     </p>
                     <Tag>
-                      {moment(flight.flight_date)
+                      {this.combineDateAndTime(
+                        flight.flight_date,
+                        flight.flight_start_time
+                      )
                         .add(flight.flight_time, "hours")
-                        .format("HH:ss:a")}
+                        .format("HH:ss")}
                       ,{" "}
-                      {moment(flight.flight_date)
+                      {this.combineDateAndTime(
+                        flight.flight_date,
+                        flight.flight_start_time
+                      )
                         .add(flight.flight_time, "hours")
                         .format("DD/MM/YYYY")}
                     </Tag>

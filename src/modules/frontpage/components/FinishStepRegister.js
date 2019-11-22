@@ -8,7 +8,28 @@ import { withRouter } from "react-router";
 
 export class FinishStepRegister extends Component {
   async componentDidMount() {
-    let result = await this.props.orderTicket(this.props.paramsRegisterFly);
+    const { paramsRegisterFly } = this.props;
+    const {
+      type,
+      seatClass,
+      flight,
+      passengers,
+      flight_return
+    } = paramsRegisterFly;
+    console.log(type);
+    let data = {};
+    if (type === 1) {
+      data.seat_class_id = JSON.parse(seatClass).id;
+      data.flight_id = flight.id;
+      data.passengers = passengers;
+    } else {
+      data.seat_class_id = JSON.parse(seatClass).id;
+      data.flight_id = flight.id;
+      data.return_flight_id = flight_return.id;
+      data.passengers = passengers;
+    }
+    console.log(data);
+    let result = await this.props.orderTicket(data, type);
     if (result && result.success) {
       notification.success({
         message: "Bạn đã order thành công"

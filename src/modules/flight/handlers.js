@@ -3,6 +3,7 @@ import { DEFAULT_URL } from "../../common/url";
 import * as actions from "./actions";
 import removeNullObject from "../../common/utils/removeObjectNull";
 import { upLoadFile } from "../../common/utils/uploadFile";
+import moment from "moment";
 
 export const addAirplane = async data => {
   let result = await fetchAuthLoading({
@@ -134,7 +135,8 @@ export default function(dispatch, props) {
       } else return { success: false, error: "Server error" };
     },
     addFlight: async data => {
-      delete data.airline_id;
+      data.flight_date = moment(data.flight_date).format("YYYY/MM/DD");
+      data.flight_start_time = moment(data.flight_start_time).format("hh:mm");
       let result = await fetchAuthLoading({
         url: `${DEFAULT_URL}/flight`,
         method: "POST",

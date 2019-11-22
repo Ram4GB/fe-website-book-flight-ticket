@@ -25,17 +25,36 @@ export class StepRegisterComponent extends Component {
     };
     this.next = this.next.bind(this);
   }
-  next(flight) {
+  next(flightItem, flightItemReturn) {
     const current = this.state.current;
     const { validateFields } = this.props.form;
     switch (current) {
       case 0:
-        if (flight) {
-          this.props.setParamsRegisterFly({ flight_id: flight.id, flight });
-          return this.setState({ current: current + 1 });
+        if (flightItem) {
+          console.log(this.props.paramsRegisterFly);
+          if (this.props.paramsRegisterFly.type === 2) {
+            if (flightItemReturn) {
+              this.props.setParamsRegisterFly({
+                flight_id: flightItem.id,
+                flight: flightItem,
+                flight_id_return: flightItemReturn.id,
+                flight_return: flightItemReturn
+              });
+              return this.setState({ current: current + 1 });
+            } else
+              notification.error({
+                message: "Mời bạn chọn chuyến bay về"
+              });
+          } else {
+            this.props.setParamsRegisterFly({
+              flight_id: flightItem.id,
+              flight: flightItem
+            });
+            return this.setState({ current: current + 1 });
+          }
         } else
           notification.error({
-            message: "Mời bạn chọn chuyến bay"
+            message: "Mời bạn chọn chuyến bay đi"
           });
         break;
       case 1:

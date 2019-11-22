@@ -9,7 +9,8 @@ import {
   InputNumber,
   DatePicker,
   notification,
-  Select
+  Select,
+  TimePicker
 } from "antd";
 import CustomBreadcrumb from "../common/components/widgets/CustomBreadcrumb";
 import { catchErrorAndNotification } from "../common/utils/Notification";
@@ -309,6 +310,18 @@ export class FlightAddPage extends Component {
                   {getFieldDecorator("flight_date", {
                     rules: [{ message: "Mời chọn ngày bay", required: true }]
                   })(<DatePicker />)}
+                </Form.Item>
+              </Col>
+              <Col lg={8}>
+                <Form.Item label="Chọn thời gian bắt đầu bay">
+                  {getFieldDecorator("flight_start_time", {
+                    rules: [
+                      {
+                        message: "Mời chọn thời gian bắt đầu bay",
+                        required: true
+                      }
+                    ]
+                  })(<TimePicker format={"HH:mm"} />)}
                 </Form.Item>
               </Col>
             </Row>

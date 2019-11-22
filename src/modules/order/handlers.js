@@ -4,15 +4,10 @@ import * as actions from "./actions";
 import { upLoadFile } from "../../common/utils/uploadFile";
 export default function(dispatch, props) {
   return {
-    orderTicket: async data => {
-      let dataSend = {};
-      let flight_id = data.flight_id;
-      let temp = JSON.parse(data.seatClass);
-      dataSend.seat_class_id = temp.id;
-      dataSend.passengers = data.passengers;
+    orderTicket: async (data, type = 1) => {
       let result = await fetchAuthLoading({
-        url: `${DEFAULT_URL}/flight/${flight_id}/order`,
-        data: dataSend,
+        url: `${DEFAULT_URL}/order/${type === 1 ? "oneway" : "return"}`,
+        data,
         method: "POST"
       });
       if (result && result.data) return result.data;

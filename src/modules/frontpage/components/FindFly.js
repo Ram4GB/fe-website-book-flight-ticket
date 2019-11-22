@@ -1,25 +1,53 @@
 import React, { Component } from "react";
-import { Card, Select } from "antd";
+import { Card, Select, Col, Button, Row } from "antd";
 import SearchFlyItem from "./SearchFlyItem";
 import { connect } from "react-redux";
 import handlers from "../../flight/handlers";
 import { catchErrorAndNotification } from "../../../common/utils/Notification";
 import { MODULE_NAME } from "../models";
 import removeNullObject from "../../../common/utils/removeObjectNull";
+import moment from "moment";
 
 export class FindFly extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      flightFrom: []
+      flightFrom: [],
+      flightReturn: [],
+      flightItem: null,
+      flightItemReturn: null
     };
     this.showFlyFrom = this.showFlyFrom.bind(this);
     this.getDataFlight = this.getDataFlight.bind(this);
     this.handleChangePrice = this.handleChangePrice.bind(this);
+    this.chooseFlightReturn = this.chooseFlightReturn.bind(this);
+    this.chooseFlight = this.chooseFlight.bind(this);
+  }
+  chooseFlightReturn(flightItemReturn) {
+    this.setState({
+      flightItemReturn:
+        this.state.flightItemReturn &&
+        this.state.flightItemReturn.id === flightItemReturn.id
+          ? null
+          : flightItemReturn
+    });
+  }
+  chooseFlight(flightItem) {
+    this.setState({
+      flightItem:
+        this.state.flightItem && this.state.flightItem.id === flightItem.id
+          ? null
+          : flightItem
+    });
   }
   async componentDidMount() {
     // fetch api flight here and show
     await this.getDataFlight();
+    await this.getDataFlightReturn();
+    this.setState({
+      flightItem: this.props.paramsRegisterFly.flight,
+      flightItemReturn: this.props.paramsRegisterFly.flight_return
+    });
   }
   async getDataFlight(extraParams) {
     const { paramsRegisterFly } = this.props;
@@ -32,6 +60,10 @@ export class FindFly extends Component {
       params.seat_class_id = JSON.parse(paramsRegisterFly.seatClass).id;
     if (paramsRegisterFly.quantity)
       params.quantity = paramsRegisterFly.quantity;
+    if (paramsRegisterFly.flight_date)
+      params.flight_date = moment(paramsRegisterFly.flight_date).format(
+        "YYYY/MM/DD"
+      );
     params.offset = 100; // this is the first time I do this
     params = {
       ...params,
@@ -39,36 +71,79 @@ export class FindFly extends Component {
     };
     params = removeNullObject(params);
     let result = await this.props.getListFlight(1, params);
-    console.log(result.data);
     if (result && result.success) {
       this.setState({
         flightFrom: result.data
       });
     } else catchErrorAndNotification(result.error);
   }
+  async getDataFlightReturn(extraParams) {
+    const { paramsRegisterFly } = this.props;
+    let params = {};
+    if (paramsRegisterFly.start_location)
+      params.start_location = paramsRegisterFly.end_location;
+    if (paramsRegisterFly.end_location)
+      params.end_location = paramsRegisterFly.start_location;
+    if (paramsRegisterFly.seatClass)
+      params.seat_class_id = JSON.parse(paramsRegisterFly.seatClass).id;
+    if (paramsRegisterFly.quantity)
+      params.quantity = paramsRegisterFly.quantity;
+    if (paramsRegisterFly.flight_date)
+      params.flight_date = moment(paramsRegisterFly.flight_date_return).format(
+        "YYYY/MM/DD"
+      );
+    params.offset = 100; // this is the first time I do this
+    params = {
+      ...params,
+      ...extraParams
+    };
+    params = removeNullObject(params);
+    let result = await this.props.getListFlight(1, params);
+    if (result && result.success) {
+      this.setState({
+        flightReturn: result.data
+      });
+    } else catchErrorAndNotification(result.error);
+  }
   showFlyFrom() {
     let arr = [];
-    const { flightFrom } = this.state;
+    const { flightFrom, flightItem } = this.state;
     const { paramsRegisterFly } = this.props;
     for (let i = 0; i < flightFrom.length; i++)
       arr.push(
         <SearchFlyItem
+          active={
+            flightItem && flightFrom[i].id === flightItem.id ? true : false
+          }
           next={this.props.next}
           flight={flightFrom[i]}
           id={`item-fly-from-${i}`}
           key={`item-fly-${i}`}
           paramsRegisterFly={paramsRegisterFly}
+          chooseFlight={this.chooseFlight}
         ></SearchFlyItem>
       );
     return arr;
   }
   showFlyTo() {
     let arr = [];
-    for (let i = 0; i < 5; i++)
+    const { flightReturn, flightItemReturn } = this.state;
+    const { paramsRegisterFly } = this.props;
+    for (let i = 0; i < flightReturn.length; i++)
       arr.push(
         <SearchFlyItem
-          id={`item-fly-to${i}`}
+          active={
+            flightItemReturn && flightReturn[i].id === flightItemReturn.id
+              ? true
+              : false
+          }
+          return={true}
+          next={this.props.next}
+          flight={flightReturn[i]}
+          id={`item-fly-return-${i}`}
           key={`item-fly-${i}`}
+          paramsRegisterFly={paramsRegisterFly}
+          chooseFlightReturn={this.chooseFlightReturn}
         ></SearchFlyItem>
       );
     return arr;
@@ -79,6 +154,7 @@ export class FindFly extends Component {
       direction: value
     });
   }
+
   render() {
     console.log(this.props.paramsRegisterFly);
     const { type } = this.props.paramsRegisterFly;
@@ -162,7 +238,7 @@ export class FindFly extends Component {
             </Card>
           </div>
         </div>
-        {type === 1 ? (
+        {type === 2 ? (
           <div className="row">
             <div className="col-lg-12">
               <Card
@@ -229,6 +305,21 @@ export class FindFly extends Component {
             </div>
           </div>
         ) : null}
+        <Row>
+          <Col lg={24}>
+            <Button
+              onClick={() =>
+                this.props.next(
+                  this.state.flightItem,
+                  this.state.flightItemReturn
+                )
+              }
+              type="primary"
+            >
+              Tiếp theo
+            </Button>
+          </Col>
+        </Row>
       </div>
     );
   }
