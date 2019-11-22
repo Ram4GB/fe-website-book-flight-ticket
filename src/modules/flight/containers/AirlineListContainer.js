@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import handlers from "../handlers";
 import { MODULE_NAME as MODULE_AIRPLANE } from "../models";
-import AirplaneListComponent from "../components/AirplaneListComponent";
+import AirlineListComponent from "../components/AirlineListComponent";
 
 const mapStateToProps = state => {
   return {
@@ -18,4 +18,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AirplaneListComponent);
+)(AirlineListComponent);
