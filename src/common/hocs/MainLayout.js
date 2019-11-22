@@ -6,7 +6,7 @@ import LoginPage from "./LoginPage";
 import { connect } from "react-redux";
 import handlers from "../../modules/user/handlers";
 import "bootstrap/dist/css/bootstrap-grid.css";
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Sider } = Layout;
 
 // const nameLogo = 'Fly Now'
 
@@ -91,7 +91,7 @@ export class MainLayout extends Component {
     const { mode } = this.props;
     if (mode) {
       return (
-        <Layout>
+        <Layout className="h-100">
           <Sider
             breakpoint="lg"
             collapsedWidth="0"
@@ -111,6 +111,7 @@ export class MainLayout extends Component {
             >
               {/* {nameLogo} */}
               <img
+                style={{ margin: "auto", display: "block" }}
                 width={100}
                 alt=""
                 src="https://res.flynow.vn/logoflynow.png"
@@ -180,9 +181,9 @@ export class MainLayout extends Component {
                 {React.cloneElement(this.props.children, { ...this.props })}
               </div>
             </Content>
-            <Footer style={{ textAlign: "center" }}>
+            {/* <Footer style={{ textAlign: "center" }}>
               FlyNow Management ©2019
-            </Footer>
+            </Footer> */}
           </Layout>
         </Layout>
       );

@@ -169,12 +169,10 @@ code {
   text-align: center;
 }
 
-.user-icon {
+.icon-custom {
   color: #5646ff;
-  line-height: 3.312rem;
-}
-.user-icon::before {
-  content: "\F05C";
+  line-height: 3.312rem !important;
+  font-size: 1.4em;
 }
 
 .icon {
@@ -190,11 +188,22 @@ code {
 }
 
 .title {
-  color: #6c7293;
-  font-size: 1.3em;
+  color: #fff;
+  font-size: 1.2em;
   text-transform: capitalize;
   text-align: center;
+  background-color: #007bff;
 }
+
+.card-1 {
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  border-radius: 4px;
+}
+
+/* .card-1 .ant-card-head,
+.ant-card-head-title {
+  padding: 10px;
+} */
 
 @media screen and (max-width: 600px) {
   .text-intro {
