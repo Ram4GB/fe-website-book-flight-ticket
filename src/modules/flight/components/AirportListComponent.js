@@ -17,20 +17,9 @@ export class AirportListComponent extends Component {
     this.getData = this.getData.bind(this);
     this.handleChangeTable = this.handleChangeTable.bind(this);
     this.handleShowFormAddAirport = this.handleShowFormAddAirport.bind(this);
+    this.handleShowFormEditAirport = this.handleShowFormEditAirport.bind(this);
   }
-  handleShowFormAddAirport() {
-    modal.show(
-      <AirportAddForm
-        getListLocation={this.props.getListLocation}
-        getData={this.getData}
-      ></AirportAddForm>,
-      {
-        title: "Thêm sân bay",
-        style: { top: 20 },
-        width: "60%"
-      }
-    );
-  }
+
   async getData(input = 1) {
     let next = input || this.state.page;
     let result = await this.props.getListAirport(next, this.state.params);
@@ -46,6 +35,35 @@ export class AirportListComponent extends Component {
   }
   async handleChangeTable(pagination, filter, sorter) {
     await sortTable(this, pagination, sorter);
+  }
+  handleShowFormAddAirport() {
+    modal.show(
+      <AirportAddForm
+        getListLocation={this.props.getListLocation}
+        getData={this.getData}
+        isEditing={false}
+      ></AirportAddForm>,
+      {
+        title: "Thêm sân bay",
+        style: { top: 20 },
+        width: "60%"
+      }
+    );
+  }
+  handleShowFormEditAirport(item) {
+    modal.show(
+      <AirportAddForm
+        getListLocation={this.props.getListLocation}
+        getData={this.getData}
+        isEditing={true}
+        item={item}
+      ></AirportAddForm>,
+      {
+        title: "Sửa sân bay",
+        style: { top: 20 },
+        width: "60%"
+      }
+    );
   }
   render() {
     const { airports } = this.props;
@@ -122,9 +140,7 @@ export class AirportListComponent extends Component {
                   <Button
                     size="small"
                     onClick={() => {
-                      this.props.history.push(
-                        `/admin/airport/${record.id}/edit`
-                      );
+                      this.handleShowFormEditAirport(record);
                     }}
                     type="primary"
                     icon="edit"
