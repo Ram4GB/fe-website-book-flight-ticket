@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Steps, Button, Card, Form, notification } from "antd";
-import FindFly from "./FindFly";
+import SearchFlightResult from "./SearchFlightResult";
 import InformationCustomer from "./InformationCustomer";
 import FinishStepRegister from "./FinishStepRegister";
 import _ from "lodash";
@@ -90,10 +90,10 @@ export class StepRegisterComponent extends Component {
     switch (current) {
       case 0:
         return (
-          <FindFly
+          <SearchFlightResult
             next={this.next}
             paramsRegisterFly={paramsRegisterFly}
-          ></FindFly>
+          ></SearchFlightResult>
         );
       case 1:
         return (
