@@ -50,7 +50,7 @@ class RegisterFlyComponent extends Component {
     });
   }
   async getDataAirline() {
-    let result = await this.props.getListAirline();
+    let result = await this.props.getListAirPlane();
     if (result && result.success) {
       this.setState({
         airlines: result.data
@@ -83,6 +83,7 @@ class RegisterFlyComponent extends Component {
     await this.getDataAirline();
   }
   render() {
+    // console.log(this.props.paramsRegisterFly);
     const { paramsRegisterFly, history, setParamsRegisterFly } = this.props;
     return (
       <div>
