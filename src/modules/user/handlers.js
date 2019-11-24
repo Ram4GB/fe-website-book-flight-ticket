@@ -171,11 +171,38 @@ export default function(dispatch, props) {
       if (result && result.data) return result.data;
       return { success: false, error: "Server error" };
     },
-    yearStatic: async year => {
+    yearStatic: async (year, month) => {
       let params;
       if (year) params.year = year;
+      if (month) params.month = month;
       let result = await fetchAuthLoading({
         url: `${DEFAULT_URL}/statistic/year`,
+        params: {
+          ...params
+        }
+      });
+      if (result && result.data) return result.data;
+      return { success: false, error: "Server error" };
+    },
+    monthStatic: async (year, month) => {
+      let params;
+      if (year) params.year = year;
+      if (month) params.month = month;
+      let result = await fetchAuthLoading({
+        url: `${DEFAULT_URL}/statistic/month`,
+        params: {
+          ...params
+        }
+      });
+      if (result && result.data) return result.data;
+      return { success: false, error: "Server error" };
+    },
+    seatClassStatic: async (year, month) => {
+      let params;
+      if (year) params.year = year;
+      if (month) params.month = month;
+      let result = await fetchAuthLoading({
+        url: `${DEFAULT_URL}/statistic/seatclass`,
         params: {
           ...params
         }

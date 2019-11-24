@@ -36,6 +36,7 @@ export class routes extends Component {
     super(props);
     this.state = {};
     this.getRole = this.getRole.bind(this);
+    this.socketGlobal = this.socketGlobal.bind(this);
   }
   getRole(user) {
     if (user) {
@@ -45,32 +46,51 @@ export class routes extends Component {
     }
   }
   componentDidMount() {
+    this.socketGlobal();
+  }
+  UNSAFE_componentWillReceiveProps() {
+    this.socketGlobal();
+  }
+  socketGlobal() {
     const { store } = this.props;
     const { user } = store.getState()[MODULE_USER];
-    if (
-      (user && this.getRole(user) === "admin") ||
-      this.getRole(user) === "staff"
-    ) {
-      socketService.admin.instance.on(eventSocket.NEW_ORDER, data => {
-        notification.info({
-          message: "Có người đặt order"
-        });
-      });
-    } else if (user && this.getRole(user) === "customer") {
-      socketService.customer.instance.on(eventSocket.ORDER_APPROVED, data => {
-        console.log(data);
-        notification.info({
-          message: `Đơn hàng #${data.order.id} của bạn đã được xác nhận`
-        });
-      });
-      socketService.customer.instance.on(eventSocket.ORDER_REJECTED, data => {
-        console.log(data);
-        notification.error({
-          message: `Đơn hàng #${data.order.id} của bạn đã bị hủy`
-        });
-      });
+    try {
+      if (
+        (user && this.getRole(user) === "admin") ||
+        this.getRole(user) === "staff"
+      ) {
+        if (!socketService.admin.instance.connected) {
+          socketService.admin.instance.on(eventSocket.NEW_ORDER, data => {
+            notification.info({
+              message: "Có người đặt order"
+            });
+          });
+        }
+      } else if (user && this.getRole(user) === "customer") {
+        if (!socketService.customer.instance.connected) {
+          socketService.customer.instance.on(
+            eventSocket.ORDER_APPROVED,
+            data => {
+              notification.info({
+                message: `Đơn hàng #${data.order.id} của bạn đã được xác nhận`
+              });
+            }
+          );
+          socketService.customer.instance.on(
+            eventSocket.ORDER_REJECTED,
+            data => {
+              notification.error({
+                message: `Đơn hàng #${data.order.id} của bạn đã bị hủy`
+              });
+            }
+          );
+        }
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
+
   render() {
     const { store } = this.props;
     const { user } = store.getState()[MODULE_USER];

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Card, Icon, Table } from "antd";
-import { Chart, Geom, Axis, Tooltip, Legend } from "bizcharts";
+import { Chart, Geom, Axis, Tooltip, Label } from "bizcharts";
 import Column from "antd/lib/table/Column";
 
 import { connect } from "react-redux";
@@ -15,56 +15,33 @@ const cols2 = {
     }
   },
   month: {
-    range: [0, 1]
+    range: [0, 0.9],
+    formatter: value => {
+      return "Tháng " + value;
+    }
   }
 };
 const cols = {
-  sales: {
-    tickInterval: 20
+  revenue: {
+    min: 0,
+    formatter: value => {
+      return numeral(value).format("0,0");
+    }
   }
 };
-const data = [
-  {
-    year: "1951 年",
-    sales: 38
-  },
-  {
-    year: "1952 年",
-    sales: 52
-  },
-  {
-    year: "1956 年",
-    sales: 61
-  },
-  {
-    year: "1957 年",
-    sales: 145
-  },
-  {
-    year: "1958 年",
-    sales: 48
-  },
-  {
-    year: "1959 年",
-    sales: 38
-  },
-  {
-    year: "1960 年",
-    sales: 38
-  },
-  {
-    year: "1962 年",
-    sales: 38
-  }
-];
 export class DashboardAdmin extends Component {
   constructor(props) {
     super(props);
     this.state = {
       generalStatic: null,
-      yearStatic: []
+      yearStatic: [],
+      flights: [],
+      seatClasses: []
     };
     this.getGeneralStatics = this.getGeneralStatics.bind(this);
+    this.seatClassStatic = this.seatClassStatic.bind(this);
+    this.yearStatic = this.yearStatic.bind(this);
+    this.monthStatic = this.monthStatic.bind(this);
   }
   async getGeneralStatics() {
     let result = await this.props.generalStatic();
@@ -85,13 +62,35 @@ export class DashboardAdmin extends Component {
   componentWillMount() {
     document.title = "FlyNow | Bảng điều khiển";
   }
-  componentDidMount() {
-    this.getGeneralStatics();
-    this.yearStatic();
+
+  async monthStatic() {
+    let result = await this.props.monthStatic();
+    if (result && result.success) {
+      this.setState({
+        flights: result.data
+      });
+    }
+  }
+  async seatClassStatic() {
+    let result = await this.props.seatClassStatic();
+    if (result && result.success) {
+      let arr;
+      arr = result.data.map(item => {
+        return { name: item.SeatClass.name, revenue: item.revenue };
+      });
+      this.setState({
+        seatClasses: arr
+      });
+    }
+  }
+  async componentDidMount() {
+    await this.getGeneralStatics();
+    await this.yearStatic();
+    await this.monthStatic();
+    await this.seatClassStatic();
   }
   render() {
-    const { generalStatic, yearStatic } = this.state;
-    console.log(yearStatic);
+    const { generalStatic, yearStatic, seatClasses } = this.state;
     return (
       <div>
         <div className="d-flex row-custom">
@@ -109,7 +108,7 @@ export class DashboardAdmin extends Component {
                   <div>
                     <Icon className="custom-icon" type="arrow-up" />
                     <span className="percent" style={{ color: "green" }}>
-                      {generalStatic.customer.percent.toFixed(2)}%
+                      {generalStatic.customer.increment.toFixed(2)}%
                     </span>
                     <span style={{ color: "#6a6a82 !important" }}>
                       Trong tháng qua
@@ -129,7 +128,7 @@ export class DashboardAdmin extends Component {
                   <div>
                     <Icon className="custom-icon" type="arrow-up" />
                     <span className="percent" style={{ color: "green" }}>
-                      {generalStatic.airline.percent.toFixed(2)}%{" "}
+                      {generalStatic.airline.increment.toFixed(2)}%{" "}
                     </span>
                     <span style={{ color: "#6a6a82 !important" }}>
                       Trong tháng qua
@@ -151,7 +150,7 @@ export class DashboardAdmin extends Component {
                   <div>
                     <Icon className="custom-icon" type="arrow-up" />
                     <span className="percent" style={{ color: "green" }}>
-                      {generalStatic.revenue.percent.toFixed(2)}%{" "}
+                      {generalStatic.revenue.increment.toFixed(2)}%{" "}
                     </span>
                     <span style={{ color: "#6a6a82 !important" }}>
                       Trong tháng qua
@@ -176,37 +175,54 @@ export class DashboardAdmin extends Component {
                 size: "small",
                 pageSize: 5
               }}
-              rowKey={e => e.id}
-              dataSource={(function() {
-                let a = [];
-                for (let i = 0; i < 11; i++) {
-                  a.push({
-                    id: i,
-                    1: `MH37${i}`,
-                    2: "VietName Airline",
-                    3: 50,
-                    4: 40,
-                    5: "80%",
-                    6: "100$"
-                  });
-                }
-                return a;
-              })()}
+              rowKey={e => e.flight_id}
+              dataSource={this.state.flights}
             >
               <Column
                 title="Số hiệu chuyến bay"
                 align="center"
-                dataIndex="1"
+                dataIndex="flight_id"
+                key="flight_id"
               ></Column>
               <Column
                 align="center"
                 title="Hãng hàng không"
-                dataIndex="2"
+                dataIndex="Flight.Airline.name"
+                key="name"
               ></Column>
-              <Column align="center" title="Tổng số vé" dataIndex="3"></Column>
-              <Column align="center" title="Số vé bán" dataIndex="4"></Column>
-              <Column align="center" title="Tỉ lệ" dataIndex="5"></Column>
-              <Column align="center" title="Doanh thu" dataIndex="6"></Column>
+              <Column
+                align="center"
+                title="Tổng số vé"
+                dataIndex="quantity"
+                key="quantity"
+              ></Column>
+              <Column
+                key="remaining_quantity"
+                align="center"
+                title="Số vé bán"
+                render={record => {
+                  return record.quantity - record.remaining_quantity;
+                }}
+              ></Column>
+              <Column
+                key="percent"
+                align="center"
+                title="Tỉ lệ"
+                render={record => {
+                  return (
+                    (
+                      ((record.quantity - record.remaining_quantity) * 100) /
+                      record.quantity
+                    ).toFixed(2) + "%"
+                  );
+                }}
+              ></Column>
+              <Column
+                align="center"
+                title="Doanh thu"
+                dataIndex="revenue"
+                key="revenue"
+              ></Column>
             </Table>
             {/* <div className="title">thống kê doanh thu tháng 11</div> */}
           </Card>
@@ -215,15 +231,17 @@ export class DashboardAdmin extends Component {
             title={<div className="title">thống kê theo loại vé</div>}
             style={{ width: "49%" }}
           >
-            <Chart height={500} data={data} scale={cols} forceFit>
-              <Axis name="year" />
-              <Axis name="sales" />
+            <Chart height={500} data={seatClasses} scale={cols} forceFit>
+              <Axis name="name" />
+              <Axis name="revenue" />
               <Tooltip
                 crosshairs={{
                   type: "y"
                 }}
               />
-              <Geom type="interval" position="year*sales" />
+              <Geom type="interval" position="name*revenue">
+                <Label></Label>
+              </Geom>
             </Chart>
             {/* <div className="title">thống kê theo loại vé</div> */}
           </Card>
@@ -241,7 +259,6 @@ export class DashboardAdmin extends Component {
                 type: "y"
               }}
             />
-            <Legend />
             <Geom type="line" position="month*revenue" size={2} />
             <Geom
               type="point"
