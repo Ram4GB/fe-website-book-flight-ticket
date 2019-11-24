@@ -25,8 +25,8 @@ class LoginForm extends Component {
   }
 
   handleSubmitLoginForm(e) {
-    this.setState({ loading: true })
-    PageLoading.show()
+    this.setState({ loading: true });
+    PageLoading.show();
     e.preventDefault();
     const { validateFields } = this.props.form;
     validateFields(async (errors, values) => {
@@ -35,23 +35,23 @@ class LoginForm extends Component {
         const result = await login(values.email, values.password);
         if (result) {
           if (result && result.success === false) {
-            PageLoading.hide()
-            this.setState({ loading: false })
+            PageLoading.hide();
+            this.setState({ loading: false });
             catchErrorAndNotification(result.error);
           } else {
-            PageLoading.hide()
-            this.setState({ loading: false })
+            PageLoading.hide();
+            this.setState({ loading: false });
             notification.success({
               message: "Đăng nhập thành công"
             });
             setTimeout(() => {
-              this.props.history.goBack();
+              window.location.href = "/";
             }, 300);
           }
         }
       } else {
-        PageLoading.hide()
-        this.setState({ loading: false })
+        PageLoading.hide();
+        this.setState({ loading: false });
       }
     });
   }
@@ -95,7 +95,12 @@ class LoginForm extends Component {
             </Col>
           </Row>
         </Form.Item>
-        <Button loading={this.state.loading} htmlType="submit" type="primary" style={{ width: "100%" }}>
+        <Button
+          loading={this.state.loading}
+          htmlType="submit"
+          type="primary"
+          style={{ width: "100%" }}
+        >
           Đăng nhập
         </Button>
       </Form>
