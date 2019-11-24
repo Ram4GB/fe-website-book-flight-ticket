@@ -109,6 +109,26 @@ export class MainLayoutFrontPage extends Component {
                         : "Thành viên"}
                     </Link>
                   </li>
+                  <li
+                    className={`nav-item ${
+                      path === "/admin/dashboard" ? "active" : null
+                    }`}
+                  >
+                    {user.role === "ADMIN" ||
+                    user.role === "STAFF" ||
+                    user.role === "CUSTOMER" ? (
+                      <Link
+                        className="nav-link"
+                        to={
+                          user.role === "CUSTOMER"
+                            ? "/admin/order"
+                            : "/admin/dashboard"
+                        }
+                      >
+                        {user.role === "CUSTOMER" ? "Hóa đơn" : "Admin Page"}
+                      </Link>
+                    ) : null}
+                  </li>
                   <li className="nav-item">
                     <a onClick={this.logout} className="nav-link" href="/#">
                       Đăng xuất
@@ -116,26 +136,6 @@ export class MainLayoutFrontPage extends Component {
                   </li>
                 </>
               ) : null}
-              <li
-                className={`nav-item ${
-                  path === "/admin/dashboard" ? "active" : null
-                }`}
-              >
-                {user.role === "ADMIN" ||
-                user.role === "STAFF" ||
-                user.role === "CUSTOMER" ? (
-                  <Link
-                    className="nav-link"
-                    to={
-                      user.role === "CUSTOMER"
-                        ? "/admin/order"
-                        : "/admin/dashboard"
-                    }
-                  >
-                    {user.role === "CUSTOMER" ? "Hóa đơn" : "Admin Page"}
-                  </Link>
-                ) : null}
-              </li>
             </ul>
           </div>
         </nav>

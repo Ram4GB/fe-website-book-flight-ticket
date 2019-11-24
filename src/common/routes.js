@@ -149,6 +149,11 @@ export class routes extends Component {
                   <FlightAddPage></FlightAddPage>
                 </MainLayout>
               </Route>
+              <Route exact path="/admin/flight/:id/edit">
+                <MainLayout mode="admin">
+                  <FlightInformationPage edit={true}></FlightInformationPage>
+                </MainLayout>
+              </Route>
               <Route exact path="/admin/flight/:id">
                 <MainLayout mode="admin">
                   <FlightInformationPage></FlightInformationPage>

@@ -132,8 +132,8 @@ export class StepRegisterComponent extends Component {
           {this.showStepContent(current)}
           {/* </Card> */}
         </div>
-        <div className="steps-action">
-          {current < steps.length - 1 && (
+        <div style={{ textAlign: "center" }} className="steps-action">
+          {current < steps.length - 1 && current !== 0 && (
             <Button type="primary" onClick={() => this.next()}>
               Tiếp theo
             </Button>

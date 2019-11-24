@@ -59,14 +59,24 @@ class RegisterFlyComponent extends Component {
   }
   showLogoAirline() {
     return this.state.airlines.map(airline => {
-      return (
-        <img
-          alt=""
-          key={airline.id}
-          src={DEFAULT_URL + "/" + airline.logo}
-          className="image-logo-flight"
-        />
-      );
+      if (airline && airline.logo)
+        return (
+          <img
+            alt=""
+            key={airline.id}
+            src={DEFAULT_URL + "/" + airline.logo}
+            className="image-logo-flight"
+          />
+        );
+      else
+        return (
+          <img
+            alt=""
+            key={airline.id}
+            src="https://www.washingtonpost.com/resizer/XDNLgd1ihU5u3te6FFp4haLzTRg=/1484x0/arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/PBKJ5C6KJJC75BO46RZEWUGL6A.jpg"
+            className="image-logo-flight"
+          />
+        );
     });
   }
   async componentDidMount() {
