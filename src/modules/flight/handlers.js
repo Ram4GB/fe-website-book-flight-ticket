@@ -56,6 +56,15 @@ export const updateAirport = async (id, data) => {
   return { success: false, error: "Server error" };
 };
 
+export const getFlightById = async id => {
+  let result = await fetchAuthLoading({
+    url: `${DEFAULT_URL}/flight/${id}`,
+    method: "GET"
+  });
+  if (result && result.data) return result.data;
+  else return { error: "Server error", success: false };
+};
+
 export default function(dispatch, props) {
   return {
     getListAirline: async (page, params) => {

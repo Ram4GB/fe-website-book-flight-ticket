@@ -308,7 +308,7 @@ export class SearchFlightResult extends Component {
           </div>
         ) : null}
         <Row>
-          <Col lg={24}>
+          <Col style={{ textAlign: "center" }} lg={24}>
             <Button
               onClick={() =>
                 this.props.next(

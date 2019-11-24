@@ -7,6 +7,7 @@ import { catchErrorAndNotification } from "../../../common/utils/Notification";
 import { withRouter } from "react-router";
 import numeral from "numeral";
 import PageLoading from "../../../common/components/widgets/PageLoading";
+import handlersFront from "../handlers";
 
 export class FinishStepRegister extends Component {
   state = {
@@ -42,6 +43,14 @@ export class FinishStepRegister extends Component {
       notification.success({
         message: "Bạn đã order thành công"
       });
+      let newParams = {
+        ...paramsRegisterFly
+      };
+      newParams.flight = null;
+      newParams.flight_return = null;
+      newParams.flight_id = null;
+      newParams.flight_id_return = null;
+      this.props.setParamsRegisterFly(newParams);
     } else {
       catchErrorAndNotification(result.error);
       this.setState({ isSuccess: false });
@@ -205,7 +214,8 @@ export class FinishStepRegister extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    ...handlers(dispatch)
+    ...handlers(dispatch),
+    ...handlersFront(dispatch)
   };
 };
 
