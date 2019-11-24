@@ -3,7 +3,7 @@ import { Card, Table, Input, Button, Tag, Avatar } from "antd";
 import Column from "antd/lib/table/Column";
 import { catchErrorAndNotification } from "../../../common/utils/Notification";
 import modal from "../../../common/components/widgets/Modal";
-import AirlineFormAdd from "./Form/AirlineFormAdd";
+import AirPlaneFormAdd from "./Form/AirlineFormAdd";
 // import imageFlight from "../../../common/assets/images/flight.png";
 import { sortTable } from "../../../common/utils/sortTable";
 import { DEFAULT_URL } from "../../../common/url";
@@ -23,7 +23,7 @@ export class AirlineListComponent extends Component {
   }
   handleShowFormAddAirline() {
     // this.props.history.push("/admin/airline/create");
-    modal.show(<AirlineFormAdd getData={this.getData}></AirlineFormAdd>, {
+    modal.show(<AirPlaneFormAdd getData={this.getData}></AirPlaneFormAdd>, {
       title: "Thêm hãng hàng không",
       style: { top: 20 },
       width: "60%"
@@ -31,7 +31,7 @@ export class AirlineListComponent extends Component {
   }
   async getData(input = 1) {
     let next = input || this.state.page;
-    let result = await this.props.getListAirline(next, this.state.params);
+    let result = await this.props.getListAirPlane(next, this.state.params);
     if (result && result.success === true) {
       this.setState({
         total: result.totalRecord,
