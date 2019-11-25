@@ -1,0 +1,71 @@
+* 0786a07 - Ram4GB, 12 minutes ago : rename airline and update notification
+* bcc9f1e - Ram4GB, 13 hours ago : fix socket and add api dashboard
+* 13969f0 - Ram4GB, 19 hours ago : api for dashboard
+* b7ccbec - Ram4GB, 3 days ago : rename FindFly to SearchFlightResult
+* 722e08b - Ram4GB, 3 days ago : add update airport & title dashboard
+* 6a5d6d3 - Ram4GB, 3 days ago : rename airplane to airline + fix layout flight list
+* e433a9e - Ram4GB, 3 days ago : order ticket
+* 5941049 - Ram4GB, 3 days ago : mockapi and update ui dashboard
+* 6e26cd8 - Ram4GB, 4 days ago : dashboard admin
+* d5eb474 - Ram4GB, 4 days ago : Add Page Loading Event
+* 562e25b - Ram4GB, 4 days ago : add Flight-time-field, remove border Step-find-fly, and fix html description
+* 1e840e3 - Ram4GB, 4 days ago : add name app
+* 0aad90d - Ram4GB, 10 days ago : add sorter column table
+* e9fa6c4 - Ram4GB, 10 days ago : add sort column table
+* bc318b9 - Ram4GB, 4 days ago : remove file not use
+* 232d56a - Ram4GB, 4 days ago : improve layout
+* b9af7b5 - Ram4GB, 4 days ago : add order approve and order reject for customer socket
+* e9b09d8 - Ram4GB, 4 days ago : config socket io
+* e0feb6f - Ram4GB, 4 days ago : fix step order
+* cca1575 - Ram4GB, 4 days ago : fix notifacation login and add search staff,customer and airline
+* a07a3f5 - Ram4GB, 4 days ago : update reject content
+* 6c2814a - Ram4GB, 5 days ago : init search for Location
+* c36f13c - Ram4GB, 5 days ago : add flight and update ui fligth frontpage
+* 8066bf3 - Ram4GB, 6 days ago : fix bug
+* 5fb90b5 - Ram4GB, 7 days ago : upload logo airline and add role customer
+* dd2c9b3 - Ram4GB, 7 days ago : fix bug
+* e6016ef - Ram4GB, 7 days ago : [Config] Scritp build production
+* 3f70fa2 - Ram4GB, 7 days ago : [Config] Url production
+* a6a6372 - Ram4GB, 7 days ago : fix bug
+* 2fe2552 - Ram4GB, 7 days ago : cant login,hide button next
+* 99cb0d7 - Ram4GB, 7 days ago : order flight, list order, update status order
+* 9b32729 - Ram4GB, 7 days ago : add flight and list
+* dfb9916 - Ram4GB, 10 days ago : add get list & create
+* b1feae4 - Ram4GB, 10 days ago : add sorter column table
+* 4e1dca2 - Ram4GB, 10 days ago : add sort column table
+* 613177d - Ram4GB, 11 days ago : fix font size header
+* d53ba69 - Ram4GB, 11 days ago : add section brand for website
+* 0caed6c - Ram4GB, 13 days ago : add png
+* afae927 - Ram4GB, 13 days ago : fix util function and add,create, update seat
+* 7366bdf - Ram4GB, 2 weeks ago : hide admin menu item
+* cae9627 - Ram4GB, 2 weeks ago : check validate and add api for register front page
+* 871dfd7 - Ram4GB, 3 weeks ago : add page register
+* bedfac2 - Ram4GB, 3 weeks ago : add input.search
+* 348a971 - Ram4GB, 3 weeks ago : add customer to role staff
+* 434e4d6 - Ram4GB, 3 weeks ago : update role staff and fix some bug
+* 3a45e7d - Ram4GB, 3 weeks ago : resize button
+* d03f162 - Ram4GB, 3 weeks ago : add,form reject bill
+* e3fa976 - Ram4GB, 3 weeks ago : add role staff
+* cb9223b - Ram4GB, 3 weeks ago : list,add,update location
+* 889c9f4 - Ram4GB, 3 weeks ago : edit url and fix missing avatar component and
+* d4a9ad2 - Ram4GB, 3 weeks ago : remove console.log
+* 6ed9e79 - Ram4GB, 3 weeks ago : edit breadcumb,customerInfo
+* f750d62 - Ram4GB, 3 weeks ago : Edit,infor and list airline
+* b172c9d - Ram4GB, 3 weeks ago : add air line and update catchError function
+* 98524ca - Ram4GB, 3 weeks ago : add form flight no api
+* c5dee22 - Ram4GB, 3 weeks ago : add breadcumb and edit flightList
+* 3666a86 - Ram4GB, 3 weeks ago : remove sorter
+* dfec703 - Ram4GB, 3 weeks ago : add customerInfoPage
+* ac1bd3e - Ram4GB, 3 weeks ago : add utils table and init page flight
+* bfe4cfb - Ram4GB, 3 weeks ago : add jquery cdn
+* 8cdbfb5 - Ram4GB, 3 weeks ago : edit staff and get infor staff
+* 77e92fb - Ram4GB, 3 weeks ago : fix width modal
+* 34a2515 - Ram4GB, 3 weeks ago : add list customer and staff and form add staff,customer
+* 3d1cf15 - Ram4GB, 4 weeks ago : information profile
+* fba6fec - Ram4GB, 4 weeks ago : Init some page
+* 5ffe162 - Ram4GB, 8 weeks ago : [Improve] Grid system
+* cfbb659 - huyquyentran, 8 weeks ago : Change port to 3000
+* 7a204c1 - huyquyentran, 9 weeks ago : [Feature] Login and logout
+* 655b2f0 - huyquyentran, 9 weeks ago : Init source code
+* 7d94d06 - huyquyentran, 9 weeks ago : Add readme
+* 7cdf411 - cuonglm-dgh, 9 weeks ago : init

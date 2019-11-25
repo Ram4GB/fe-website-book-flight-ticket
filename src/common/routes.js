@@ -60,28 +60,32 @@ export class routes extends Component {
         this.getRole(user) === "staff"
       ) {
         if (!socketService.admin.instance.connected) {
-          socketService.admin.instance.on(eventSocket.NEW_ORDER, data => {
+          socketService.admin.instance.on(eventSocket.NEW_ORDER, async data => {
             notification.info({
-              message: "Có người đặt order"
+              message: `Có người đặt order ${data.order.code}`
             });
+            console.log(this);
+            await this.props.getListOrder(1, {});
           });
         }
       } else if (user && this.getRole(user) === "customer") {
         if (!socketService.customer.instance.connected) {
           socketService.customer.instance.on(
             eventSocket.ORDER_APPROVED,
-            data => {
+            async data => {
               notification.info({
-                message: `Đơn hàng #${data.order.id} của bạn đã được xác nhận`
+                message: `Đơn hàng #${data.order.code} của bạn đã được xác nhận`
               });
+              await this.props.getListOrder(1, {});
             }
           );
           socketService.customer.instance.on(
             eventSocket.ORDER_REJECTED,
-            data => {
+            async data => {
               notification.error({
-                message: `Đơn hàng #${data.order.id} của bạn đã bị hủy`
+                message: `Đơn hàng #${data.order.code} của bạn đã bị hủy`
               });
+              await this.props.getListOrder(1, {});
             }
           );
         }

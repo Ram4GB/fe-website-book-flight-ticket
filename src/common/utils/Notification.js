@@ -18,7 +18,7 @@ export const catchErrorAndNotification = (data, componentThis) => {
             });
           } else {
             notification.error({
-              message: error.value
+              message: error.message
             });
           }
         });
