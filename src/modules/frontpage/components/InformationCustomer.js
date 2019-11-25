@@ -116,7 +116,6 @@ class InformationCustomer extends Component {
     const start_location = JSON.parse(paramsRegisterFly.start_location);
     const end_location = JSON.parse(paramsRegisterFly.end_location);
     const { type } = paramsRegisterFly;
-    console.log(flight_return);
     return (
       <Card>
         <h5 className="font-weight-bold">

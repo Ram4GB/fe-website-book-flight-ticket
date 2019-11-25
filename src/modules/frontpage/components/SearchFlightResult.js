@@ -156,12 +156,10 @@ export class SearchFlightResult extends Component {
   }
 
   render() {
-    console.log(this.props.paramsRegisterFly);
     const { type } = this.props.paramsRegisterFly;
     const { paramsRegisterFly } = this.props;
     const start_location = JSON.parse(paramsRegisterFly.start_location);
     const end_location = JSON.parse(paramsRegisterFly.end_location);
-    console.log(paramsRegisterFly);
     const { flightFrom, flightReturn } = this.state;
     return (
       <div>
