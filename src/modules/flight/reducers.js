@@ -9,7 +9,7 @@ const initialState = {
 };
 
 const reducerMap = {
-  [actions.getListAirPlane]: (state, action) => ({
+  [actions.getListAirline]: (state, action) => ({
     ...state,
     airlines: action.payload
   }),

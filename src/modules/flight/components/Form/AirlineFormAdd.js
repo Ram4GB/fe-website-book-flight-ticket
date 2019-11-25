@@ -1,73 +1,82 @@
-import React, { Component } from 'react'
-import { Form, Input, Row, Col, Button, notification, Upload, Icon } from 'antd'
-import ReactQuill from 'react-quill'
-import { addAirline } from '../../handlers'
-import { catchErrorAndNotification } from '../../../../common/utils/Notification'
-import Modal from '../../../../common/components/widgets/Modal'
+import React, { Component } from "react";
+import {
+  Form,
+  Input,
+  Row,
+  Col,
+  Button,
+  notification,
+  Upload,
+  Icon
+} from "antd";
+import ReactQuill from "react-quill";
+import { addAirline } from "../../handlers";
+import { catchErrorAndNotification } from "../../../../common/utils/Notification";
+import Modal from "../../../../common/components/widgets/Modal";
 
-class AirPlaneFormAdd extends Component {
+class AirlineFormAdd extends Component {
   constructor(props) {
-    super(props)
-    this.state = {}
-    this.handleSubmit = this.handleSubmit.bind(this)
+    super(props);
+    this.state = {};
+    this.handleSubmit = this.handleSubmit.bind(this);
     /**
      * Start upload Image
      */
-    this.dummyRequest = this.dummyRequest.bind(this)
-    this.beforeUpload = this.beforeUpload.bind(this)
-    this.normFile = this.normFile.bind(this)
-    this.handleChangeFile = this.handleChangeFile.bind(this)
+    this.dummyRequest = this.dummyRequest.bind(this);
+    this.beforeUpload = this.beforeUpload.bind(this);
+    this.normFile = this.normFile.bind(this);
+    this.handleChangeFile = this.handleChangeFile.bind(this);
     /**
      * End upload Image
      */
     this.editorModules = {
       toolbar: [
-        [{ header: '1' }, { header: '2' }, { font: [] }],
+        [{ header: "1" }, { header: "2" }, { font: [] }],
         [{ size: [] }],
-        ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+        ["bold", "italic", "underline", "strike", "blockquote"],
         [
-          { list: 'ordered' },
-          { list: 'bullet' },
-          { indent: '-1' },
-          { indent: '+1' },
+          { list: "ordered" },
+          { list: "bullet" },
+          { indent: "-1" },
+          { indent: "+1" }
         ],
-        ['link'],
-        ['clean'],
+        ["link"],
+        ["clean"]
       ],
       clipboard: {
         // toggle to add extra line breaks when pasting HTML:
-        matchVisual: false,
-      },
-    }
+        matchVisual: false
+      }
+    };
     this.editorFormats = [
-      'header',
-      'font',
-      'size',
-      'bold',
-      'italic',
-      'underline',
-      'strike',
-      'blockquote',
-      'list',
-      'bullet',
-      'indent',
-      'link',
-    ]
+      "header",
+      "font",
+      "size",
+      "bold",
+      "italic",
+      "underline",
+      "strike",
+      "blockquote",
+      "list",
+      "bullet",
+      "indent",
+      "link"
+    ];
   }
   handleSubmit(e) {
-    e.preventDefault()
+    e.preventDefault();
     this.props.form.validateFields(async (errors, values) => {
       if (!errors) {
-        let result = await addAirline(values)
+        let result = await addAirline(values);
         if (result && result.success === true) {
           notification.success({
-            message: 'Thêm hãng hàng không thành công',
-          })
-          this.props.getData()
-          Modal.hide()
-        } else catchErrorAndNotification(result.error, this)
+            message: "Thêm hãng hàng không thành công"
+          });
+          this.props.getData();
+          Modal.hide();
+        } else catchErrorAndNotification(result.error, this);
       }
-    })
+    });
   }
   /**
    *
@@ -75,103 +84,104 @@ class AirPlaneFormAdd extends Component {
    */
   dummyRequest({ file, onSuccess }) {
     setTimeout(() => {
-      onSuccess('ok')
-    }, 0)
+      onSuccess("ok");
+    }, 0);
   }
 
   beforeUpload(file, fileList) {
-    return true
+    return true;
   }
 
   handleChangeFile(info) {
-    if (info.file.status === 'uploading') {
-      return this.normFile(info)
+    if (info.file.status === "uploading") {
+      return this.normFile(info);
     }
-    if (info.file.status === 'done') {
+    if (info.file.status === "done") {
     }
-    return this.normFile(info)
+    return this.normFile(info);
   }
   normFile(e) {
-    console.log('Upload event:', e)
+    console.log("Upload event:", e);
     if (Array.isArray(e)) {
-      return e
+      return e;
     }
-    return e && e.fileList
+    return e && e.fileList;
   }
   /**End Upload Logo */
 
   render() {
-    const { getFieldDecorator } = this.props.form
-    const { form } = this.props
-    const file = form.getFieldValue('file') || []
+    const { getFieldDecorator } = this.props.form;
+    const { form } = this.props;
+    const file = form.getFieldValue("file") || [];
     return (
       <Form onSubmit={this.handleSubmit}>
-        <Form.Item label='File'>
-          {getFieldDecorator('document', {
-            valuePropName: 'fileList',
-            getValueFromEvent: this.handleChangeFile,
+        <Form.Item label="File">
+          {getFieldDecorator("document", {
+            valuePropName: "fileList",
+            getValueFromEvent: this.handleChangeFile
           })(
             <Upload
-              name='file'
-              listType='text'
+              name="file"
+              listType="text"
               customRequest={this.dummyRequest}
               beforeUpload={this.beforeUpload}
+              accept="image/*,.pdf"
             >
               {file.length <= 0 ? (
                 <Button>
-                  <Icon type='plus' /> Nhấn đế thêm logo
+                  <Icon type="plus" /> Nhấn đế thêm logo
                 </Button>
               ) : null}
-            </Upload>,
+            </Upload>
           )}
         </Form.Item>
-        <Form.Item label='Tên hãng hàng không'>
-          {getFieldDecorator('name', {
+        <Form.Item label="Tên hãng hàng không">
+          {getFieldDecorator("name", {
             rules: [
               {
                 required: true,
-                message: 'Mời điền tên hảng hàng không',
-              },
-            ],
+                message: "Mời điền tên hảng hàng không"
+              }
+            ]
           })(<Input />)}
         </Form.Item>
-        <Form.Item label='Tên đại diện'>
-          {getFieldDecorator('short_name', {
+        <Form.Item label="Tên đại diện">
+          {getFieldDecorator("short_name", {
             rules: [
               {
                 required: true,
-                message: 'Mời điền tên đại diện',
-              },
-            ],
+                message: "Mời điền tên đại diện"
+              }
+            ]
           })(<Input />)}
         </Form.Item>
-        <Form.Item label='Tên trang web'>
-          {getFieldDecorator('website', {})(<Input />)}
+        <Form.Item label="Tên trang web">
+          {getFieldDecorator("website", {})(<Input />)}
         </Form.Item>
-        <Form.Item label='Liên lạc'>
-          {getFieldDecorator('contact_info', {})(<Input />)}
+        <Form.Item label="Liên lạc">
+          {getFieldDecorator("contact_info", {})(<Input />)}
         </Form.Item>
-        <Form.Item label='Mô tả'>
-          {getFieldDecorator('description', {
-            initialValue: '',
+        <Form.Item label="Mô tả">
+          {getFieldDecorator("description", {
+            initialValue: ""
           })(
             <ReactQuill
               modules={this.editorModules}
               formats={this.editorFormats}
-            />,
+            />
           )}
         </Form.Item>
         <Row>
-          <Col style={{ textAlign: 'right' }} lg={24}>
-            <Button onClick={() => Modal.hide()}>Hủy</Button>{' '}
-            <Button type='primary' htmlType='submit'>
+          <Col style={{ textAlign: "right" }} lg={24}>
+            <Button onClick={() => Modal.hide()}>Hủy</Button>{" "}
+            <Button type="primary" htmlType="submit">
               Thêm
             </Button>
           </Col>
         </Row>
       </Form>
-    )
+    );
   }
 }
 
-export default Form.create({ name: 'airline-form' })(AirPlaneFormAdd)
+export default Form.create({ name: "airline-form" })(AirlineFormAdd);
