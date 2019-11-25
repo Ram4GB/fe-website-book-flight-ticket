@@ -53,9 +53,17 @@ export class DashboardAdmin extends Component {
   }
   async yearStatic() {
     let result = await this.props.yearStatic();
+    let arr = [];
     if (result && result.success) {
+      for (let i = 1; i <= 12; i++) {
+        let month = result.data.find(item => {
+          return item.month === i;
+        });
+        if (month) arr.push(month);
+        else arr.push({ month: i, revenue: 0 });
+      }
       this.setState({
-        yearStatic: result.data
+        yearStatic: arr
       });
     }
   }

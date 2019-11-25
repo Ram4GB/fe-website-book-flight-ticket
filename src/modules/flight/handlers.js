@@ -58,7 +58,7 @@ export const updateAirport = async (id, data) => {
 
 export default function(dispatch, props) {
   return {
-    getListAirPlane: async (page, params) => {
+    getListAirline: async (page, params) => {
       params = removeNullObject(params);
       let result = await fetchLoading({
         url: `${DEFAULT_URL}/airline`,
@@ -69,7 +69,7 @@ export default function(dispatch, props) {
         }
       });
       if (result && result.data) {
-        dispatch(actions.getListAirPlane(result.data.data));
+        dispatch(actions.getListAirline(result.data.data));
         return result.data;
       } else return { success: false, error: "Server error" };
     },

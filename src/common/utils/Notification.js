@@ -9,12 +9,18 @@ export const catchErrorAndNotification = (data, componentThis) => {
     if (data) {
       if (Array.isArray(data)) {
         data.forEach(error => {
-          componentThis.props.form.setFields({
-            [error.field]: {
-              value: error.value,
-              errors: [new Error(error.message)]
-            }
-          });
+          if (componentThis.props.form.getFieldValue(error.field)) {
+            componentThis.props.form.setFields({
+              [error.field]: {
+                value: error.value,
+                errors: [new Error(error.message)]
+              }
+            });
+          } else {
+            notification.error({
+              message: error.value
+            });
+          }
         });
       } else {
         if (componentThis.props.form.getFieldValue(data.field)) {
