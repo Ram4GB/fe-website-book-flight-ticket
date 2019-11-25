@@ -104,7 +104,10 @@ class FormRegisterHomepage extends Component {
   showLocationTo() {
     return this.state.locationTo.map(location => {
       return (
-        <Select.Option key={location.id} value={location.id}>
+        <Select.Option
+          key={location.id}
+          value={JSON.stringify({ id: location.id, name: location.name })}
+        >
           {location.name}
         </Select.Option>
       );
@@ -130,7 +133,10 @@ class FormRegisterHomepage extends Component {
   showLocationFrom() {
     return this.state.locationFrom.map(location => {
       return (
-        <Select.Option key={location.id} value={location.id}>
+        <Select.Option
+          key={location.id}
+          value={JSON.stringify({ id: location.id, name: location.name })}
+        >
           {location.name}
         </Select.Option>
       );
@@ -146,7 +152,6 @@ class FormRegisterHomepage extends Component {
     const { getFieldDecorator } = this.props.form;
     const { paramsRegisterFly } = this.props;
     const { type, firstItem } = this.state;
-    console.log(type);
     return (
       <Form onSubmit={this.handleSubmit}>
         <div className="text-center">
