@@ -104,6 +104,7 @@ export class StepRegisterComponent extends Component {
             paramsRegisterFly={paramsRegisterFly}
             form={this.props.form}
             flight={paramsRegisterFly.flight}
+            flight_return={paramsRegisterFly.flight_return}
           ></InformationCustomer>
         );
       case 2:

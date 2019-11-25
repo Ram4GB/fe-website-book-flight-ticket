@@ -53,9 +53,9 @@ export class SearchFlightResult extends Component {
     const { paramsRegisterFly } = this.props;
     let params = {};
     if (paramsRegisterFly.start_location)
-      params.start_location = paramsRegisterFly.start_location;
+      params.start_location = JSON.parse(paramsRegisterFly.start_location).id;
     if (paramsRegisterFly.end_location)
-      params.end_location = paramsRegisterFly.end_location;
+      params.end_location = JSON.parse(paramsRegisterFly.end_location).id;
     if (paramsRegisterFly.seatClass)
       params.seat_class_id = JSON.parse(paramsRegisterFly.seatClass).id;
     if (paramsRegisterFly.quantity)
@@ -81,9 +81,9 @@ export class SearchFlightResult extends Component {
     const { paramsRegisterFly } = this.props;
     let params = {};
     if (paramsRegisterFly.start_location)
-      params.start_location = paramsRegisterFly.end_location;
+      params.start_location = JSON.parse(paramsRegisterFly.end_location).id;
     if (paramsRegisterFly.end_location)
-      params.end_location = paramsRegisterFly.start_location;
+      params.end_location = JSON.parse(paramsRegisterFly.start_location).id;
     if (paramsRegisterFly.seatClass)
       params.seat_class_id = JSON.parse(paramsRegisterFly.seatClass).id;
     if (paramsRegisterFly.quantity)
@@ -159,11 +159,15 @@ export class SearchFlightResult extends Component {
     console.log(this.props.paramsRegisterFly);
     const { type } = this.props.paramsRegisterFly;
     const { paramsRegisterFly } = this.props;
-    const { flightFrom } = this.state;
+    const start_location = JSON.parse(paramsRegisterFly.start_location);
+    const end_location = JSON.parse(paramsRegisterFly.end_location);
+    console.log(paramsRegisterFly);
+    const { flightFrom, flightReturn } = this.state;
     return (
       <div>
         <h5 className="font-weight-bold" style={{ margin: "20px" }}>
-          Tìm chuyến bay từ {paramsRegisterFly.from} đến {paramsRegisterFly.to}
+          Tìm chuyến bay {type === 2 ? "khứ hồi " : ""} {start_location.name} -{" "}
+          {end_location.name}
         </h5>
         <div className="row">
           <div className="col-lg-12">
@@ -182,7 +186,7 @@ export class SearchFlightResult extends Component {
                 <div className="col-lg-6">
                   <p className="text-left font-weight-bold">CHỌN CHIỀU ĐI</p>
                   <p className="text-left">
-                    {paramsRegisterFly.from} đến {paramsRegisterFly.to}
+                    {start_location.name} đến {end_location.name}
                   </p>
                 </div>
                 <div className="col-lg-6">
@@ -255,11 +259,11 @@ export class SearchFlightResult extends Component {
                   <div className="col-lg-6">
                     <p className="text-left font-weight-bold">CHỌN CHIỀU VỀ</p>
                     <p className="text-left">
-                      Hà Nội (HAN) đến Hồ Chí Mình (SGN)
+                      {end_location.name} về {start_location.name}
                     </p>
                   </div>
                   <div className="col-lg-6">
-                    <p className="text-right">2 kết quả</p>
+                    <p className="text-right">{flightReturn.length} kết quả</p>
                     <p className="text-right">
                       Giá vé đã bao gồm thuế và phụ phí
                     </p>

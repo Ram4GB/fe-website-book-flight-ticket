@@ -1,19 +1,31 @@
 import React, { Component } from "react";
 import { Card, Form, Input, Icon, Col, Row, Tag, Button, Alert } from "antd";
-import point from "../../../common/assets/images/01-point.png";
+import point1 from "../../../common/assets/images/01-point.png";
+import point2 from "../../../common/assets/images/02-point.png";
 import numeral from "numeral";
 import { withRouter } from "react-router";
 import moment from "moment";
 
 class InformationCustomer extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      arrayPrice: []
+    };
+  }
+  showSumTotalPrice(arrayPrice) {
+    return arrayPrice.reduce((a, b) => a + b);
+  }
   showTotalPrice(count, seats, seatClass) {
     let ticket = seats.filter(item => {
       let id = JSON.parse(seatClass).id;
       if (id === item.seat_class_id) return true;
       else return false;
     })[0];
-    if (ticket) return ticket.price * count;
-    else return "No API";
+    if (ticket) {
+      this.state.arrayPrice.push(ticket.price * count);
+      return ticket.price * count;
+    } else return "No API";
   }
   showPrice(count, seats, seatClass) {
     let ticket = seats.filter(item => {
@@ -96,14 +108,20 @@ class InformationCustomer extends Component {
     return moment(date + " " + time);
   }
   render() {
-    const { paramsRegisterFly, user, flight } = this.props;
+    const { paramsRegisterFly, user, flight, flight_return } = this.props;
+    const { arrayPrice } = this.state;
     const customer = user && user.Customer ? user.Customer : null;
     const { getFieldDecorator } = this.props.form;
     const { count } = this.props.paramsRegisterFly;
+    const start_location = JSON.parse(paramsRegisterFly.start_location);
+    const end_location = JSON.parse(paramsRegisterFly.end_location);
+    const { type } = paramsRegisterFly;
+    console.log(flight_return);
     return (
       <Card>
         <h5 className="font-weight-bold">
-          Tìm chuyến bay từ Hà Nội (HAN) đến Hồ Chí Mình (SGN)
+          Tìm chuyến bay {type === 2 ? "khứ hồi " : ""} {start_location.name} -{" "}
+          {end_location.name}
         </h5>
         <div className="row">
           <div className="col-lg-12 card-step-1">
@@ -135,7 +153,7 @@ class InformationCustomer extends Component {
                   </div>
                   <div>
                     <p>{flight.flight_time}h</p>
-                    <img alt="" src={point} />
+                    <img alt="" src={point1} />
                   </div>
                   <div>
                     <p className="font-weight-bold">
@@ -198,6 +216,105 @@ class InformationCustomer extends Component {
                   </p>
                 </div>
               </div>
+              {type === 2 ? (
+                <>
+                  <hr></hr>
+                  <div className="flex-direction-column row align-items-center d-flex flex-lg-row flex-md-column flex-sm-column">
+                    <div
+                      className="flex-direction-column col d-flex"
+                      style={{
+                        alignItems: "center",
+                        justifyContent: "space-between"
+                      }}
+                    >
+                      <div>
+                        <p className="font-weight-bold">
+                          {flight_return.end_airport.location}
+                        </p>
+                        <Tag>
+                          {this.combineDateAndTime(
+                            flight_return.flight_date,
+                            flight_return.flight_start_time
+                          )
+                            .add(flight_return.flight_time, "hours")
+                            .format("HH:ss")}
+                          ,{" "}
+                          {this.combineDateAndTime(
+                            flight_return.flight_date,
+                            flight_return.flight_start_time
+                          )
+                            .add(flight_return.flight_time, "hours")
+                            .format("DD/MM/YYYY")}
+                        </Tag>
+                        <p className="strong">
+                          {flight_return.end_airport.name}
+                        </p>
+                      </div>
+
+                      <div>
+                        <p>{flight_return.flight_time}h</p>
+                        <img alt="" src={point2} />
+                      </div>
+                      <div>
+                        <p className="font-weight-bold">
+                          {flight_return.start_airport.location}
+                        </p>
+                        <Tag>
+                          {moment(
+                            flight_return.flight_start_time,
+                            "HH:mm:ss"
+                          ).format("HH:mm")}
+                          ,{" "}
+                          {moment(flight_return.flight_date).format(
+                            "DD/MM/YYYY"
+                          )}
+                        </Tag>
+                        <p className="strong">
+                          {flight_return.start_airport.name}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="col">
+                      <p className="strong">Loại vé:</p>
+                      <p>{JSON.parse(paramsRegisterFly.seatClass).name}</p>
+                    </div>
+                    <div className="col">
+                      <p className="strong">Số lượng:</p>
+                      <p>
+                        {paramsRegisterFly && paramsRegisterFly.count
+                          ? paramsRegisterFly.count
+                          : 0}
+                      </p>
+                    </div>
+                    <div className="col">
+                      <p className="strong">Giá vé:</p>
+                      <p>
+                        {numeral(
+                          this.showPrice(
+                            paramsRegisterFly.count,
+                            flight_return.Seats,
+                            paramsRegisterFly.seatClass
+                          )
+                        ).format("0,0")}
+                        đ
+                      </p>
+                    </div>
+                    <div className="col">
+                      <p className="font-weight-bold strong">Tổng cộng</p>
+                      <p>
+                        {numeral(
+                          this.showTotalPrice(
+                            paramsRegisterFly.count,
+                            flight_return.Seats,
+                            paramsRegisterFly.seatClass
+                          )
+                        ).format("0,0")}
+                        đ
+                      </p>
+                    </div>
+                  </div>
+                </>
+              ) : null}
               <div className="row">
                 <div className="strong col-lg-12 text-right">
                   Số tiền bạn phải trả:{" "}
@@ -205,14 +322,7 @@ class InformationCustomer extends Component {
                     className="font-weight-bold"
                     style={{ color: "#FFA801" }}
                   >
-                    {numeral(
-                      this.showTotalPrice(
-                        paramsRegisterFly.count,
-                        flight.Seats,
-                        paramsRegisterFly.seatClass
-                      )
-                    ).format("0,0")}
-                    đ
+                    {numeral(this.showSumTotalPrice(arrayPrice)).format("0,0")}đ
                   </span>
                 </div>
               </div>

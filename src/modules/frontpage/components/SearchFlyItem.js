@@ -51,7 +51,7 @@ export class SearchFlyItem extends Component {
                 src="https://media.gettyimages.com/photos/road-trip-picture-id846454370?s=612x612"
               />
               <span style={{ fontWeight: "bold", fontSize: "1.2em" }}>
-                Vietjet Air
+                {flight.Airline.name}
               </span>
             </div>
             <div className="col padding">
