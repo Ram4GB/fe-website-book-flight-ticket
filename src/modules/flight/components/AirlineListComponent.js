@@ -3,7 +3,7 @@ import { Card, Table, Input, Button, Tag, Avatar } from "antd";
 import Column from "antd/lib/table/Column";
 import { catchErrorAndNotification } from "../../../common/utils/Notification";
 import modal from "../../../common/components/widgets/Modal";
-import AirPlaneFormAdd from "./Form/AirlineFormAdd";
+import AirlineFormAdd from "./Form/AirlineFormAdd";
 // import imageFlight from "../../../common/assets/images/flight.png";
 import { sortTable } from "../../../common/utils/sortTable";
 import { DEFAULT_URL } from "../../../common/url";

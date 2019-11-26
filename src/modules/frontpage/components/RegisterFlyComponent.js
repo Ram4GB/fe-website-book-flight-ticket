@@ -50,7 +50,7 @@ class RegisterFlyComponent extends Component {
     });
   }
   async getDataAirline() {
-    let result = await this.props.getListAirPlane();
+    let result = await this.props.getDataAirline();
     if (result && result.success) {
       this.setState({
         airlines: result.data
