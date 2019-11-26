@@ -141,7 +141,7 @@ export class MainLayoutFrontPage extends Component {
         </nav>
         <div
           style={{
-            height: "100%"
+            minHeight: "calc(100vh - 80px - 184px)"
           }}
         >
           {this.props.children}
