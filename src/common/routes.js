@@ -37,7 +37,7 @@ export class routes extends Component {
     super(props);
     this.state = {};
     this.getRole = this.getRole.bind(this);
-    this.socketGlobal = this.socketGlobal.bind(this);
+    // this.socketGlobal = this.socketGlobal.bind(this);
   }
   getRole(user) {
     if (user) {
