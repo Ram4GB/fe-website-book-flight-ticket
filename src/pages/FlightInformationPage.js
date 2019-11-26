@@ -19,7 +19,7 @@ import handlersSeat from "../modules/seat/handlers";
 import { connect } from "react-redux";
 import uuid from "uuid";
 import moment from "moment";
-import FlightInformation from "../modules/flight/components/FlightInformation";
+import FlightInformation from "./FlightInformation";
 
 const flight = {
   id: 1,

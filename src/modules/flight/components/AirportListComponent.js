@@ -103,16 +103,6 @@ export class AirportListComponent extends Component {
         >
           <Column title="Tên" sorter dataIndex="name" key="name"></Column>
           <Column
-            title="Mô tả"
-            sorter
-            dataIndex="description"
-            render={value => {
-              return <div dangerouslySetInnerHTML={{ __html: value }} />;
-            }}
-            key="description"
-            align="center"
-          ></Column>
-          <Column
             title="Địa điểm"
             sorter
             dataIndex="Location.name"
