@@ -7,12 +7,21 @@ export class LocationListPage extends Component {
     document.title = "FlyNow | Quản lí Địa điểm";
   }
   render() {
-    return <><CustomBreadcrumb
-    items={[
-      { url: "/admin/dashboard", icon: "home", title: "Bảng điều khiển" },
-      { url: "/admin/location", icon: "environment", title: "Quản lí Địa điểm" }
-    ]}
-  /><LocationListContainer></LocationListContainer></>;
+    return (
+      <>
+        <CustomBreadcrumb
+          items={[
+            { url: "/admin/dashboard", icon: "home", title: "Bảng điều khiển" },
+            {
+              url: "/admin/location",
+              icon: "environment",
+              title: "Quản lí Địa điểm"
+            }
+          ]}
+        />
+        <LocationListContainer></LocationListContainer>
+      </>
+    );
   }
 }
 

@@ -28,7 +28,7 @@ export class MainLayoutFrontPage extends Component {
     }, 1000);
   }
   componentDidMount() {}
-  componentWillReceiveProps() {
+  UNSAFE_componentWillReceiveProps() {
     let path = this.props.history.location.pathname;
     this.setState({
       path
@@ -141,7 +141,7 @@ export class MainLayoutFrontPage extends Component {
         </nav>
         <div
           style={{
-            minHeight: "calc(100vh - 80px - 184px)"
+            minHeight: "calc(100vh - 80px - 180px)"
           }}
         >
           {this.props.children}
