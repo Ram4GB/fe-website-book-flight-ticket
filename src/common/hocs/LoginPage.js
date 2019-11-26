@@ -11,13 +11,13 @@ export class LoginPage extends Component {
     return (
       <Card
         className="card-md-100"
-        style={{ margin: "10px auto", width: "70%", minWidth: 300 }}
+        style={{ margin: "20px auto", width: "70%", minWidth: 300, borderRadius: 10 }}
       >
         <Row style={{ padding: 30 }}>
           <Col lg={12}>
             <img
               alt=""
-              style={{ width: "100%", maxWidth: 400 }}
+              style={{ width: "100%", maxWidth: 450 }}
               src={loginleftimg}
             />
           </Col>

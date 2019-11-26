@@ -71,7 +71,7 @@ class LoginForm extends Component {
                 required: true
               }
             ]
-          })(<Input prefix={<Icon type="user" />} />)}
+          })(<Input size='large' prefix={<Icon type="user" />} />)}
         </Form.Item>
         <Form.Item label="Mật khẩu">
           {getFieldDecorator("password", {
@@ -80,7 +80,7 @@ class LoginForm extends Component {
                 required: true
               }
             ]
-          })(<Input.Password prefix={<Icon type="lock" />} />)}
+          })(<Input.Password size='large' prefix={<Icon type="lock" />} />)}
         </Form.Item>
         <Form.Item>
           <Row>
@@ -99,6 +99,7 @@ class LoginForm extends Component {
           loading={this.state.loading}
           htmlType="submit"
           type="primary"
+          size='large'
           style={{ width: "100%" }}
         >
           Đăng nhập

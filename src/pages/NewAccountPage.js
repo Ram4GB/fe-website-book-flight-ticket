@@ -64,7 +64,7 @@ export class RegisterForm extends Component {
         className="card-md-100"
         style={{
           width: "70%",
-          margin: "10px auto"
+          margin: "20px auto", borderRadius: 10
         }}
       >
         {!success ? (
@@ -75,16 +75,9 @@ export class RegisterForm extends Component {
                   Là thành viên bạn sẽ nhận được nhiều ưu đãi. <br /> Thông tin
                   này sẽ được dùng để liên hệ khi bạn đặt vé
                 </p>
-                <img
-                  src={registerImg}
-                  alt=""
-                  width="100%"
-                  style={{
-                    marginTop: "10%",
-                    height: "auto",
-                    verticalAlign: "middle"
-                  }}
-                />
+                <Lottie options={{
+                  animationData: require('../common/assets/animations/3619-profile.json')
+                }} />
               </div>
             </Col>
             <Col lg={12}>

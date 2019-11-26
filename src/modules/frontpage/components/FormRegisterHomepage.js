@@ -215,7 +215,7 @@ class FormRegisterHomepage extends Component {
           )}
         </Form.Item>
         <Row gutter={6}>
-          <Col lg={type === 1 ? 24 : 12}>
+          <Col lg={type === 2 ? 12 : 24}>
             <Form.Item label="Ngày đi">
               {getFieldDecorator("flight_date", {
                 initialValue:
