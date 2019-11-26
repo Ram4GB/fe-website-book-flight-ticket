@@ -37,10 +37,6 @@ export class MainLayoutFrontPage extends Component {
   render() {
     const { user } = this.props;
     const { path } = this.state;
-    console.log(
-      _.isEmpty(this.props.user) ? "khong co user" : "co user",
-      this.props.user
-    );
     return (
       <Layout className="use-bootstrap">
         <nav
@@ -96,10 +92,10 @@ export class MainLayoutFrontPage extends Component {
               )}
               {!_.isEmpty(user) ? (
                 <>
-                  <li className='d-flex'>
+                  <li className="d-flex">
                     <img
-                      src={require('../../common/assets/images/user.svg')}
-                      alt='avatar'
+                      src={require("../../common/assets/images/user.svg")}
+                      alt="avatar"
                       width={35}
                     />
                     <div style={{ width: 5 }}></div>
@@ -152,7 +148,11 @@ export class MainLayoutFrontPage extends Component {
         </div>
         <Footer
           className="text-light"
-          style={{ backgroundColor: "#001529", color: "#fff", paddingBottom: 50 }}
+          style={{
+            backgroundColor: "#001529",
+            color: "#fff",
+            paddingBottom: 50
+          }}
         >
           <Row>
             <Col lg={6}>
@@ -184,7 +184,7 @@ export class MainLayoutFrontPage extends Component {
                 ĐĂNG KÍ NHẬN EMAIL
               </p>
               <p>
-                <Input style={{ width: 233 }} placeholder='Email' />
+                <Input style={{ width: 233 }} placeholder="Email" />
               </p>
             </Col>
           </Row>

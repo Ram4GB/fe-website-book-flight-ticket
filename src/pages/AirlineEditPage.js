@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 import {
   Card,
   Form,
@@ -8,57 +8,57 @@ import {
   Button,
   Upload,
   Icon,
-  notification,
-} from 'antd'
-import CustomBreadcrumb from '../common/components/widgets/CustomBreadcrumb'
-import ReactQuill from 'react-quill'
-import { updateAirpplane, getAirlineByID } from '../modules/flight/handlers'
-import { catchErrorAndNotification } from '../common/utils/Notification'
+  notification
+} from "antd";
+import CustomBreadcrumb from "../common/components/widgets/CustomBreadcrumb";
+import ReactQuill from "react-quill";
+import { updateAirpplane, getAirlineByID } from "../modules/flight/handlers";
+import { catchErrorAndNotification } from "../common/utils/Notification";
 
 export class AirlineEditPage extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      airline: {},
-    }
-    this.handleSubmit = this.handleSubmit.bind(this)
+      airline: {}
+    };
+    this.handleSubmit = this.handleSubmit.bind(this);
     /**
      * Start upload Image
      */
-    this.dummyRequest = this.dummyRequest.bind(this)
-    this.beforeUpload = this.beforeUpload.bind(this)
-    this.normFile = this.normFile.bind(this)
-    this.handleChangeFile = this.handleChangeFile.bind(this)
+    this.dummyRequest = this.dummyRequest.bind(this);
+    this.beforeUpload = this.beforeUpload.bind(this);
+    this.normFile = this.normFile.bind(this);
+    this.handleChangeFile = this.handleChangeFile.bind(this);
     /**
      * End upload Image
      */
   }
   componentWillMount() {
-    document.title = 'FlyNow | Sửa hãng hàng không'
+    document.title = "FlyNow | Sửa hãng hàng không";
   }
   handleSubmit(e) {
-    e.preventDefault()
+    e.preventDefault();
     this.props.form.validateFields(async (errors, values) => {
       if (!errors) {
-        let result = await updateAirpplane(this.props.match.params.id, values)
+        let result = await updateAirpplane(this.props.match.params.id, values);
         if (result && result.success) {
           notification.success({
-            message: 'Sửa thành công',
-          })
-        } else catchErrorAndNotification(result.error, this)
+            message: "Sửa thành công"
+          });
+        } else catchErrorAndNotification(result.error, this);
       }
-    })
+    });
   }
   async getAirlineByID() {
-    let result = await getAirlineByID(this.props.match.params.id)
+    let result = await getAirlineByID(this.props.match.params.id);
     if (result && result.success) {
       this.setState({
-        airline: result.airline,
-      })
+        airline: result.airline
+      });
     }
   }
   async componentDidMount() {
-    await this.getAirlineByID()
+    await this.getAirlineByID();
   }
   /**
    *
@@ -66,55 +66,54 @@ export class AirlineEditPage extends Component {
    */
   dummyRequest({ file, onSuccess }) {
     setTimeout(() => {
-      onSuccess('ok')
-    }, 0)
+      onSuccess("ok");
+    }, 0);
   }
 
   beforeUpload(file, fileList) {
-    return true
+    return true;
   }
 
   handleChangeFile(info) {
-    if (info.file.status === 'uploading') {
-      return this.normFile(info)
+    if (info.file.status === "uploading") {
+      return this.normFile(info);
     }
-    if (info.file.status === 'done') {
+    if (info.file.status === "done") {
     }
-    return this.normFile(info)
+    return this.normFile(info);
   }
   normFile(e) {
-    console.log('Upload event:', e)
     if (Array.isArray(e)) {
-      return e
+      return e;
     }
-    return e && e.fileList
+    return e && e.fileList;
   }
   /**End Upload Logo */
   render() {
-    const { getFieldDecorator } = this.props.form
-    const { airline } = this.state
+    const { getFieldDecorator } = this.props.form;
+    const { airline } = this.state;
     // const { form } = this.props;
     // const file = form.getFieldValue("file") || [];
     return (
       <>
         <CustomBreadcrumb
           items={[
-            { url: '/admin/dashboard', icon: 'home', title: 'Bảng điều khiển' },
+            { url: "/admin/dashboard", icon: "home", title: "Bảng điều khiển" },
             {
-              url: '/admin/airline',
-              icon: 'rocket',
-              title: 'Hãng hàng không',
+              url: "/admin/airline",
+              icon: "rocket",
+              title: "Hãng hàng không"
             },
             {
               url: `/admin/airline/${this.props.match.params.id}`,
-              icon: 'rocket',
-              title: 'Thông tin hãng hàng không',
+              icon: "rocket",
+              title: "Thông tin hãng hàng không"
             },
             {
               url: `/admin/airline/${this.props.match.params.id}/edit`,
-              icon: 'edit',
-              title: 'Chỉnh sửa hãng hàng không',
-            },
+              icon: "edit",
+              title: "Chỉnh sửa hãng hàng không"
+            }
           ]}
         ></CustomBreadcrumb>
         {airline ? (
@@ -125,111 +124,111 @@ export class AirlineEditPage extends Component {
             <Form onSubmit={this.handleSubmit}>
               <Row gutter={10}>
                 <Col lg={8}>
-                  <Form.Item label='Tên hãng hàng không'>
-                    {getFieldDecorator('name', {
+                  <Form.Item label="Tên hãng hàng không">
+                    {getFieldDecorator("name", {
                       rules: [
                         {
                           required: true,
-                          message: 'Xin mời điền tên hãng hàng không',
-                        },
+                          message: "Xin mời điền tên hãng hàng không"
+                        }
                       ],
-                      initialValue: airline.name,
+                      initialValue: airline.name
                     })(<Input />)}
                   </Form.Item>
                 </Col>
                 <Col lg={8}>
-                  <Form.Item label='Tên viết tắt'>
-                    {getFieldDecorator('short_name', {
+                  <Form.Item label="Tên viết tắt">
+                    {getFieldDecorator("short_name", {
                       rules: [
                         {
                           required: true,
-                          message: 'Xin mời điền viết tắt hãng hàng không',
-                        },
+                          message: "Xin mời điền viết tắt hãng hàng không"
+                        }
                       ],
-                      initialValue: airline.short_name,
+                      initialValue: airline.short_name
                     })(<Input />)}
                   </Form.Item>
                 </Col>
                 <Col lg={8}>
-                  <Form.Item label='Logo'>
-                    {getFieldDecorator('document', {
+                  <Form.Item label="Logo">
+                    {getFieldDecorator("document", {
                       rules: [
                         {
                           required: false,
-                          message: 'Xin chọn logo',
-                        },
+                          message: "Xin chọn logo"
+                        }
                       ],
-                      valuePropName: 'fileList',
-                      getValueFromEvent: this.handleChangeFile,
+                      valuePropName: "fileList",
+                      getValueFromEvent: this.handleChangeFile
                     })(
                       <Upload
                         customRequest={this.dummyRequest}
                         beforeUpload={this.beforeUpload}
                       >
                         <Button>
-                          <Icon type='upload' /> Click to Upload
+                          <Icon type="upload" /> Click to Upload
                         </Button>
-                      </Upload>,
+                      </Upload>
                     )}
                   </Form.Item>
                 </Col>
               </Row>
               <Row gutter={10}>
                 <Col lg={8}>
-                  <Form.Item label='Người liên lạc'>
-                    {getFieldDecorator('contact_info', {
+                  <Form.Item label="Người liên lạc">
+                    {getFieldDecorator("contact_info", {
                       rules: [
                         {
-                          message: 'Xin mời điên người liên lạc',
-                          required: true,
-                        },
+                          message: "Xin mời điên người liên lạc",
+                          required: true
+                        }
                       ],
-                      initialValue: airline.contact_info,
+                      initialValue: airline.contact_info
                     })(<Input />)}
                   </Form.Item>
                 </Col>
                 <Col lg={8}>
-                  <Form.Item label='Số điện thoại'>
-                    {getFieldDecorator('phone', {
+                  <Form.Item label="Số điện thoại">
+                    {getFieldDecorator("phone", {
                       rules: [
                         {
-                          message: 'Xin mời điên số điện thoại',
-                          required: false,
-                        },
+                          message: "Xin mời điên số điện thoại",
+                          required: false
+                        }
                       ],
-                      initialValue: airline.phone,
+                      initialValue: airline.phone
                     })(<Input />)}
                   </Form.Item>
                 </Col>
                 <Col lg={8}>
-                  <Form.Item label='Trang web'>
-                    {getFieldDecorator('website', {
+                  <Form.Item label="Trang web">
+                    {getFieldDecorator("website", {
                       rules: [
                         {
-                          message: 'Xin mời điên Trang web',
-                          required: false,
-                        },
+                          message: "Xin mời điên Trang web",
+                          required: false
+                        }
                       ],
-                      initialValue: airline.website,
+                      initialValue: airline.website
                     })(<Input />)}
                   </Form.Item>
                 </Col>
                 <Col lg={8}>
-                  <Form.Item label='Mô tả'>
-                    {getFieldDecorator('description', {
-                      initialValue: airline.description,
+                  <Form.Item label="Mô tả">
+                    {getFieldDecorator("description", {
+                      initialValue: airline.description
                     })(<ReactQuill></ReactQuill>)}
                   </Form.Item>
                 </Col>
               </Row>
               <Row>
-                <Col style={{ textAlign: 'right' }} lg={24}>
-                  <Button size='default'>Hủy</Button>{' '}
+                <Col style={{ textAlign: "right" }} lg={24}>
+                  <Button size="default">Hủy</Button>{" "}
                   <Button
-                    htmlType='submit'
-                    size='default'
-                    icon='edit'
-                    type='primary'
+                    htmlType="submit"
+                    size="default"
+                    icon="edit"
+                    type="primary"
                   >
                     Sửa
                   </Button>
@@ -239,8 +238,8 @@ export class AirlineEditPage extends Component {
           </Card>
         ) : null}
       </>
-    )
+    );
   }
 }
 
-export default Form.create({})(AirlineEditPage)
+export default Form.create({})(AirlineEditPage);

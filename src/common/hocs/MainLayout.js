@@ -96,9 +96,7 @@ export class MainLayout extends Component {
             breakpoint="lg"
             collapsedWidth="0"
             onBreakpoint={broken => {}}
-            onCollapse={(collapsed, type) => {
-              // console.log(collapsed, type);
-            }}
+            onCollapse={(collapsed, type) => {}}
             theme="dark"
           >
             <div className="logo" />

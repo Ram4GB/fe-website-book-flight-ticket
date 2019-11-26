@@ -13,7 +13,6 @@ export default function(dispatch) {
           page
         }
       });
-      console.log(result);
       if (result && result.data) {
         dispatch(actions.getListClassSeat(result.data.data));
         return result.data;

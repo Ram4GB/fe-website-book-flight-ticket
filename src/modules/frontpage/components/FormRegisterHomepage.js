@@ -49,7 +49,6 @@ class FormRegisterHomepage extends Component {
     });
   }
   handleChangeType(e) {
-    console.log(e.target.value);
     this.setState({
       type: e.target.value
     });
@@ -85,9 +84,7 @@ class FormRegisterHomepage extends Component {
       {
         type: this.props.paramsRegisterFly.type
       },
-      () => {
-        console.log("componentDidMount", this.state.type);
-      }
+      () => {}
     );
   }
   async getLocationTo(value) {

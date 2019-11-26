@@ -24,7 +24,6 @@ export const searchTable = (component, fieldName, op) => value => {
     let paramsTemp = {
       ...component.state.params
     };
-    console.log(paramsTemp);
     delete paramsTemp.search[fieldName];
     delete paramsTemp.searchFields[fieldName];
     component.setState(

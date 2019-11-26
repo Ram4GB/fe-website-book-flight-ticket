@@ -31,7 +31,6 @@ export class StepRegisterComponent extends Component {
     switch (current) {
       case 0:
         if (flightItem) {
-          console.log(this.props.paramsRegisterFly);
           if (this.props.paramsRegisterFly.type === 2) {
             if (flightItemReturn) {
               this.props.setParamsRegisterFly({
@@ -60,7 +59,6 @@ export class StepRegisterComponent extends Component {
       case 1:
         validateFields((errors, values) => {
           if (!errors) {
-            console.log(this.props.user);
             if (!_.isEmpty(this.props.user)) {
               this.props.setParamsRegisterFly(values);
               return this.setState({ current: current + 1 });
@@ -86,7 +84,6 @@ export class StepRegisterComponent extends Component {
   }
   showStepContent(current) {
     const { paramsRegisterFly } = this.props;
-    console.log(this.props.user);
     switch (current) {
       case 0:
         return (

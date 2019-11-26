@@ -16,7 +16,6 @@ export class FinishStepRegister extends Component {
       passengers,
       flight_return
     } = paramsRegisterFly;
-    console.log(type);
     let data = {};
     if (type === 1) {
       data.seat_class_id = JSON.parse(seatClass).id;
@@ -28,7 +27,6 @@ export class FinishStepRegister extends Component {
       data.return_flight_id = flight_return.id;
       data.passengers = passengers;
     }
-    console.log(data);
     let result = await this.props.orderTicket(data, type);
     if (result && result.success) {
       notification.success({

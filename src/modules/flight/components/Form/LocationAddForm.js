@@ -41,7 +41,6 @@ class LocationAddForm extends Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     const { edit, location } = this.props;
-    console.log(location, edit);
 
     return (
       <Form onSubmit={this.handleSubmit}>
