@@ -101,7 +101,6 @@ class AirlineFormAdd extends Component {
     return this.normFile(info);
   }
   normFile(e) {
-    console.log("Upload event:", e);
     if (Array.isArray(e)) {
       return e;
     }

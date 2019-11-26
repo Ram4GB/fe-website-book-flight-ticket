@@ -73,7 +73,6 @@ class RegisterFlyComponent extends Component {
     await this.getDataAirline();
   }
   render() {
-    // console.log(this.props.paramsRegisterFly);
     const { paramsRegisterFly, history, setParamsRegisterFly } = this.props;
     return (
       <div>

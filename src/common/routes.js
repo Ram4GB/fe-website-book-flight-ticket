@@ -64,7 +64,6 @@ export class routes extends Component {
             notification.info({
               message: `Có người đặt order ${data.order.code}`
             });
-            console.log(this);
             await this.props.getListOrder(1, {});
           });
         }
