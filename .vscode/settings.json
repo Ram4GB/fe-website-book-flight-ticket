@@ -1,11 +1,12 @@
 {
-    "standard.autoFixOnSave": true,
-    "javascript.format.enable": false,
-    "javascript.validate.enable": false,
-    "standard.enable": true,
-    "editor.formatOnSave": true,
-    "standard.validate": [
-        "javascript",
-        "javascriptreact"
-      ]
+  "standard.autoFixOnSave": true,
+  "javascript.format.enable": false,
+  "javascript.validate.enable": false,
+  "standard.enable": true,
+  "editor.formatOnSave": false,
+  "standard.validate": ["javascript", "javascriptreact"],
+  "prettier.singleQuote": false,
+  "prettier.trailingComma": "none",
+  "prettier.semi": true,
+  "prettier.jsxSingleQuote": false
 }

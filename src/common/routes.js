@@ -5,7 +5,6 @@ import UnderConstruction from "./components/UnderConstruction";
 /** Pages */
 import MainLayout from "./hocs/MainLayout";
 import LoginPage from "./hocs/LoginPage";
-import NewAccount from "../pages/NewAccount";
 import StaffPage from "../pages/StaffPage";
 import MainLayoutFrontPage from "./hocs/MainLayoutFrontPage";
 import { Result, Button, notification } from "antd";
@@ -30,6 +29,7 @@ import AirportPage from "../pages/AirportPage";
 import { socketService } from "./utils/socketIO";
 import { eventSocket } from "./events";
 import DashboardAdmin from "../pages/DashboardAdmin";
+import NewAccountPage from "../pages/NewAccountPage";
 
 export class routes extends Component {
   constructor(props) {
@@ -207,7 +207,7 @@ export class routes extends Component {
               </Route>
               <Route exact path="/new-account">
                 <MainLayoutFrontPage>
-                  <NewAccount></NewAccount>
+                  <NewAccountPage></NewAccountPage>
                 </MainLayoutFrontPage>
               </Route>
               <Route path="*">
@@ -280,7 +280,7 @@ export class routes extends Component {
               </Route>
               <Route exact path="/new-account">
                 <MainLayoutFrontPage>
-                  <NewAccount></NewAccount>
+                  <NewAccountPage></NewAccountPage>
                 </MainLayoutFrontPage>
               </Route>
               <Route path="*">
@@ -338,7 +338,7 @@ export class routes extends Component {
               </Route>
               <Route exact path="/new-account">
                 <MainLayoutFrontPage>
-                  <NewAccount></NewAccount>
+                  <NewAccountPage></NewAccountPage>
                 </MainLayoutFrontPage>
               </Route>
               <Route path="*">
@@ -364,7 +364,7 @@ export class routes extends Component {
           return (
             <MainLayout mode="">
               <Route path="*" component={UnderConstruction} />
-              <Route exact component={NewAccount} path="/new-account" />
+              <Route exact component={NewAccountPage} path="/new-account" />
             </MainLayout>
           );
       }
@@ -374,7 +374,7 @@ export class routes extends Component {
           <Switch>
             <Route exact component={RegisterFlyPage} path="/" />
             <Route exact component={LoginPage} path="/login" />
-            <Route exact component={NewAccount} path="/new-account" />
+            <Route exact component={NewAccountPage} path="/new-account" />
             <Route exact component={RegisterFlyPage} path="/register" />
             <Route exact component={StepRegisterPage} path="/step-register" />
             {/* <Route exact component={Homepage} path="/homepage" /> */}
