@@ -18,6 +18,7 @@ import InformationUser from "../pages/InformationUser";
 import StaffInformationPage from "../pages/StaffInformationPage";
 import FlightPage from "../pages/FlightPage";
 import FlightInformationPage from "../pages/FlightInformationPage";
+import FlightInformation from "../pages/FlightInformation";
 import CustomerInfomationPage from "../pages/CustomerInfomationPage";
 import FlightAddPage from "../pages/FlightAddPage";
 import AirlineListPage from "../pages/AirlineListPage";
@@ -133,7 +134,7 @@ export class routes extends Component {
               </Route>
               <Route exact path="/admin/flight/:id">
                 <MainLayout mode="admin">
-                  <FlightInformationPage></FlightInformationPage>
+                  <FlightInformation></FlightInformation>
                 </MainLayout>
               </Route>
               <Route exact path="/admin/profile">

@@ -7,7 +7,7 @@ export class FlightPage extends Component {
     document.title = "FlyNow | Quản lí Chuyến bay";
   }
   render() {
-    const { history } = this.props;
+    const { history, match } = this.props;
     return (
       <>
         <CustomBreadcrumb
@@ -16,7 +16,10 @@ export class FlightPage extends Component {
             { url: "/admin/flight", icon: "rocket", title: "Chuyến bay" }
           ]}
         />
-        <FlightListContainer history={history}></FlightListContainer>
+        <FlightListContainer
+          history={history}
+          match={match}
+        ></FlightListContainer>
       </>
     );
   }
