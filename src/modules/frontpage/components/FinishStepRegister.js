@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 import handlers from "../../order/handlers";
 import { catchErrorAndNotification } from "../../../common/utils/Notification";
 import { withRouter } from "react-router";
+import numeral from "numeral";
+import PageLoading from "../../../common/components/widgets/PageLoading";
 
 export class FinishStepRegister extends Component {
   state = {
@@ -13,6 +15,7 @@ export class FinishStepRegister extends Component {
   };
 
   async componentDidMount() {
+    PageLoading.show();
     const { paramsRegisterFly } = this.props;
     const {
       type,
@@ -33,9 +36,9 @@ export class FinishStepRegister extends Component {
       data.passengers = passengers;
     }
     let result = await this.props.orderTicket(data, type);
+    PageLoading.hide();
     if (result && result.success) {
-      console.log("Ninh Debug: result", result);
-      this.setState({ order: result, isSuccess: true });
+      this.setState({ order: result.order, isSuccess: true });
       notification.success({
         message: "Bạn đã order thành công"
       });
@@ -45,7 +48,7 @@ export class FinishStepRegister extends Component {
     }
   }
   render() {
-    const { isSuccess } = this.state;
+    const { isSuccess, order } = this.state;
 
     if (!isSuccess) {
       return (
@@ -184,11 +187,11 @@ export class FinishStepRegister extends Component {
                   </tr>
                   <tr>
                     <td>Số tiền</td>
-                    <td>11.644.000 ₫</td>
+                    <td>{numeral(order.total_price).format("0,0")}đ</td>
                   </tr>
                   <tr>
                     <td>Nội dung</td>
-                    <td>MDH 0645302569</td>
+                    <td>{order.code}</td>
                   </tr>
                 </tbody>
               </table>
