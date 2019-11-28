@@ -14,7 +14,7 @@ import {
 } from "antd";
 import CustomBreadcrumb from "../common/components/widgets/CustomBreadcrumb";
 import { catchErrorAndNotification } from "../common/utils/Notification";
-import handlers from "../modules/flight/handlers";
+import handlers, { getFlightById } from "../modules/flight/handlers";
 import handlersSeat from "../modules/seat/handlers";
 import { connect } from "react-redux";
 import uuid from "uuid";
@@ -256,30 +256,32 @@ export class FlightInformationPage extends Component {
   }
 
   async getDataFlight() {
-    // let result = await getFlightById(this.props.match.params.id);
-    // if (result && result.success) {
-    //   this.setState(
-    //     {
-    //       flight: result.flight,
-    //       seat: result.flight.Seats.length
-    //     },
-    //     () => {
-    //       this.props.form.setFieldsValue({});
-    //     }
-    //   );
-    // }
-    let values = {};
-    values.airline_id = flight.Airline.id;
-    values.end_airport = flight.end_airport.id;
-    values.flight_date = moment(flight.flight_date);
-    values.start_airport = flight.start_airport.id;
-    values.flight_start_time = moment(flight.flight_start_time, "HH:mm:aa");
-    values.flight_time = flight.flight_time;
-    this.setState({
-      seat: flight.Seats
-    });
+    let result = await getFlightById(this.props.match.params.id);
+    if (result && result.success) {
+      this.setState(
+        {
+          flight: result.flight,
+          seat: result.flight.Seats.length
+        },
+        () => {
+          let values = {};
+          values.airline_id = result.flight.Airline.id;
+          values.end_airport = result.flight.end_airport.id;
+          values.flight_date = moment(result.flight.flight_date);
+          values.start_airport = result.flight.start_airport.id;
+          values.flight_start_time = moment(
+            result.flight.flight_start_time,
+            "HH:mm:aa"
+          );
+          values.flight_time = result.flight.flight_time;
+          this.setState({
+            seat: result.flight.Seats
+          });
 
-    if (this.props.edit) this.props.form.setFieldsValue(values);
+          if (this.props.edit) this.props.form.setFieldsValue(values);
+        }
+      );
+    }
   }
 
   async componentDidMount() {
