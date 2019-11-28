@@ -125,7 +125,7 @@ export class OrderListComponent extends Component {
             align="center"
             title="Mã hóa đơn"
             sorter
-            dataIndex="id"
+            dataIndex="code"
             render={value => {
               return (
                 <>
