@@ -205,7 +205,16 @@ code {
   padding: 10px;
 } */
 
+.evidence {
+  width: 500px;
+  display: block;
+  margin: auto;
+}
+
 @media screen and (max-width: 600px) {
+  .evidence {
+    width: 100%;
+  }
   .text-intro {
     font-size: 1em;
   }

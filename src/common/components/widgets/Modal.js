@@ -58,7 +58,7 @@ class ModalComponent extends Component {
 
     const props = {
       title: params.title || "Notification",
-      visible: isShow && component,
+      visible: isShow,
       footer: null,
       onCancel: this.deactivateModal,
       ...params

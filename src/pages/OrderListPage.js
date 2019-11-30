@@ -7,6 +7,7 @@ export class OrderListPage extends Component {
     document.title = "FlyNow | Quản lí Hoá đơn";
   }
   render() {
+    const { history } = this.props;
     return (
       <>
         <CustomBreadcrumb
@@ -15,7 +16,7 @@ export class OrderListPage extends Component {
             { url: "/admin/order", icon: "file-text", title: "Hóa đơn" }
           ]}
         />
-        <OrderListContainer></OrderListContainer>
+        <OrderListContainer history={history}></OrderListContainer>
       </>
     );
   }

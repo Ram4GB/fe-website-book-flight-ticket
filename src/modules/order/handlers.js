@@ -52,6 +52,14 @@ export default function(dispatch, props) {
       });
       if (result && result.data) return result.data;
       return { success: false, error: "Server error" };
+    },
+    getOrderByID: async id => {
+      let result = await fetchAuthLoading({
+        url: `${DEFAULT_URL}/order/${id}/ticket`,
+        method: "GET"
+      });
+      if (result && result.data) return result.data;
+      else return { error: "Server error", success: false };
     }
   };
 }

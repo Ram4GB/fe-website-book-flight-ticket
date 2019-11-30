@@ -6,3 +6,5 @@ export const COLOR_REJECT_CONTENT = {
   Rejected: "red",
   Verifying: "#13c2c2"
 };
+
+export const emptyString = "---";

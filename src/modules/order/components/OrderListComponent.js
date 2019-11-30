@@ -9,6 +9,7 @@ import { catchErrorAndNotification } from "../../../common/utils/Notification";
 import FormUploadTransfer from "./Form/FormUploadTransfer";
 import { DEFAULT_URL } from "../../../common/url";
 import { COLOR_REJECT_CONTENT } from "../models";
+import { withRouter } from "react-router";
 
 export class OrderListComponent extends Component {
   constructor(props) {
@@ -43,6 +44,7 @@ export class OrderListComponent extends Component {
     modal.show(
       <div>
         <img
+          className="evidence"
           alt=""
           style={{ display: "block", margin: "auto" }}
           src={
@@ -125,12 +127,18 @@ export class OrderListComponent extends Component {
             align="center"
             title="Mã hóa đơn"
             sorter
-            dataIndex="code"
             render={value => {
               return (
                 <>
                   <Avatar src="https://static.vecteezy.com/system/resources/previews/000/350/512/non_2x/invoice-vector-icon.jpg" />
-                  {value}
+                  <span
+                    onClick={() =>
+                      this.props.history.push(`/admin/order/${value.id}`)
+                    }
+                    className="table-name"
+                  >
+                    {value.code}
+                  </span>
                 </>
               );
             }}
@@ -231,4 +239,4 @@ export class OrderListComponent extends Component {
   }
 }
 
-export default OrderListComponent;
+export default withRouter(OrderListComponent);
