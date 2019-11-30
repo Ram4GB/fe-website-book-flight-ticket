@@ -31,6 +31,7 @@ import { socketService } from "./utils/socketIO";
 import { eventSocket } from "./events";
 import DashboardAdmin from "../pages/DashboardAdmin";
 import NewAccountPage from "../pages/NewAccountPage";
+import OrderInformationPage from "../pages/OrderInformationPage";
 
 export class routes extends Component {
   constructor(props) {
@@ -110,6 +111,11 @@ export class routes extends Component {
               <Route exact path="/admin/order">
                 <MainLayout mode="admin">
                   <OrderListPage></OrderListPage>
+                </MainLayout>
+              </Route>
+              <Route exact path="/admin/order/:id">
+                <MainLayout mode="admin">
+                  <OrderInformationPage></OrderInformationPage>
                 </MainLayout>
               </Route>
               <Route exact path="/admin/flight">
@@ -230,6 +236,11 @@ export class routes extends Component {
                   <OrderListPage></OrderListPage>
                 </MainLayout>
               </Route>
+              <Route exact path="/admin/order/:id">
+                <MainLayout mode="staff">
+                  <OrderInformationPage></OrderInformationPage>
+                </MainLayout>
+              </Route>
               <Route exact path="/admin/customer">
                 <MainLayout mode="staff">
                   <CustomerPage></CustomerPage>
@@ -296,6 +307,11 @@ export class routes extends Component {
               <Route exact path="/admin/order">
                 <MainLayout mode="customer">
                   <OrderListPage></OrderListPage>
+                </MainLayout>
+              </Route>
+              <Route exact path="/admin/order/:id">
+                <MainLayout mode="customer">
+                  <OrderInformationPage></OrderInformationPage>
                 </MainLayout>
               </Route>
               {/* Front Page */}
